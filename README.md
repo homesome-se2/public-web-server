@@ -21,6 +21,9 @@
     - [Overview](#overview)
     - [Panes |  `pane-*`](#panes--pane-)
     - [Controls |  `controls-*`](#controls--controls-)
+    - [Gadget |  `gadget-*`](#gadget--gadget-)
+      - [Gadget Cards |  `gadget-card-*`](#gadget-cards--gadget-card-)
+      - [Gadget detail |  `gadget-detail-*`](#gadget-detail--gadget-detail-)
 - [License](#license)
 
 ## Description
@@ -84,6 +87,27 @@ The `controls-*` contains general purpose but custom designed elements to provid
 </span>
 
 > note that all controls shipped with coreUI must contain the `controls-` prefix
+
+#### Gadget |  `gadget-*`
+>Gadget related controls, wrappers and visualizer
+
+The `gadget-*` contains all gadget's related controls, wrapper and visualizer.
+
+**Gadget component wrappers:**
+1. `gadget-`card
+2. `gadget-`detail
+
+
+##### Gadget Cards |  `gadget-card-*`
+> Gadget cards represent an effortlessly quick-way to access, view and/or edit a sensor's state 
+
+`Note: gadget-card-control is a component wrapper that holds the specific sensor's compact control `
+
+##### Gadget detail |  `gadget-detail-*`
+> Gadget detail contains the controls displayed in the detail pane - typically an expanded version of the compact control
+
+`Note: gadget-detail-control is a component wrapper that holds the specific sensor's expanded control `
+
 
 ## License
 
