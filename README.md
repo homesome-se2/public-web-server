@@ -8,3 +8,7 @@
 ![Issues](https://img.shields.io/github/issues/homesome-se2/public-web-server)
 ![Forks](https://img.shields.io/github/forks/homesome-se2/public-web-server)
 ![Stars](https://img.shields.io/github/stars/homesome-se2/public-web-server)
+
+<span style="display:block;text-align:center">
+    <img src="./assets/hs-webjs-hero-image.png" alt="HS-WebJS hero image">
+</span>
