@@ -1,2 +1,2 @@
-# public-web-server
-Web interface for access to the features of a local hub, via the public server.
+# HS-WebJS | Formally public-web-server) <!-- omit in toc -->
+> ReactJS Web-client based on the _**HoSo**_ protocol and _**WebSockets**_
