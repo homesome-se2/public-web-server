@@ -1,4 +1,4 @@
-# HS-WebJS | Formally public-web-server) <!-- omit in toc -->
+# HS-WebJS | Formally public-web-server <!-- omit in toc -->
 > ReactJS Web-client based on the _**HoSo**_ protocol and _**WebSockets**_
 
 ![ReactJS](https://img.shields.io/badge/built%20with-ReactJS-brightgreen)
@@ -12,3 +12,21 @@
 <span style="display:block;text-align:center">
     <img src="./assets/hs-webjs-hero-image.png" alt="HS-WebJS hero image">
 </span>
+
+## Table of contents <!-- omit in toc -->
+- [Description](#description)
+- [Design](#design)
+- [License](#license)
+
+## Description
+
+_HS-WebJS_, formally _public-web-server_, is a modern _Single Page Application (SPA)_ powered by _ReactJS_ and based on top of the _HoSo_ protocol and _WebSockets_. 
+
+## Design
+
+
+
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
