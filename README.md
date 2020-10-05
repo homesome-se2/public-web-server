@@ -19,6 +19,7 @@
   - [Framework and technologies](#framework-and-technologies)
   - [Component Structure](#component-structure)
     - [Overview](#overview)
+    - [Panes |  `pane-*`](#panes--pane-)
 - [License](#license)
 
 ## Description
@@ -46,6 +47,24 @@ Dictated by the system requirements and driven by the project leader constraints
 
 <span style="display:block;text-align:center">
     <img src="./assets/component-structure.png" alt="HS-WebJS component structure overview">
+</span>
+
+#### Panes |  `pane-*`
+>Beside the root component, the application is built with four main wrapper components
+
+The _SPA_ is built upon three main section/areas called __panes__ that, from left to right, define the main user interaction with the application. 
+
+**Wrapper components:**
+1. `pane-`selection-room
+2. `pane-`active-area
+3. `pane-`detail
+4. `pane-`gadget-list
+
+> note that all panes must contain the `pane-` prefix
+
+
+<span style="display:block;text-align:center">
+    <img src="./assets/component-structure-panes.png" alt="HS-WebJS component structure panes">
 </span>
 
 ## License
