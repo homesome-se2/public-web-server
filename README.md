@@ -20,6 +20,7 @@
   - [Component Structure](#component-structure)
     - [Overview](#overview)
     - [Panes |  `pane-*`](#panes--pane-)
+    - [Controls |  `controls-*`](#controls--controls-)
 - [License](#license)
 
 ## Description
@@ -66,6 +67,23 @@ The _SPA_ is built upon three main section/areas called __panes__ that, from lef
 <span style="display:block;text-align:center">
     <img src="./assets/component-structure-panes.png" alt="HS-WebJS component structure panes">
 </span>
+
+#### Controls |  `controls-*`
+>Custom general purpose controls have been designed and provided through the coreUI
+
+The `controls-*` contains general purpose but custom designed elements to provide a richer user experience.
+
+**Custom control:**
+1. `controls-`searchbar
+2. `controls-`1ubutton
+3. `controls-`pager
+4. `controls-`hero-button
+
+<span style="display:block;text-align:center">
+    <img src="./assets/component-structure-controls.png" alt="HS-WebJS component structure controls">
+</span>
+
+> note that all controls shipped with coreUI must contain the `controls-` prefix
 
 ## License
 
