@@ -17,6 +17,8 @@
 - [Description](#description)
 - [Design](#design)
   - [Framework and technologies](#framework-and-technologies)
+  - [Component Structure](#component-structure)
+    - [Overview](#overview)
 - [License](#license)
 
 ## Description
@@ -38,7 +40,13 @@ Dictated by the system requirements and driven by the project leader constraints
 7. **[OPTIONAL] Database:** **`MongoDB`**
 8. **[OPTIONAL] Web server framework:** **`ExpressJS`**
 
+### Component Structure
 
+#### Overview
+
+<span style="display:block;text-align:center">
+    <img src="./assets/component-structure.png" alt="HS-WebJS component structure overview">
+</span>
 
 ## License
 
