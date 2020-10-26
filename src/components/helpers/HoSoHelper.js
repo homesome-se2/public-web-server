@@ -7,8 +7,8 @@ class HoSoHelper {
             logOut: "105"
         },
         receivingCommandCodes: {
-            "101": "102",
-            "103": "104",
+            sucessfulManualLogin: "102",
+            successfulAutoLogin: "104",
         
         }
     }
