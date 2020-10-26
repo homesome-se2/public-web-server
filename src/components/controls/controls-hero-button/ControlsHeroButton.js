@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 import './ControlsHeroButton.css';
 
 class ControlsHeroButton extends Component {
-    constructor(props){
-        super(props);
-    }
-
     state = {  }
     render() { 
         return ( 

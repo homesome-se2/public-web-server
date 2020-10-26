@@ -1,4 +1,4 @@
-import HoSoHelper from "../components/helpers/HoSoHelper";
+import HoSoHelper from "../helpers/HoSoHelper";
 
 class ConnectionService{
     socket = {} ;
