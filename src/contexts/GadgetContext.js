@@ -1,13 +1,18 @@
-import React, {Component} from 'react';
-import { createContext } from 'vm';
+import React, {Component, createContext} from 'react';
 
 export const GadgetContext = createContext();
 
 class GadgetContextProvider extends Component {
-    state = {  }
+    state = { 
+        gadgets: []
+     }
     render() { 
-        return ( null );
+        return ( 
+            <GadgetContext.Provider value={ {...this.state} }>
+                {this.props.children}
+            </GadgetContext.Provider>
+         );
     }
 }
  
-export default GadgetContext;
+export default GadgetContextProvider;
