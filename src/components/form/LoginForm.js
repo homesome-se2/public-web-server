@@ -50,6 +50,7 @@ class LoginForm extends Component {
 
           LSTokenService.setAdminFlag(!!rData.isAdmin);
           LSTokenService.setHomeAlias(rData.homeAlias);
+          LSTokenService.setUsername(rData.username);
           LSTokenService.setToken(rData.token);
 
           this.navigate("dashboard", {});
