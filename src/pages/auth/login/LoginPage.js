@@ -7,7 +7,9 @@ import UserContextProvider from '../../../contexts/UserContext';
 
 
 class LoginPage extends Component {
-    state = {  }
+    state = {  
+
+    }
     render() { 
         return ( 
             <UserContextProvider>
@@ -17,7 +19,6 @@ class LoginPage extends Component {
                     <h1 className="black-medium">Sign in to your <b>smart-home</b> dashboard</h1>
                     <LoginForm />
                 </div>
-               
             </div>
             </UserContextProvider>
          );
