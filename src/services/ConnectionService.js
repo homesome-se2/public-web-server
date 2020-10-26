@@ -21,7 +21,11 @@ class ConnectionService{
                 this.socket.send(HoSoHelper.buildLoginString(username, password));
                 
                 this.receiver().then((rData) => {
-                    resolve(rData);
+                    this.waitForGadgetState().then(e=>{
+                        resolve({...rData, ...e});
+                    }).catch((rData) => {
+                        reject(rData);
+                    });
                 }).catch((rData) => {
                     reject(rData);
                 });
@@ -70,6 +74,37 @@ class ConnectionService{
             }
         })
     }
+
+    waitForGadgetState = () => {
+        return new Promise((resolve, reject) => {
+            this.socket.onmessage = e => {
+                switch(HoSoHelper.parseHoSoMessage(e.data).type){
+                    case 'GADGET_LIST':
+                        console.log(HoSoHelper.parseHoSoMessage(e.data));
+                        resolve(HoSoHelper.parseHoSoMessage(e.data));
+                        break;
+                    default: 
+
+                }
+                resolve(HoSoHelper.parseHoSoMessage(e.data));
+            }
+        })
+    }
+
+    listenForUpdates = () => {
+        this.socket.onmessage = e => {
+            switch(HoSoHelper.parseHoSoMessage(e.data).type){
+                case 'GADGET_LIST_UPDATE':
+                    console.log(HoSoHelper.parseHoSoMessage(e.data));
+                    
+                    break;
+                default: 
+
+            }
+            
+        }
+    }
+
 
 }
 export default ConnectionService;
