@@ -7,6 +7,9 @@ class LSTokenService {
     static hcStates = {
         error: "INVALID"
     }
+    static isAuth = () => {
+        return (this.getToken() === this.hcStates.error) ? false : true;
+    }
 
     static setToken = token => {
         localStorage.setItem(this.paths.token, token);

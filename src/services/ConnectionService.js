@@ -2,9 +2,15 @@ import HoSoHelper from "../components/helpers/HoSoHelper";
 
 class ConnectionService{
     socket = {} ;
+    url = "ws://134.209.198.123:8084/homesome";
 
-    constructor(url){
+    /*constructor(url){
         this.socket = new WebSocket(url);
+        console.log('Connection service init (websocket)');
+    }*/
+
+    connect = () => {
+        this.socket = new WebSocket(this.url);
         console.log('Connection service init (websocket)');
     }
 
@@ -13,7 +19,7 @@ class ConnectionService{
             this.socket.onopen = e => {
                 console.log("websocket connection opened");
                 this.socket.send(HoSoHelper.buildLoginString(username, password));
-    
+                
                 this.receiver().then((rData) => {
                     resolve(rData);
                 }).catch((rData) => {
