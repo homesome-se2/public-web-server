@@ -1,15 +1,19 @@
+import Gadget from "../models/Gadget";
+
 class HoSoHelper {
   static syntaxSpecifics = {
-    separator: "::",
+    separator: '::',
     sendingCommandCodes: {
-      manualLogin: "101",
-      autoReconnect: "103",
-      logOut: "105",
+      manualLogin: '101',
+      autoReconnect: '103',
+      logOut: '105',
     },
     receivingCommandCodes: {
-      sucessfulManualLogin: "102",
-      successfulAutoLogin: "104",
-      error: "901",
+      sucessfulManualLogin: '102',
+      successfulAutoLogin: '104',
+      gadgetFetching: '304',
+      gadgetStateUpdate: '316',
+      error: '901',
     },
   };
 
@@ -20,6 +24,15 @@ class HoSoHelper {
       username +
       this.syntaxSpecifics.separator +
       password
+    );
+  };
+  static buildAutoLoginString = (username, token) => {
+    return (
+      this.syntaxSpecifics.sendingCommandCodes.autoReconnect +
+      this.syntaxSpecifics.separator +
+      username +
+      this.syntaxSpecifics.separator +
+      token
     );
   };
 
@@ -36,7 +49,19 @@ class HoSoHelper {
       token
     );
   };
-
+  static buildGadgetObjectArray = (paramsArray) => {
+    let gadgetList = [];
+    for(let i=0; i<Number(paramsArray[0]); i++){
+      gadgetList.push(new Gadget(
+        paramsArray[i*Gadget.gadgetProperties+1], 
+        paramsArray[i*Gadget.gadgetProperties+2], 
+        paramsArray[i*Gadget.gadgetProperties+3],
+        paramsArray[i*Gadget.gadgetProperties+4], 
+        paramsArray[i*Gadget.gadgetProperties+5], 
+        paramsArray[i*Gadget.gadgetProperties+6]))
+    }
+    return gadgetList;
+  }
   static parseString = (string) => {
     let params = string.split("::");
     return {
@@ -71,6 +96,16 @@ class HoSoHelper {
                     type: 'ERROR',
                     errorCode: HoSoHelper.syntaxSpecifics.receivingCommandCodes["unsuccessfulLogin"],
                     description: this.parseString(message).params[0],
+                }
+            case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetFetching"]:
+               return {
+                    //type: 'GADGET_LIST',
+                    gadgets: this.buildGadgetObjectArray(this.parseString(message).params)
+                }
+              case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetStateUpdate"]:
+               return {
+                    gadgetId: this.parseString(message).params[0],
+                    updatedValue: this.parseString(message).params[1],
                 }
             default: 
             return {

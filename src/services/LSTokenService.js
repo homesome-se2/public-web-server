@@ -1,5 +1,6 @@
 class LSTokenService {
     static paths = {
+        username: 'C_nameID',
         token: 'C_sessionKey',
         isAdmin: 'C_isAdmin',
         homeAlias: 'H_alias',
@@ -32,7 +33,12 @@ class LSTokenService {
     static setHomeAlias = homeAlias => {
         localStorage.setItem(this.paths.homeAlias, homeAlias );
     }
-
+    static setUsername = username => {
+        localStorage.setItem(this.paths.username, username );
+    }
+    static getUsername = () => {
+        return localStorage.getItem(this.paths.username);
+    }
     static getHomeAlias = () => {
         return localStorage.getItem(this.paths.token);
     }
