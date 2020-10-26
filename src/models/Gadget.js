@@ -1,4 +1,6 @@
 class Gadget {
+    static gadgetProperties = 6;
+    
   constructor(id, alias, type, valueTemplate, state, pollDelaySec){
       this.id = id;
       this.alias = alias;
