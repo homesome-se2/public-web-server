@@ -29,7 +29,13 @@ class HoSoHelper {
         token;
     }
     
-
+    static parseString(string){
+        let params = string.split("::");
+        return {
+            commandCode: params[0],
+            params: [...params.slice(1)]
+        };
+    }
 }
  
 export default HoSoHelper;
