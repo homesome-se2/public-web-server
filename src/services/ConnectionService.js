@@ -33,6 +33,25 @@ class ConnectionService{
         })
     }
 
+    autoLogin = (username, token) => {
+        return new Promise((resolve, reject) => {
+            this.socket.onopen = e => {
+                console.log("websocket connection opened");
+                this.socket.send(HoSoHelper.buildAutoLoginString(username, token));
+                
+                this.receiver().then((rData) => {
+                    this.waitForGadgetState().then(e=>{
+                        resolve({...rData, ...e});
+                    }).catch((rData) => {
+                        reject(rData);
+                    });
+                }).catch((rData) => {
+                    reject(rData);
+                });
+            }
+        })
+    }
+
     auth = () => {
 
     }
@@ -78,6 +97,7 @@ class ConnectionService{
     waitForGadgetState = () => {
         return new Promise((resolve, reject) => {
             this.socket.onmessage = e => {
+                console.log(e.data);
                 switch(HoSoHelper.parseHoSoMessage(e.data).type){
                     case 'GADGET_LIST':
                         console.log(HoSoHelper.parseHoSoMessage(e.data));
