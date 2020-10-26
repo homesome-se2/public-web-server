@@ -26,6 +26,15 @@ class HoSoHelper {
       password
     );
   };
+  static buildAutoLoginString = (username, token) => {
+    return (
+      this.syntaxSpecifics.sendingCommandCodes.autoReconnect +
+      this.syntaxSpecifics.separator +
+      username +
+      this.syntaxSpecifics.separator +
+      token
+    );
+  };
 
   static buildLogoutString = () => {
     return this.syntaxSpecifics.sendingCommandCodes.logOut;
@@ -95,7 +104,6 @@ class HoSoHelper {
                 }
               case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetStateUpdate"]:
                return {
-                    //type: 'GADGET_LIST',
                     gadgetId: this.parseString(message).params[0],
                     updatedValue: this.parseString(message).params[1],
                 }
