@@ -12,6 +12,7 @@ class HoSoHelper {
       sucessfulManualLogin: '102',
       successfulAutoLogin: '104',
       gadgetFetching: '304',
+      gadgetStateUpdate: '316',
       error: '901',
     },
   };
@@ -89,8 +90,14 @@ class HoSoHelper {
                 }
             case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetFetching"]:
                return {
-                    type: 'GADGET_LIST',
-                    gadget: this.buildGadgetObjectArray(this.parseString(message).params)
+                    //type: 'GADGET_LIST',
+                    gadgets: this.buildGadgetObjectArray(this.parseString(message).params)
+                }
+              case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetStateUpdate"]:
+               return {
+                    //type: 'GADGET_LIST',
+                    gadgetId: this.parseString(message).params[0],
+                    updatedValue: this.parseString(message).params[1],
                 }
             default: 
             return {
