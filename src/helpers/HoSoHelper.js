@@ -1,3 +1,5 @@
+import Gadget from "../models/Gadget";
+
 class HoSoHelper {
   static syntaxSpecifics = {
     separator: '::',
@@ -37,7 +39,19 @@ class HoSoHelper {
       token
     );
   };
-
+  static buildGadgetObjectArray = (paramsArray) => {
+    let gadgetList = [];
+    for(let i=0; i<Number(paramsArray[0]); i++){
+      gadgetList.push(new Gadget(
+        paramsArray[i*Gadget.gadgetProperties+1], 
+        paramsArray[i*Gadget.gadgetProperties+2], 
+        paramsArray[i*Gadget.gadgetProperties+3],
+        paramsArray[i*Gadget.gadgetProperties+4], 
+        paramsArray[i*Gadget.gadgetProperties+5], 
+        paramsArray[i*Gadget.gadgetProperties+6]))
+    }
+    return gadgetList;
+  }
   static parseString = (string) => {
     let params = string.split("::");
     return {
@@ -76,7 +90,7 @@ class HoSoHelper {
             case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetFetching"]:
                return {
                     type: 'GADGET_LIST',
-                    gadget: this.parseString(message).params
+                    gadget: this.buildGadgetObjectArray(this.parseString(message).params)
                 }
             default: 
             return {
