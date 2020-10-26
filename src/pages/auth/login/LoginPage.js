@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LoginForm from '../../../components/form/LoginForm';
-import { ReactComponent as HSLogo } from '../../images/hs-webjs-logo.svg';
+import { ReactComponent as HSLogo } from '../../../assets/images/hs-webjs-logo.svg';
 import './LoginPage.css';
 
 
