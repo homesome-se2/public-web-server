@@ -50,10 +50,12 @@ class HoSoHelper {
       switch(this.parseString(message).commandCode){
             case HoSoHelper.syntaxSpecifics.receivingCommandCodes["successfulAutoLogin"]:
                 //TODO: REQUEST SUCESSAUTOLOGIN RESPONSE PARAM UPDATE
+               //polyfill empty values
                 return {
                     type: 'AUTO_LOGIN_RESULT',
                     result: 'SUCCESS',
-                    isAdmin: '',
+                    username: '',
+                    isAdmin: '', 
                     homeAlias: '',
                     token: ''
                 }
@@ -61,6 +63,7 @@ class HoSoHelper {
                return {
                     type: 'MANUAL_LOGIN_RESULT',
                     result: 'SUCCESS',
+                    username: this.parseString(message).params[0],
                     isAdmin: this.parseString(message).params[1],
                     homeAlias: this.parseString(message).params[2],
                     token: this.parseString(message).params[3]
@@ -68,6 +71,7 @@ class HoSoHelper {
             case HoSoHelper.syntaxSpecifics.receivingCommandCodes["unsuccessfulLogin"]:
                return {
                     type: 'ERROR',
+                    errorCode: HoSoHelper.syntaxSpecifics.receivingCommandCodes["unsuccessfulLogin"],
                     description: this.parseString(message).params[0],
                 }
             default: 
