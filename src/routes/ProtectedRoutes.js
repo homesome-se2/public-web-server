@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom'
+import LSTokenService from '../services/LSTokenService';
 
 
 
@@ -7,7 +8,7 @@ class ProtectedRoutes extends Component {
     state = {  }
     render() { 
         const Component = this.props.component;
-        const isAuthenticated = localStorage.getItem('token');
+        const isAuthenticated = LSTokenService.isAuth();
 
         //TODO: TOKEN VERIFICATION
        
