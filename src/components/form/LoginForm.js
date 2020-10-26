@@ -72,14 +72,14 @@ class LoginForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
        
-        <TextField className="input-field" id="filled-basic" label="Username" 
+        <TextField className="input-field" id="username-field" label="Username" 
         onChange={ e => {this.setState({username: e.target.value})} } required fullWidth
         error={ this.state.invalid || (this.state.username.length <= 3 && this.state.attemptedLogin>0 )}
         
         />
 
         <TextField className="input-field"  
-        id="filled-basic" label="Password" 
+        id="password-field" label="Password" 
         type="password" required fullWidth
           onChange={ e => {this.setState({password: e.target.value})} }
           error={ this.state.invalid || (this.state.username.length <= 3 && this.state.attemptedLogin>0)}
