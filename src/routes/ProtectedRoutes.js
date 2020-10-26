@@ -7,7 +7,9 @@ class ProtectedRoutes extends Component {
     state = {  }
     render() { 
         const Component = this.props.component;
-        const isAuthenticated = false;
+        const isAuthenticated = localStorage.getItem('token');
+
+        //TODO: TOKEN VERIFICATION
        
         return isAuthenticated ? (
             <Component />
