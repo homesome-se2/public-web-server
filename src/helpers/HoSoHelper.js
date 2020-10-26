@@ -1,15 +1,16 @@
 class HoSoHelper {
   static syntaxSpecifics = {
-    separator: "::",
+    separator: '::',
     sendingCommandCodes: {
-      manualLogin: "101",
-      autoReconnect: "103",
-      logOut: "105",
+      manualLogin: '101',
+      autoReconnect: '103',
+      logOut: '105',
     },
     receivingCommandCodes: {
-      sucessfulManualLogin: "102",
-      successfulAutoLogin: "104",
-      error: "901",
+      sucessfulManualLogin: '102',
+      successfulAutoLogin: '104',
+      gadgetFetching: '304',
+      error: '901',
     },
   };
 
@@ -71,6 +72,11 @@ class HoSoHelper {
                     type: 'ERROR',
                     errorCode: HoSoHelper.syntaxSpecifics.receivingCommandCodes["unsuccessfulLogin"],
                     description: this.parseString(message).params[0],
+                }
+            case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetFetching"]:
+               return {
+                    type: 'GADGET_LIST',
+                    gadget: this.parseString(message).params
                 }
             default: 
             return {
