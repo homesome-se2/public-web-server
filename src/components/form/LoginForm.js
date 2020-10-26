@@ -39,7 +39,7 @@ class LoginForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.setState({attemptedLogin: ++this.state.attemptedLogin});
+    this.setState({attemptedLogin: this.state.attemptedLogin+1});
 
     if(this.areFieldsValid()){
       this.context.csInstance.connect();
