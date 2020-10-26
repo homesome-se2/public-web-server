@@ -1,0 +1,28 @@
+.header-logo{
+    width: 100px;
+    height: auto;
+    display: block;
+    margin-bottom: 1em;
+}
+
+.fw-wrapper{
+    width: 500px;
+    padding: 3em;
+}
+
+.fw-wrapper h1{
+    font-size: 1.3em!important;
+    text-align: center;
+    font-weight: 300!important;
+}
+
+.fw-wrapper h1>b{
+    background: -webkit-linear-gradient(#9008fe, #3dc8e2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.controls-hero-button{
+    margin: auto;
+    margin-top: 2em;
+}
