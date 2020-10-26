@@ -14,6 +14,10 @@ class HoSoHelper {
         username + this.syntaxSpecifics.separator +
         password;
     }
+
+    static buildLogoutString = () => {
+        return this.syntaxSpecifics.commandCodes.logOut;
+    }
 }
  
 export default HoSoHelper;
