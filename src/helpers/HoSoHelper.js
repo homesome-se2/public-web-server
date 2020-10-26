@@ -1,5 +1,3 @@
-import LoginForm from "../form/LoginForm";
-
 class HoSoHelper {
   static syntaxSpecifics = {
     separator: "::",
