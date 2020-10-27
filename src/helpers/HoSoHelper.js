@@ -99,11 +99,12 @@ class HoSoHelper {
                 }
             case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetFetching"]:
                return {
-                    //type: 'GADGET_LIST',
+                    type: 'GADGET_LIST',
                     gadgets: this.buildGadgetObjectArray(this.parseString(message).params)
                 }
               case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetStateUpdate"]:
                return {
+                    type: 'GADGET_STATE_UPDATE',
                     gadgetId: this.parseString(message).params[0],
                     updatedValue: this.parseString(message).params[1],
                 }
