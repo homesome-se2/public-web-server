@@ -1,4 +1,5 @@
 import React, { Component, createContext } from "react";
+import Gadget from "../models/Gadget";
 import ConnectionService from "../services/ConnectionService";
 import LSTokenService from "../services/LSTokenService";
 
@@ -34,15 +35,19 @@ class UserContextProvider extends Component {
     this.setState({ token: token });
   };
   updateGadget = (gadgetId, updatedValue) => {
-     let found = this.state.gadgets.find( (gadget, index, arr) => {
+    this.state.gadgets.find( (gadget, index, arr) => {
         if(gadget.id === gadgetId){
-         this.state.gadgets[index].state = updatedValue;
+            gadget.state = updatedValue;
+            const scGadgets = [...this.state.gadgets];
+            scGadgets[index] = gadget;
+            console.log('found: ', gadget.state);
+            this.setState({gadgets: scGadgets});
          return true;
         }
         return false;
       });
-     return found;
-  }
+      return false;
+  };
   setupEESubscribers = () => {
     console.log(this.state.csInstance.getWSReceiverEEmitterInstance);
     this.setState({
@@ -52,32 +57,32 @@ class UserContextProvider extends Component {
           .subscribe(
             ConnectionService.wsReceiverEEmitterEvent.onGadgetStateUpdateRV,
             (...args) => {
-              console.log(args);
-              //this.updateGadget(args[0].gadgetId, args[0].updatedValue);
+              console.log("onGadgetStateUpdateRV: ", args);
+              this.updateGadget(args[0].gadgetId, args[0].updatedValue);
             }
           ),
       },
     });
     this.setState({
       subscribers: {
-         connectionOpenRV: this.state.csInstance
+        connectionOpenRV: this.state.csInstance
           .getWSReceiverEEmitterInstance()
           .subscribe(
             ConnectionService.wsReceiverEEmitterEvent.onConnectionOpenRV,
             (...args) => {
-              console.log(args);
+              console.log("onConnectionOpenRV: ", args);
             }
           ),
       },
     });
     this.setState({
       subscribers: {
-         connectionOpenRV: this.state.csInstance
+        connectionOpenRV: this.state.csInstance
           .getWSReceiverEEmitterInstance()
           .subscribe(
             ConnectionService.wsReceiverEEmitterEvent.onGadgetFecthRV,
             (...args) => {
-              console.log('onGadgetFecthRV: ', args);
+              console.log("onGadgetFecthRV: ", args);
               this.updateGadgets(args[0].gadgets);
             }
           ),
@@ -86,18 +91,18 @@ class UserContextProvider extends Component {
   };
 
   setupContextState = (data) => {
-      this.setUsername(data.username);
-      this.setHomeAlias(data.homeAlias);
-      this.setAdminFlag(data.isAdmin);
-      this.setToken(data.token);
-  }
+    this.setUsername(data.username);
+    this.setHomeAlias(data.homeAlias);
+    this.setAdminFlag(data.isAdmin);
+    this.setToken(data.token);
+  };
 
-   setupLSTS = (data) => {
-      LSTokenService.setAdminFlag(!!data.isAdmin);
-      LSTokenService.setHomeAlias(data.homeAlias);
-      LSTokenService.setUsername(data.username);
-      LSTokenService.setToken(data.token);
-  }
+  setupLSTS = (data) => {
+    LSTokenService.setAdminFlag(!!data.isAdmin);
+    LSTokenService.setHomeAlias(data.homeAlias);
+    LSTokenService.setUsername(data.username);
+    LSTokenService.setToken(data.token);
+  };
 
   csConnect = () => {
     this.setupEESubscribers();
@@ -108,7 +113,7 @@ class UserContextProvider extends Component {
       this.state.csInstance
         .auth(ConnectionService.authTypes.manualLogin, username, password)
         .then((rData) => {
-           console.log('rdata: ', rData);
+          console.log("rdata: ", rData);
           //you're auth with no errors!
           this.initLiveHooks();
           this.setupContextState(rData);
@@ -122,7 +127,7 @@ class UserContextProvider extends Component {
     });
   };
   initLiveHooks = () => {
-   this.state.csInstance.initLiveHooks();
+    this.state.csInstance.initLiveHooks();
   };
 
   render() {
