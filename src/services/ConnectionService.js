@@ -1,3 +1,4 @@
+import EEmitter from "../helpers/EEmitter";
 import HoSoHelper from "../helpers/HoSoHelper";
 
 class ConnectionService {
@@ -12,7 +13,7 @@ class ConnectionService {
     notAuthorized: 5,
     authorized: 6,
   };
-  authTypes = {
+  static authTypes = {
     manualLogin: 0,
     autoLogin: 1,
   };
@@ -21,6 +22,7 @@ class ConnectionService {
     this.wsState = this.wsConnectionStates.closed;
     this.wsUrl = wsUrl;
     this.ws = null;
+    this.wsReceiverEEmitter = new EEmitter();
   }
 
   connect = () => {
@@ -32,14 +34,39 @@ class ConnectionService {
     }
 
     this.wsState = this.wsConnectionStates.connecting;
-    this.ws = new WebSocket(this.url);
+    this.ws = new WebSocket(this.wsUrl);
     this.ws.binaryType = "arraybuffer";
 
-    this.initLiveHooks();
+    console.log("ConnectionService init (websocket)");
+    console.log("WS:ReadyState: " + this.ws.readyState);
+
+    return 1;
+    //this.initLiveHooks();
   };
-  auth = (authType) => {
-    if (authType === this.authTypes.manualLogin) {
-    }
+  auth = (authType, username, password, token) => {
+    return new Promise((resolve, reject) => {
+      if (authType === ConnectionService.authTypes.manualLogin) {
+        this.sendSingleWSMessage(
+          HoSoHelper.buildLoginString(username, password)
+        )
+          .then((rData) => {
+            if (rData.isAuth) {
+             this.gadgetSetupReceiver().then((rGadgets) =>{
+                resolve({...rData, ...rGadgets});
+             }).catch((rData) => {
+                 reject(rData);
+             });
+            } else {
+              reject(rData);
+            }
+          })
+          .catch((rData) => {
+            reject(rData);
+          });
+      } else {
+        //TODO: AUTO_LOGIN
+      }
+    });
   };
 
   disconnect = () => {
@@ -57,15 +84,17 @@ class ConnectionService {
   };
   sendSingleWSMessage = (message) => {
     return new Promise((resolve, reject) => {
-      if (this.ws.readyState === this.wsConnectionStates.open) {
-        this.ws.send(message);
-        this.ws.onmessage = (e) => {
-          resolve(this.encapsulateHoSoMessage(e.data));
-        };
-      } else {
-        console.log("error: ws state not open");
-        reject("error: ws state not open");
-      }
+      this.ws.onopen = (e) => {
+        if (this.ws.readyState === this.wsConnectionStates.open) {
+          this.ws.send(message);
+          this.ws.onmessage = (e) => {
+            resolve(this.encapsulateHoSoMessage(e.data));
+          };
+        } else {
+          console.log("error: ws state not open");
+          reject("error: ws state not open");
+        }
+      };
     });
   };
 
@@ -76,6 +105,7 @@ class ConnectionService {
       case "AUTO_LOGIN_RESULT":
       case "MANUAL_LOGIN_RESULT":
         return {
+          isAuth: true,
           username: HoSoHelper.parseHoSoMessage(encapsulatedData).username,
           isAdmin: HoSoHelper.parseHoSoMessage(encapsulatedData).isAdmin,
           homeAlias: HoSoHelper.parseHoSoMessage(encapsulatedData).homeAlias,
@@ -87,17 +117,33 @@ class ConnectionService {
           description: HoSoHelper.parseHoSoMessage(encapsulatedData)
             .description,
         };
-        case "GADGET_LIST":
-            return {
-                gadgets: HoSoHelper.parseHoSoMessage(encapsulatedData).gadgets
-            };
+      case "GADGET_LIST":
+        return {
+          gadgets: HoSoHelper.parseHoSoMessage(encapsulatedData).gadgets,
+        };
       default:
     }
   };
+  gadgetSetupReceiver = () => {
+    return new Promise((resolve, reject) => {
+        this.ws.onmessage = e => {
+            if(HoSoHelper.parseHoSoMessage(e.data).type === 'GADGET_LIST'){
+                resolve(this.encapsulateHoSoMessage(e.data))
+            } 
+            reject('error: wrong received HoSo message');
+        }
+    });
+  }
 
   initLiveHooks = () => {
-    this.ws.onopen = (e) => {};
-    this.ws.onmessage = (e) => {};
+    this.ws.onopen = (e) => {
+      console.log("ConnectionService init (reset)(websocket)");
+      console.log("WS:ReadyState: " + this.ws.readyState);
+    };
+    this.ws.onmessage = (e) => {
+        console.log('live-hook: ', e.data);
+        
+    };
     this.ws.onerror = (e) => {};
     this.ws.onclose = (e) => {};
   };
