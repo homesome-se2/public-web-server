@@ -1,0 +1,23 @@
+.dashboard-page{
+    margin: 0!important;
+    padding: 0!important;
+}
+
+h1.medium-title{
+    font-size: 1.3em!important;
+    text-align: left;
+    font-weight: 300!important;
+}
+
+h1.medium-title{
+    font-size: 1.3em!important;
+    text-align: left;
+    font-weight: 700!important;
+    color: #373840;
+}
+h2.medium-subtitle{
+    font-size: 0.8em!important;
+    text-align: left;
+    font-weight: 300!important;
+    color: #c7cbdc;
+}
