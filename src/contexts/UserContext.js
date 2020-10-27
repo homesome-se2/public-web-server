@@ -1,5 +1,6 @@
 import React, { Component, createContext } from "react";
 import ConnectionService from "../services/ConnectionService";
+import LSTokenService from "../services/LSTokenService";
 
 export const UserContext = createContext();
 
@@ -32,6 +33,16 @@ class UserContextProvider extends Component {
   setToken = (token) => {
     this.setState({ token: token });
   };
+  updateGadget = (gadgetId, updatedValue) => {
+     let found = this.state.gadgets.find( (gadget, index, arr) => {
+        if(gadget.id === gadgetId){
+         this.state.gadgets[index].state = updatedValue;
+         return true;
+        }
+        return false;
+      });
+     return found;
+  }
   setupEESubscribers = () => {
     console.log(this.state.csInstance.getWSReceiverEEmitterInstance);
     this.setState({
@@ -42,6 +53,7 @@ class UserContextProvider extends Component {
             ConnectionService.wsReceiverEEmitterEvent.onGadgetStateUpdateRV,
             (...args) => {
               console.log(args);
+              //this.updateGadget(args[0].gadgetId, args[0].updatedValue);
             }
           ),
       },
@@ -65,12 +77,27 @@ class UserContextProvider extends Component {
           .subscribe(
             ConnectionService.wsReceiverEEmitterEvent.onGadgetFecthRV,
             (...args) => {
-              console.log(args);
+              console.log('onGadgetFecthRV: ', args);
+              this.updateGadgets(args[0].gadgets);
             }
           ),
       },
     });
   };
+
+  setupContextState = (data) => {
+      this.setUsername(data.username);
+      this.setHomeAlias(data.homeAlias);
+      this.setAdminFlag(data.isAdmin);
+      this.setToken(data.token);
+  }
+
+   setupLSTS = (data) => {
+      LSTokenService.setAdminFlag(!!data.isAdmin);
+      LSTokenService.setHomeAlias(data.homeAlias);
+      LSTokenService.setUsername(data.username);
+      LSTokenService.setToken(data.token);
+  }
 
   csConnect = () => {
     this.setupEESubscribers();
@@ -81,8 +108,12 @@ class UserContextProvider extends Component {
       this.state.csInstance
         .auth(ConnectionService.authTypes.manualLogin, username, password)
         .then((rData) => {
+           console.log('rdata: ', rData);
           //you're auth with no errors!
           this.initLiveHooks();
+          this.setupContextState(rData);
+          this.setupLSTS(rData);
+
           resolve(rData);
         })
         .catch((rData) => {
