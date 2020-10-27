@@ -1,16 +1,35 @@
 .pane-active-area{
     width: 65%;
     background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pane-active-area .inner-area{
-    width: auto;
-    height: -webkit-fill-available;
-    padding: 1em 0;
+    width: 100%;
+    height: 98%;
 }
 .pane-active-area .content-wrapper{
     background-color: #f3f6ff;
     border-radius: 50px;
     width: auto;
     height: 100%;
+    position: relative;
+ 
+    
 }
+
+.pane-active-area .device-list-header-wrapper{
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    width: 100%;
+}
+
+.separator{
+    width: 85%;
+    height: 1px;
+    background-color: #e6eaf5;
+}
+
