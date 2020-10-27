@@ -5,7 +5,6 @@ import "./LoginForm.css";
 import { TextField } from "@material-ui/core";
 import ControlsHeroButton from "../controls/controls-hero-button/ControlsHeroButton";
 import { UserContext } from "../../contexts/UserContext";
-import LSTokenService from "../../services/LSTokenService";
 
 class LoginForm extends Component {
   static contextType = UserContext;

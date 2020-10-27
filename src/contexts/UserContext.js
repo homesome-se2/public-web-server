@@ -1,5 +1,4 @@
 import React, { Component, createContext } from "react";
-import Gadget from "../models/Gadget";
 import ConnectionService from "../services/ConnectionService";
 import LSTokenService from "../services/LSTokenService";
 
