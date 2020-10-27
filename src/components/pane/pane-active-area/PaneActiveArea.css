@@ -1,0 +1,16 @@
+.pane-active-area{
+    width: 65%;
+    background-color: #ffffff;
+}
+
+.pane-active-area .inner-area{
+    width: auto;
+    height: -webkit-fill-available;
+    padding: 1em 0;
+}
+.pane-active-area .content-wrapper{
+    background-color: #f3f6ff;
+    border-radius: 50px;
+    width: auto;
+    height: 100%;
+}
