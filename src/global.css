@@ -4,6 +4,11 @@
 html, body{
   font-family: 'Lato', sans-serif;
   font-weight: 300;
+  margin: 0!important;
+  padding: 0!important;
+  overflow: hidden;
+  min-width: 800px;
+  min-height: 800px;
 }
 
 .center {
@@ -14,3 +19,14 @@ html, body{
 .black-medium{
   color: #373840;
 }
+.light-grey{
+  color: #131420;
+}
+
+.pane{
+  height: 100vh;
+  float:left;
+  overflow: hidden;
+}
+
+

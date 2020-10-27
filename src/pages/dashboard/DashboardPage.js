@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import PaneActiveArea from "../../components/pane/pane-active-area/PaneActiveArea";
+import PaneDetail from "../../components/pane/pane-detail/PaneDetail";
+import PaneRoomSelection from "../../components/pane/pane-room-selection/PaneRoomSelection";
 import { UserContext } from "../../contexts/UserContext";
-import HoSoHelper from "../../helpers/HoSoHelper";
-import LSTokenService from "../../services/LSTokenService";
+
+import './DashboardPage.css';
+
 
 class DashboardPage extends Component {
   static contextType = UserContext;
@@ -16,8 +20,9 @@ class DashboardPage extends Component {
   render() {
     return (
       <div className="dashboard-page">
-        <h1>dashboard</h1>
-        {this.context.username}
+        <PaneRoomSelection></PaneRoomSelection>
+        <PaneActiveArea></PaneActiveArea>
+        <PaneDetail></PaneDetail>
       </div>
     );
   }
