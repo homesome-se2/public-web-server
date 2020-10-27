@@ -60,6 +60,8 @@ class ConnectionService {
         )
           .then((rData) => {
             if (rData.isAuth) {
+                this.initLiveHooks();
+                resolve(rData);
              this.gadgetSetupReceiver().then((rGadgets) =>{
                 resolve({...rData, ...rGadgets});
              }).catch((rData) => {
