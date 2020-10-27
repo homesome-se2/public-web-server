@@ -37,29 +37,15 @@ class LoginForm extends Component {
     this.setState({ attemptedLogin: this.state.attemptedLogin + 1 });
 
     if (this.areFieldsValid()) {
-      this.context.csInstance.connect();
-      this.context.csInstance
+      this.context.csConnect();
+      this.context
         .login(this.state.username, this.state.password)
         .then((rData) => {
-          console.log(rData);
-          this.context.setUsername(this.state.username);
-          this.context.setHomeAlias(rData.homeAlias);
-          this.context.setAdminFlag(rData.isAdmin);
-          this.context.setToken(rData.token);
-          this.context.updateGadgets(rData.gadgets);
-
-          LSTokenService.setAdminFlag(!!rData.isAdmin);
-          LSTokenService.setHomeAlias(rData.homeAlias);
-          LSTokenService.setUsername(rData.username);
-          LSTokenService.setToken(rData.token);
-
+          console.log("then: ", rData);
           this.navigate("dashboard", {});
-
-          //this.context.csInstance.waitForGadgetState();
         })
         .catch((rData) => {
-          console.log(rData);
-          this.setState({ invalid: true });
+          console.log("catch: ", rData);
         });
     } else {
       this.setState({ invalid: true });
