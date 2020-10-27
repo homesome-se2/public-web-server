@@ -17,12 +17,21 @@ class ConnectionService {
     manualLogin: 0,
     autoLogin: 1,
   };
+  static wsReceiverEEmitterEvent = {
+      onConnectionOpenRV: 'onConnectionOpenRV',
+      onGadgetFecthRV: 'HoSoGadgetListFetchRV',
+      onGadgetStateUpdateRV: 'HoSoGadgetStateUpdateRV'
+  }
 
   constructor(wsUrl) {
     this.wsState = this.wsConnectionStates.closed;
     this.wsUrl = wsUrl;
     this.ws = null;
     this.wsReceiverEEmitter = new EEmitter();
+  }
+
+  getWSReceiverEEmitterInstance = () => {
+    return this.wsReceiverEEmitter;
   }
 
   connect = () => {
@@ -121,6 +130,11 @@ class ConnectionService {
         return {
           gadgets: HoSoHelper.parseHoSoMessage(encapsulatedData).gadgets,
         };
+        case "GADGET_STATE_UPDATE":
+        return {
+          gadgetId: HoSoHelper.parseHoSoMessage(encapsulatedData).gadgetId,
+          updatedValue: HoSoHelper.parseHoSoMessage(encapsulatedData).updatedValue,
+        };
       default:
     }
   };
@@ -139,10 +153,16 @@ class ConnectionService {
     this.ws.onopen = (e) => {
       console.log("ConnectionService init (reset)(websocket)");
       console.log("WS:ReadyState: " + this.ws.readyState);
+      this.wsReceiverEEmitter.emit(this.wsReceiverEEmitterEvent.onConnectionOpenRV, e.data, this.ws.readyState);
     };
     this.ws.onmessage = (e) => {
-        console.log('live-hook: ', e.data);
+        console.log(`live-hook: hoso:{ ${e.data} }`);
         
+        if(HoSoHelper.parseHoSoMessage(e.data).type === 'GADGET_LIST')
+        this.wsReceiverEEmitter.emit(ConnectionService.wsReceiverEEmitterEvent.onGadgetFecthRV, this.encapsulateHoSoMessage(e.data));
+        else if(HoSoHelper.parseHoSoMessage(e.data).type === 'GADGET_STATE_UPDATE'){
+            this.wsReceiverEEmitter.emit(ConnectionService.wsReceiverEEmitterEvent.onGadgetStateUpdateRV, this.encapsulateHoSoMessage(e.data));
+        }
     };
     this.ws.onerror = (e) => {};
     this.ws.onclose = (e) => {};
