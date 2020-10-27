@@ -1,130 +1,52 @@
 import HoSoHelper from "../helpers/HoSoHelper";
 
 class ConnectionService{
-    socket = {} ;
-    url = "ws://134.209.198.123:8084/homesome";
+    wsConnectionStates = {
+        connecting: 0,
+        open: 1, 
+        closing: 2, 
+        closed: 3,
+        disconnecting: 4 //custom
+    }
 
-    /*constructor(url){
-        this.socket = new WebSocket(url);
-        console.log('Connection service init (websocket)');
-    }*/
+
+    constructor(wsUrl){
+        this.wsState = this.wsConnectionStates.closed;
+        this.wsUrl = wsUrl;
+        this.ws = null;
+    }
 
     connect = () => {
-        this.socket = new WebSocket(this.url);
-        console.log('Connection service init (websocket)');
-    }
+        if(this.wsState === this.wsConnectionStates.open){
+            this.disconnect();
+        } else if(this.wsState !== this.wsConnectionStates.closed){
+            console.log('ws socket already open');
+            return -1;
+        }
 
-    login = (username, password) => {
-        return new Promise((resolve, reject) => {
-            this.socket.onopen = e => {
-                console.log("websocket connection opened");
-                this.socket.send(HoSoHelper.buildLoginString(username, password));
-                
-                this.receiver().then((rData) => {
-                    this.waitForGadgetState().then(e=>{
-                        resolve({...rData, ...e});
-                    }).catch((rData) => {
-                        reject(rData);
-                    });
-                }).catch((rData) => {
-                    reject(rData);
-                });
-            }
-        })
-    }
+        this.wsState = this.wsConnectionStates.connecting;
+        this.ws = new WebSocket(this.url);
+        this.ws.binaryType = "arraybuffer";
 
-    autoLogin = (username, token) => {
-        return new Promise((resolve, reject) => {
-            this.socket.onopen = e => {
-                console.log("websocket connection opened");
-                this.socket.send(HoSoHelper.buildAutoLoginString(username, token));
-                
-                this.receiver().then((rData) => {
-                    this.waitForGadgetState().then(e=>{
-                        resolve({...rData, ...e});
-                    }).catch((rData) => {
-                        reject(rData);
-                    });
-                }).catch((rData) => {
-                    reject(rData);
-                });
-            }
-        })
-    }
+       
 
-    auth = () => {
 
     }
 
-    receiver = () => {
-        return new Promise((resolve, reject) => {
-            this.socket.onmessage = e => {
-               // console.log(`received data: ${e.data}`);;
-                switch(HoSoHelper.parseHoSoMessage(e.data).type){
-                    case 'AUTO_LOGIN_RESULT':
-                       //TODO: REMOVE AFTER REQUEST SUCESSAUTOLOGIN RESPONSE PARAM UPDATE
-                       //polyfill empty values at request-level
-                    resolve({
-                        username: HoSoHelper.parseHoSoMessage(e.data).username,
-                        isAdmin: HoSoHelper.parseHoSoMessage(e.data).isAdmin,
-                        homeAlias: HoSoHelper.parseHoSoMessage(e.data).homeAlias,
-                        token: HoSoHelper.parseHoSoMessage(e.data).token
-                    });
-                    break;
-                    case 'MANUAL_LOGIN_RESULT':
-                        resolve({
-                            username: HoSoHelper.parseHoSoMessage(e.data).username,
-                            isAdmin: HoSoHelper.parseHoSoMessage(e.data).isAdmin,
-                            homeAlias: HoSoHelper.parseHoSoMessage(e.data).homeAlias,
-                            token: HoSoHelper.parseHoSoMessage(e.data).token
-                        });
-                    break;
-                    case 'ERROR':
-                      reject({
-                        errorCode: HoSoHelper.parseHoSoMessage(e.data).errorCode,
-                        description: HoSoHelper.parseHoSoMessage(e.data).description
-                      });
-                    break;
-    
-                    default:
-    
-                }
-                resolve(HoSoHelper.parseHoSoMessage(e.data).type);
-            }
-        })
-    }
-
-    waitForGadgetState = () => {
-        return new Promise((resolve, reject) => {
-            this.socket.onmessage = e => {
-                console.log(e.data);
-                switch(HoSoHelper.parseHoSoMessage(e.data).type){
-                    case 'GADGET_LIST':
-                        console.log(HoSoHelper.parseHoSoMessage(e.data));
-                        resolve(HoSoHelper.parseHoSoMessage(e.data));
-                        break;
-                    default: 
-
-                }
-                resolve(HoSoHelper.parseHoSoMessage(e.data));
-            }
-        })
-    }
-
-    listenForUpdates = () => {
-        this.socket.onmessage = e => {
-            switch(HoSoHelper.parseHoSoMessage(e.data).type){
-                case 'GADGET_LIST_UPDATE':
-                    console.log(HoSoHelper.parseHoSoMessage(e.data));
-                    
-                    break;
-                default: 
-
-            }
-            
+    disconnect = () => {
+        if(this.ws !== null && this.wsState === this.wsConnectionStates.open){
+            return this.connectionTeardown();
+        }else {
+            console.log("Connection not open or ws instance null");
+            return -1;
         }
     }
+    connectionTeardown = () => {
+        this.wsState = this.wsConnectionStates.disconnecting;
+        this.ws.close(1000, "Client request disconnection");
+        return 1;
+    }
 
-
+   
 }
 export default ConnectionService;
