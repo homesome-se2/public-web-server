@@ -37,17 +37,26 @@ class ConnectionService {
   connect = () => {
     if (this.wsState === this.wsConnectionStates.open) {
       this.disconnect();
-    } else if (this.wsState !== this.wsConnectionStates.closed) {
       console.log("ws socket already open");
-      return -1;
-    }
+      return 1;
+    } 
 
     this.wsState = this.wsConnectionStates.connecting;
     this.ws = new WebSocket(this.wsUrl);
     this.ws.binaryType = "arraybuffer";
 
-    console.log("ConnectionService init (websocket)");
-    console.log("WS:ReadyState: " + this.ws.readyState);
+
+    this.ws.onopen = (e) => {
+      console.log("ConnectionService init (reset)(websocket)");
+      console.log("WS:ReadyState: " + this.ws.readyState);
+      this.wsState = this.wsConnectionStates.open;
+      this.wsReceiverEEmitter.emit(
+        this.wsReceiverEEmitterEvent.onConnectionOpenRV,
+        e.data,
+        this.ws.readyState
+      );
+    };
+    
 
     return 1;
     //this.initLiveHooks();
