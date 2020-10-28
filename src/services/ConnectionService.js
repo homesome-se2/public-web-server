@@ -18,10 +18,10 @@ class ConnectionService {
     autoLogin: 1,
   };
   static wsReceiverEEmitterEvent = {
-      onConnectionOpenRV: 'onConnectionOpenRV',
-      onGadgetFecthRV: 'HoSoGadgetListFetchRV',
-      onGadgetStateUpdateRV: 'HoSoGadgetStateUpdateRV'
-  }
+    onConnectionOpenRV: "onConnectionOpenRV",
+    onGadgetFecthRV: "HoSoGadgetListFetchRV",
+    onGadgetStateUpdateRV: "HoSoGadgetStateUpdateRV",
+  };
 
   constructor(wsUrl) {
     this.wsState = this.wsConnectionStates.closed;
@@ -32,22 +32,31 @@ class ConnectionService {
 
   getWSReceiverEEmitterInstance = () => {
     return this.wsReceiverEEmitter;
-  }
+  };
 
   connect = () => {
     if (this.wsState === this.wsConnectionStates.open) {
       this.disconnect();
-    } else if (this.wsState !== this.wsConnectionStates.closed) {
       console.log("ws socket already open");
-      return -1;
-    }
+      return 1;
+    } 
 
     this.wsState = this.wsConnectionStates.connecting;
     this.ws = new WebSocket(this.wsUrl);
     this.ws.binaryType = "arraybuffer";
 
-    console.log("ConnectionService init (websocket)");
-    console.log("WS:ReadyState: " + this.ws.readyState);
+
+    this.ws.onopen = (e) => {
+      console.log("ConnectionService init (reset)(websocket)");
+      console.log("WS:ReadyState: " + this.ws.readyState);
+      this.wsState = this.wsConnectionStates.open;
+      this.wsReceiverEEmitter.emit(
+        this.wsReceiverEEmitterEvent.onConnectionOpenRV,
+        e.data,
+        this.ws.readyState
+      );
+    };
+    
 
     return 1;
     //this.initLiveHooks();
@@ -60,13 +69,14 @@ class ConnectionService {
         )
           .then((rData) => {
             if (rData.isAuth) {
-                this.initLiveHooks();
-                resolve(rData);
-             this.gadgetSetupReceiver().then((rGadgets) =>{
-                resolve({...rData, ...rGadgets});
-             }).catch((rData) => {
-                 reject(rData);
-             });
+              resolve(rData);
+              this.gadgetSetupReceiver()
+                .then((rGadgets) => {
+                  resolve({ ...rData, ...rGadgets });
+                })
+                .catch((rData) => {
+                  reject(rData);
+                });
             } else {
               reject(rData);
             }
@@ -132,39 +142,69 @@ class ConnectionService {
         return {
           gadgets: HoSoHelper.parseHoSoMessage(encapsulatedData).gadgets,
         };
-        case "GADGET_STATE_UPDATE":
+      case "GADGET_STATE_UPDATE":
         return {
           gadgetId: HoSoHelper.parseHoSoMessage(encapsulatedData).gadgetId,
-          updatedValue: HoSoHelper.parseHoSoMessage(encapsulatedData).updatedValue,
+          updatedValue: HoSoHelper.parseHoSoMessage(encapsulatedData)
+            .updatedValue,
         };
+      case "SERVER_EXCEPTION":
+        //TODO: WORKAROUND ASK FOR DIFFERENT RESPONSE
+        return (HoSoHelper.parseHoSoMessage(encapsulatedData).description.includes('Login failed')) ?
+        {
+          isAuth: false,
+          username: HoSoHelper.syntaxSpecifics.invalidLocalCodes.invalid,
+          isAdmin: HoSoHelper.syntaxSpecifics.invalidLocalCodes.invalid,
+          homeAlias: HoSoHelper.syntaxSpecifics.invalidLocalCodes.invalid,
+          token: HoSoHelper.syntaxSpecifics.invalidLocalCodes.invalid,
+        } :
+        {
+         //TODO: WAIT FOR OTHER EXCEPTIONS TO BE PUBLISHED
+        }
       default:
+        return {
+          type: "FATAL_ERROR",
+          description: HoSoHelper.parseHoSoMessage(encapsulatedData).description,
+        };
     }
   };
   gadgetSetupReceiver = () => {
     return new Promise((resolve, reject) => {
-        this.ws.onmessage = e => {
-            if(HoSoHelper.parseHoSoMessage(e.data).type === 'GADGET_LIST'){
-                resolve(this.encapsulateHoSoMessage(e.data))
-            } 
-            reject('error: wrong received HoSo message');
+      this.ws.onmessage = (e) => {
+        if (HoSoHelper.parseHoSoMessage(e.data).type === "GADGET_LIST") {
+          resolve(this.encapsulateHoSoMessage(e.data));
         }
+        reject("error: wrong received HoSo message");
+      };
     });
-  }
+  };
 
   initLiveHooks = () => {
     this.ws.onopen = (e) => {
       console.log("ConnectionService init (reset)(websocket)");
       console.log("WS:ReadyState: " + this.ws.readyState);
-      this.wsReceiverEEmitter.emit(this.wsReceiverEEmitterEvent.onConnectionOpenRV, e.data, this.ws.readyState);
+      this.wsReceiverEEmitter.emit(
+        this.wsReceiverEEmitterEvent.onConnectionOpenRV,
+        e.data,
+        this.ws.readyState
+      );
     };
     this.ws.onmessage = (e) => {
-        console.log(`live-hook: hoso:{ ${e.data} }`);
-        
-        if(HoSoHelper.parseHoSoMessage(e.data).type === 'GADGET_LIST')
-        this.wsReceiverEEmitter.emit(ConnectionService.wsReceiverEEmitterEvent.onGadgetFecthRV, this.encapsulateHoSoMessage(e.data));
-        else if(HoSoHelper.parseHoSoMessage(e.data).type === 'GADGET_STATE_UPDATE'){
-            this.wsReceiverEEmitter.emit(ConnectionService.wsReceiverEEmitterEvent.onGadgetStateUpdateRV, this.encapsulateHoSoMessage(e.data));
-        }
+      console.log(`live-hook: hoso:{ ${e.data} }`);
+
+      if (HoSoHelper.parseHoSoMessage(e.data).type === "GADGET_LIST")
+        this.wsReceiverEEmitter.emit(
+          ConnectionService.wsReceiverEEmitterEvent.onGadgetFecthRV,
+          this.encapsulateHoSoMessage(e.data)
+        );
+      else if (
+        HoSoHelper.parseHoSoMessage(e.data).type === "GADGET_STATE_UPDATE"
+      ) {
+        this.wsReceiverEEmitter.emit(
+          ConnectionService.wsReceiverEEmitterEvent.onGadgetStateUpdateRV,
+          this.encapsulateHoSoMessage(e.data)
+        );
+      }
     };
     this.ws.onerror = (e) => {};
     this.ws.onclose = (e) => {};

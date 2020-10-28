@@ -45,6 +45,7 @@ class LoginForm extends Component {
         })
         .catch((rData) => {
           console.log("catch: ", rData);
+          if(!rData.isAuth) this.setState({invalid: true});
         });
     } else {
       this.setState({ invalid: true });
