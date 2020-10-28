@@ -59,7 +59,6 @@ class ConnectionService {
     
 
     return 1;
-    //this.initLiveHooks();
   };
   auth = (authType, username, password, token) => {
     return new Promise((resolve, reject) => {
@@ -148,18 +147,21 @@ class ConnectionService {
           updatedValue: HoSoHelper.parseHoSoMessage(encapsulatedData)
             .updatedValue,
         };
-      case "SERVER_EXCEPTION":
-        //TODO: WORKAROUND ASK FOR DIFFERENT RESPONSE
-        return (HoSoHelper.parseHoSoMessage(encapsulatedData).description.includes('Login failed')) ?
-        {
+      case "LOGIN_ERROR":
+        return {
           isAuth: false,
           username: HoSoHelper.syntaxSpecifics.invalidLocalCodes.invalid,
           isAdmin: HoSoHelper.syntaxSpecifics.invalidLocalCodes.invalid,
           homeAlias: HoSoHelper.syntaxSpecifics.invalidLocalCodes.invalid,
           token: HoSoHelper.syntaxSpecifics.invalidLocalCodes.invalid,
-        } :
-        {
-         //TODO: WAIT FOR OTHER EXCEPTIONS TO BE PUBLISHED
+          errorCode: HoSoHelper.parseHoSoMessage(encapsulatedData).errorCode,
+          description:HoSoHelper.parseHoSoMessage(encapsulatedData).description
+        }
+      case "SERVER_EXCEPTION":
+        return {
+          isAuth: false,
+          errorCode: HoSoHelper.parseHoSoMessage(encapsulatedData).errorCode,
+          description:HoSoHelper.parseHoSoMessage(encapsulatedData).description
         }
       default:
         return {
