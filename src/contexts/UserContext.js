@@ -39,7 +39,7 @@ class UserContextProvider extends Component {
             gadget.state = updatedValue;
             const scGadgets = [...this.state.gadgets];
             scGadgets[index] = gadget;
-            console.log('found: ', gadget.state);
+            console.log('onGadgetStateUpdateRV service found: ', gadget);
             this.setState({gadgets: scGadgets});
          return true;
         }
