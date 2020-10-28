@@ -9,11 +9,13 @@ class HoSoHelper {
       logOut: "105",
     },
     receivingCommandCodes: {
-      sucessfulManualLogin: "102",
+      successfulManualLogin: "102",
       successfulAutoLogin: "104",
       gadgetFetching: "304",
       gadgetStateUpdate: "316",
       serverException: "901",
+      unsuccessfulLogin: "903"
+      
     },
     invalidLocalCodes: {
       invalid: '_INVALID_'
@@ -91,7 +93,7 @@ class HoSoHelper {
           token: "",
         };
       case HoSoHelper.syntaxSpecifics.receivingCommandCodes[
-        "sucessfulManualLogin"
+        "successfulManualLogin"
       ]:
         return {
           type: "MANUAL_LOGIN_RESULT",
@@ -105,11 +107,8 @@ class HoSoHelper {
         "unsuccessfulLogin"
       ]:
         return {
-          type: "ERROR",
-          errorCode:
-            HoSoHelper.syntaxSpecifics.receivingCommandCodes[
-              "unsuccessfulLogin"
-            ],
+          type: "LOGIN_ERROR",
+          errorCode: this.parseString(message).commandCode,
           description: this.parseString(message).params[0],
         };
       case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetFetching"]:
@@ -127,14 +126,16 @@ class HoSoHelper {
           gadgetId: this.parseString(message).params[0],
           updatedValue: this.parseString(message).params[1],
         };
-      case HoSoHelper.syntaxSpecifics.receivingCommandCodes["serverException"]:
+        case HoSoHelper.syntaxSpecifics.receivingCommandCodes["serverException"]:
         return {
           type: "SERVER_EXCEPTION",
+          errorCode: this.parseString(message).commandCode,
           description: this.parseString(message).params[0],
         };
       default:
         return {
           type: "ERROR",
+          errorCode: this.parseString(message).commandCode,
           description: "invalid or unhandled response message format",
         };
     }
