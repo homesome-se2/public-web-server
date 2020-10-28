@@ -7,6 +7,9 @@ import DashboardPage from "./pages/dashboard/DashboardPage";
 import UserContextProvider from './contexts/UserContext';
 import GadgetContextProvider from './contexts/GadgetContext';
 
+import "./App.css";
+
+
 function App() {
   return (
     <div className="hs-webjs-app">

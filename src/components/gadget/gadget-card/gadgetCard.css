@@ -1,0 +1,120 @@
+/*Components*/ 
+
+/*gadget-card*/
+#gadget-card{
+    margin: 5px;
+    width: 15rem;
+    height: 5rem;
+    border-radius: 17px;
+    background-color: #3F6CFF;
+    color: #ffff;
+    text-align: center;
+  }
+  /*gadget-card-white --*/
+  #gadget-card-white{
+    margin: 5px;
+    width: 15rem;
+    height: 5rem;
+    border-radius: 17px;
+    background-color: #FFFF;
+    color: #b1b3b9;
+    text-align: center;
+
+  }
+  
+  /* text wrapper - gadget name and status (connected/disconnected) */
+  #gadget-text-wrapper{
+    text-align:left;
+    position: relative;
+    left:23px;
+    top:15px;
+    display: inline-block; 
+    
+  }
+
+ 
+  /* Holding image */
+  .fixed-wrapper{
+    position: absolute;
+    left:2.6rem;
+    
+  }
+  
+  .gadgetImage{
+    position: relative;
+    right:20px;
+    top: 18px;
+    width:30px;
+    height:35px;
+  }
+  
+  
+  /*gadget-card-control*/
+  #gadget-card-control{
+    text-align: center;
+    float: right;
+    margin-top: 8px;
+    margin-right: 5px;
+    width: 3rem;
+    height: 4rem;
+    border-radius: 17px;
+    background-color: #0031CC;
+    
+  }
+  /*gadget-card-control-white --*/
+  #gadget-card-control-white{
+    text-align: center;
+    float: right;
+    margin-top: 8px;
+    margin-right: 5px;
+    width: 3rem;
+    height: 4rem;
+    border-radius: 17px;
+    background-color: #f0f3f8;
+  }
+
+  #sensor-wrapper{
+    float: right;
+    margin-top: 1.3rem;
+    margin-right: 1.5rem;
+    width:3rem;
+    font-size: x-large;
+    color:#0031CC;
+    font-weight: 650;
+  }
+
+  /* Gadget state text*/
+   .On{
+  position: relative;
+  top:14px;
+  }
+  
+  /* Gadget state text*/
+ .Off{
+    position: relative;
+    top:4px;
+  
+  }
+  
+  /* toggle: up gadget-card-control*/
+  .up{
+    position: relative;
+    margin:5px 5px;
+  
+    bottom: 42px;
+  
+    width: 2.4rem;
+    height: 1.7rem;
+    border-radius: 11px;
+    background-color: #ffff;
+   }
+   /* toggle: original position gadget-card-control*/
+  .standard{
+    position: relative;
+    margin:5px 5px;
+    bottom:15px;
+    width: 2.4rem;
+    height: 1.7rem;
+    border-radius: 11px;
+    background-color: #ffff;
+  }
