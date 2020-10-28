@@ -7,6 +7,7 @@ class HoSoHelper {
       manualLogin: "101",
       autoReconnect: "103",
       logOut: "105",
+      fetchGadgetGrouping: "370",
     },
     receivingCommandCodes: {
       sucessfulManualLogin: "102",
@@ -14,10 +15,11 @@ class HoSoHelper {
       gadgetFetching: "304",
       gadgetStateUpdate: "316",
       serverException: "901",
+      gadgetGroupingList: "373",
     },
     invalidLocalCodes: {
-      invalid: '_INVALID_'
-    }
+      invalid: "_INVALID_",
+    },
   };
 
   static buildLoginString = (username, password) => {
@@ -52,6 +54,10 @@ class HoSoHelper {
       token
     );
   };
+  static buildGadgetGroupString = () => {
+    return this.syntaxSpecifics.sendingCommandCodes.fetchGadgetGrouping +
+    this.syntaxSpecifics.separator;
+  };
   static buildGadgetObjectArray = (paramsArray) => {
     let gadgetList = [];
     for (let i = 0; i < Number(paramsArray[0]); i++) {
@@ -68,6 +74,19 @@ class HoSoHelper {
     }
     return gadgetList;
   };
+  static buildGadgetGroupList = (rawString) => {
+    console.log('gGroupData (rawString)', rawString);
+    let gGroups = rawString.split('::').slice(1);
+    let groups = [];
+    for(let g of gGroups){
+      groups.push({
+        name: g.split(':')[0],
+        gadgetIds: g.split(':').slice(1)
+      });
+    }
+    return groups;
+
+  }
   static parseString = (string) => {
     let params = string.split("::");
     return {
@@ -118,6 +137,11 @@ class HoSoHelper {
           gadgets: this.buildGadgetObjectArray(
             this.parseString(message).params
           ),
+        };
+        case HoSoHelper.syntaxSpecifics.receivingCommandCodes["gadgetGroupingList"]:
+        return {
+          type: "GADGET_GROUPING_LIST",
+          groupList: this.buildGadgetGroupList(message),
         };
       case HoSoHelper.syntaxSpecifics.receivingCommandCodes[
         "gadgetStateUpdate"

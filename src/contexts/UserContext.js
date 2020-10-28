@@ -117,7 +117,10 @@ class UserContextProvider extends Component {
           this.initLiveHooks();
           this.setupContextState(rData);
           this.setupLSTS(rData);
+          //async fetch and build gGroups
+          this.state.csInstance.fetchAndBuildGadgetGroup(rData).then((rdContext => {
 
+          }));
           resolve(rData);
         })
         .catch((rData) => {

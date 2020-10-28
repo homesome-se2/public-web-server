@@ -118,6 +118,19 @@ class ConnectionService {
       };
     });
   };
+  sendSingleWSUnsafeMessage = (message) => {
+    return new Promise((resolve, reject) => {
+      if (this.ws.readyState === this.wsConnectionStates.open) {
+        this.ws.send(message);
+        this.ws.onmessage = (e) => {
+          resolve(this.encapsulateHoSoMessage(e.data));
+        };
+      } else {
+        console.log("error: ws state not open");
+        reject("error: ws state not open");
+      }
+    });
+  };
 
   encapsulateHoSoMessage = (encapsulatedData) => {
     switch (HoSoHelper.parseHoSoMessage(encapsulatedData).type) {
@@ -141,6 +154,10 @@ class ConnectionService {
       case "GADGET_LIST":
         return {
           gadgets: HoSoHelper.parseHoSoMessage(encapsulatedData).gadgets,
+        };
+      case "GADGET_GROUPING_LIST":
+        return {
+          groupList:HoSoHelper.parseHoSoMessage(encapsulatedData).groupList,
         };
       case "GADGET_STATE_UPDATE":
         return {
@@ -178,6 +195,17 @@ class ConnectionService {
       };
     });
   };
+    fetchAndBuildGadgetGroup = () => {
+      return new Promise((resolve, reject) =>{
+        this.sendSingleWSUnsafeMessage(HoSoHelper.buildGadgetGroupString()).then((gGroupData) => {
+          console.log('gGroupData: ',gGroupData);
+          resolve(gGroupData);
+        }).catch((d)=>{
+          console.log(d);
+          reject(d);
+        });
+      });
+  }
 
   initLiveHooks = () => {
     this.ws.onopen = (e) => {
