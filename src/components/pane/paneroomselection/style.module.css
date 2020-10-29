@@ -1,0 +1,60 @@
+.leftSideComponent{
+  padding: 20px;
+  background: rgba(255,255,255,1);
+
+}
+
+.leftSideComponent h2{
+  margin-bottom: 0px;
+}
+
+.description{
+  font-size: 10px;
+  line-height: 1;
+  color: rgb(114 117 125 / 45%);
+  margin-bottom: 20px;
+}
+
+.elemetContainer{
+  min-height: 130px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #fff;
+  text-align: center;
+  border-radius: 0;
+  height: 130px;
+  padding-top: 1px;
+  border-radius: 6px;
+}
+
+.elemetContainer h3{
+  text-align: center;
+}
+
+.elementSelected {
+  background: #1890ff;
+  color: white !important;
+}
+
+.elementSelected h3{
+  min-height: 30px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #fff;
+  text-align: center;
+  border-radius: 0;
+}
+
+.listItem{
+  margin: 10px;
+  color: #d9d9d9;
+  cursor: pointer;
+}
+
+.listItemSelected{
+  color: #1890ff;
+}
+
+.imagesClass {
+  height: 50px;
+}
