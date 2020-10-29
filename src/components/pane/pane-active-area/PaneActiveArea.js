@@ -14,9 +14,7 @@ class PaneActiveArea extends Component {
                                 <h2 className="medium-subtitle d2-subtitle">All the available gadgets</h2>
                             </span>
                             <div className="separator"></div>
-
                         </div>
-                        
                     </div>
                 </div>
             </div>
