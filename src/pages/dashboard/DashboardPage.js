@@ -5,8 +5,8 @@ import PaneRoomSelection from '../../components/pane/paneroomselection/PaneRoomS
 import { UserContext } from "../../contexts/UserContext";
 import 'antd/dist/antd.css';
 import './DashboardPage.css';
-import PaneActiveArea from '../../components/pane/paneactivearea/PaneActiveArea';
-
+import PaneActiveArea from '../../components/pane/PaneActiveArea/PaneActiveArea';
+import GadgetCard from '../../components/gadget/gadget-card/GadgetCard';
 
 
 class DashboardPage extends Component {
@@ -30,7 +30,10 @@ class DashboardPage extends Component {
           </Col>
           <Col xs={24} sm={24} lg={14}>
             <div style={{backgroundColor:'#f3f6ff',width:'100%',height:'85%'}}>
-           <PaneActiveArea />
+           <PaneActiveArea />  
+           <GadgetCard name="Kitchen Lamp" state={1} design={1} read={0}  />
+           <GadgetCard name="Living Room TV" state={1} design={0} read={0} />
+           <GadgetCard name="Temperature" state={1} design={0} read={1} />
             </div>
           </Col>
           <Col xs={24} sm={24} lg={6}>
