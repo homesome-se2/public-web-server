@@ -9,6 +9,7 @@ import './DashboardPage.css';
 
 
 
+
 class DashboardPage extends Component {
   static contextType = UserContext;
   constructor(props) {
@@ -30,7 +31,7 @@ class DashboardPage extends Component {
           </Col>
           <Col xs={24} sm={24} lg={14}>
             <div style={{backgroundColor:'#f3f6ff',width:'100%',height:'85%'}}>
-           <PaneActiveArea/>
+           <PaneActiveArea />
             </div>
           </Col>
           <Col xs={24} sm={24} lg={6}>
