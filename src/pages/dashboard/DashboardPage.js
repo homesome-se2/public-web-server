@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Row, Col } from "antd"
 import PaneDetails from '../../components/pane/panedetails/PaneDetails'
 import PaneRoomSelection from '../../components/pane/paneroomselection/PaneRoomSelection';
-import PaneActiveArea from '../../components/pane/paneactivearea/PaneActiveArea';
+import PaneActiveArea from '../../components/pane/PaneActiveArea/PaneActiveArea';
 import GadgetCard from '../../components/gadget/gadget-card/GadgetCard';
 import { UserContext } from "../../contexts/UserContext";
 import 'antd/dist/antd.css';
