@@ -24,7 +24,7 @@ const GadgetDetailsControl = ()=>{
       </Row>
       <Row justify="space-between" align="middle">
         <Col span={3}  className={styles.chartLabels}>
-          <strong>10<span className={styles.celcius}>C</span></strong><c /> <Divider />
+          <strong>10<span className={styles.celcius}>C</span></strong> <Divider />
         </Col>
         <Col span={17}>
           <CircularProgressbarWithChildren
