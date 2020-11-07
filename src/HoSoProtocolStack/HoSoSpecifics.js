@@ -35,28 +35,6 @@ class HoSoSpecifics {
       },
     },
   };
-
-  static syntaxSpecifics = {
-    separator: '::',
-    sendingCommandCodes: {
-      auth: {
-        manualLogin: '101',
-        autoLogin: '103',
-        logOut: '105',
-      },
-    },
-    receivingCommandCodes: {
-      successfulManualLogin: '102',
-      successfulAutoLogin: '104',
-      gadgetFetching: '304',
-      gadgetStateUpdate: '316',
-      serverException: '901',
-      unsuccessfulLogin: '903',
-    },
-    invalidLocalCodes: {
-      invalid: '_INVALID_',
-    },
-  };
 }
 
 export default HoSoSpecifics;
