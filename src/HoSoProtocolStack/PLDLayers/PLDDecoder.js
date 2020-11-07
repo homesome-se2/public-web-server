@@ -1,5 +1,5 @@
-import HoSoSpecifics from './HoSoSpecifics';
-import DLObject from './LDOModels/DLObject';
+import HoSoSpecifics from '../HoSoSpecifics';
+import DLObject from '../LDOModels/DLObject';
 
 class PLDDecoder {
   /////////////////////////////////////

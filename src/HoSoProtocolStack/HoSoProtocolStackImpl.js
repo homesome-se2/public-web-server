@@ -1,11 +1,13 @@
-import PLDParser from './PLDParser';
-import PLDDecoder from './PLDDecoder';
-import PLDExecutor from './PLDExecutor';
-import PLDEncapsulator from './PLDEncapsulator';
+import PLDParser from './PLDLayers/PLDParser';
+import PLDDecoder from './PLDLayers/PLDDecoder';
+import PLDExecutor from './PLDLayers/PLDExecutor';
+import PLDEncapsulator from './PLDLayers/PLDEncapsulator';
+import UCReceiverEEHub from '../contexts/UCReceiverEEHub';
 
 class HoSoProtocolStackImpl {
   constructor() {
     this.mLayers = [];
+    this.UCReceiverEEHub = new UCReceiverEEHub();
     this.createStack();
   }
   createStack = () => {
@@ -27,16 +29,24 @@ class HoSoProtocolStackImpl {
     //PLDEncapsulator
     m_Layers[3].upperLayer = m_Layers[2];
     m_Layers[3].lowerLayer = null;
+    m_Layers[3].UCReceiverEEHub = this.UCReceiverEEHub;
 
     this.mLayers.push(...m_Layers);
-    console.log('mLayers: ', this.mLayers);
+    console.log('HoSoProtocolStackImpl (mLayers): ', this.mLayers);
   };
   send = (obj) => {
     this.mLayers[this.mLayers.length].send(obj);
   };
   recv = (obj) => {
+    this.UCReceiverEEHub.emitGEvent(
+      UCReceiverEEHub.events.onHoSoMessageReceived,
+      obj
+    );
     console.log('receiving data: ', obj);
     this.mLayers[0].recv(obj);
+  };
+  getUCReceiverEEHub = () => {
+    return this.UCReceiverEEHub;
   };
 }
 
