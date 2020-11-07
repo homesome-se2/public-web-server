@@ -1,12 +1,14 @@
-import ELObject from './LDOModels/ELObject';
+import UCReceiverEEHub from '../../contexts/UCReceiverEEHub';
+import ENLObject from '../LDOModels/ENLObject';
 
-class PLDExecutor {
+class PLDEncapsulator {
   /////////////////////////////////////
   ////////////// DEF /////////////////
   ///////////////////////////////////
-  constructor(upperLayer, lowerLayer) {
+  constructor(upperLayer, lowerLayer, UCReceiverEEHub) {
     this.upperLayer = upperLayer;
     this.lowerLayer = lowerLayer;
+    this.UCReceiverEEHub = UCReceiverEEHub;
   }
   /**
    * @param {Object} layer
@@ -20,13 +22,19 @@ class PLDExecutor {
   set lowerLayer(layer) {
     this._lowerLayer = layer;
   }
+  /**
+   * @param {Object} layer
+   */
+  set UCReceiverEEHub(adapter) {
+    this._UCReceiverEEHub = adapter;
+  }
   /////////////////////////////////////
   ////////////// IOPs  ///////////////
   ///////////////////////////////////
-  send = (ELObject) => {};
-  recv = (DLObject) => {
-    const LDO = this.process(DLObject, { type: 'RECV' });
-    console.log('PLDExecutor: ', LDO);
+  send = (UContextAdapterObject) => {};
+  recv = (ELObject) => {
+    const LDO = this.process(ELObject, { type: 'RECV' });
+    console.log('PLDEncapsulator: ', this);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
   };
@@ -54,13 +62,22 @@ class PLDExecutor {
   ///////////////////////////////////
   process_send = (obj) => {};
   process_recv = (obj) => {
-    if (!Object.entries(obj.header.directives).length === 0)
-      this.exec(obj.header.directives);
-    return new ELObject({ type: obj.header.type, data: obj.payload });
-  };
-  exec = (directives) => {
-    //exec async directives
+    switch (obj.payload.type) {
+      case 'SUCCESSFUL_MANUAL_LOGIN':
+        this._UCReceiverEEHub.getEEInstance().emit(
+          UCReceiverEEHub.events.onSuccessfulManualLogin,
+          new ENLObject({
+            C_nameID: obj.payload.data[0],
+            C_isAdmin: obj.payload.data[1],
+            H_Alias: obj.payload.data[2],
+            C_SessionKey: obj.payload.data[3],
+          })
+        );
+        break;
+      default:
+        break;
+    }
   };
 }
 
-export default PLDExecutor;
+export default PLDEncapsulator;

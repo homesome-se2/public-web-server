@@ -1,5 +1,5 @@
-import HoSoSpecifics from './HoSoSpecifics';
-import PLObject from './LDOModels/PLObject';
+import HoSoSpecifics from '../HoSoSpecifics';
+import PLObject from '../LDOModels/PLObject';
 
 class PLDParser {
   /////////////////////////////////////

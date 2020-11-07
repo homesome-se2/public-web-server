@@ -1,6 +1,6 @@
-import ENLObject from './LDOModels/ENLObject';
+import ELObject from '../LDOModels/ELObject';
 
-class PLDEncapsulator {
+class PLDExecutor {
   /////////////////////////////////////
   ////////////// DEF /////////////////
   ///////////////////////////////////
@@ -23,10 +23,10 @@ class PLDEncapsulator {
   /////////////////////////////////////
   ////////////// IOPs  ///////////////
   ///////////////////////////////////
-  send = (UContextAdapterObject) => {};
-  recv = (ELObject) => {
-    const LDO = this.process(ELObject, { type: 'RECV' });
-    console.log('PLDEncapsulator: ', LDO);
+  send = (ELObject) => {};
+  recv = (DLObject) => {
+    const LDO = this.process(DLObject, { type: 'RECV' });
+    console.log('PLDExecutor: ', LDO);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
   };
@@ -54,17 +54,13 @@ class PLDEncapsulator {
   ///////////////////////////////////
   process_send = (obj) => {};
   process_recv = (obj) => {
-    switch (obj.payload.type) {
-      case 'SUCCESSFUL_MANUAL_LOGIN':
-        return new ENLObject({
-          C_nameID: obj.payload.data[0],
-          C_isAdmin: obj.payload.data[1],
-          H_Alias: obj.payload.data[2],
-          C_SessionKey: obj.payload.data[3],
-        });
-      default:
-    }
+    if (!Object.entries(obj.header.directives).length === 0)
+      this.exec(obj.header.directives);
+    return new ELObject({ type: obj.header.type, data: obj.payload });
+  };
+  exec = (directives) => {
+    //exec async directives
   };
 }
 
-export default PLDEncapsulator;
+export default PLDExecutor;
