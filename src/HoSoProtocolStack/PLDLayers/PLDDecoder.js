@@ -1,5 +1,7 @@
+import HoSoHelper from '../../helpers/HoSoHelper';
 import HoSoSpecifics from '../HoSoSpecifics';
 import DLObject from '../LDOModels/DLObject';
+import ENLDObject from '../LDOModels/ENLDObject';
 
 class PLDDecoder {
   /////////////////////////////////////
@@ -59,6 +61,25 @@ class PLDDecoder {
       case HoSoSpecifics.commandCodes.receiving.auth.successfulManualLogin:
         return new DLObject(
           { type: 'SUCCESSFUL_MANUAL_LOGIN', directives: {} }, //header
+          obj.params // payload
+        );
+      case HoSoSpecifics.commandCodes.receiving.gadgetState.fetchGadgets:
+        return new DLObject(
+          {
+            type: 'GADGET_LIST',
+            directives: [
+              new ENLDObject(
+                'GADGETS_GROUPS_FETCH_DIR',
+                [
+                  HoSoHelper.buildHoSoString(
+                    {},
+                    { type: 'GADGET_FETCH_GADGETS_GROUPS' }
+                  ),
+                ],
+                ENLDObject.executingMode.waitAndContinue
+              ),
+            ],
+          }, //header
           obj.params // payload
         );
       default:
