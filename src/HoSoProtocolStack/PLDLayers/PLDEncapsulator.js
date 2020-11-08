@@ -1,3 +1,4 @@
+import UContextAdapter from '../../contexts/UContextAdapter';
 import UCReceiverEEHub from '../../contexts/UCReceiverEEHub';
 import ENLObject from '../LDOModels/ENLObject';
 
@@ -71,6 +72,14 @@ class PLDEncapsulator {
             C_isAdmin: obj.payload.data[1],
             H_Alias: obj.payload.data[2],
             C_SessionKey: obj.payload.data[3],
+          })
+        );
+        break;
+      case 'GADGET_LIST':
+        this._UCReceiverEEHub.getEEInstance().emit(
+          UCReceiverEEHub.events.onGadgetFetchRVEEService,
+          new ENLObject({
+            gadgets: UContextAdapter.buildGadgetObjectArray(obj.payload.data),
           })
         );
         break;
