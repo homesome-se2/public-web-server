@@ -15,6 +15,9 @@ class HoSoSpecifics {
         fetchGadgetGroups: '370',
         alterGadgetState: '311',
       },
+      global: {
+        ping: 'ping',
+      },
     },
     receiving: {
       auth: {
@@ -31,7 +34,6 @@ class HoSoSpecifics {
       },
       global: {
         exception: '901',
-        ping: 'ping',
       },
     },
   };
