@@ -1,3 +1,4 @@
+import HoSoHelper from '../../helpers/HoSoHelper';
 import HoSoSpecifics from '../HoSoSpecifics';
 import PLObject from '../LDOModels/PLObject';
 
@@ -5,9 +6,10 @@ class PLDParser {
   /////////////////////////////////////
   ////////////// DEF /////////////////
   ///////////////////////////////////
-  constructor(upperLayer, lowerLayer) {
+  constructor(upperLayer, lowerLayer, CService) {
     this.upperLayer = upperLayer;
     this.lowerLayer = lowerLayer;
+    this.CServiceInstance = CService;
   }
   /**
    * @param {Object} layer
@@ -21,10 +23,21 @@ class PLDParser {
   set lowerLayer(layer) {
     this._lowerLayer = layer;
   }
+  /**
+   * @param {Object} layer
+   */
+  set CServiceInstance(CServiceInstance) {
+    this._CServiceInstance = CServiceInstance;
+  }
   /////////////////////////////////////
   ////////////// IOPs  ///////////////
   ///////////////////////////////////
-  send = (DLObject) => {};
+  send = (DLObject) => {
+    const LDO = this.process(DLObject, { type: 'SEND' });
+    console.log('PLDParser: ', LDO);
+
+    if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
+  };
   recv = (HoSoMessage) => {
     const LDO = this.process(HoSoMessage, { type: 'RECV' });
     console.log('PLDParser: ', LDO);
@@ -53,7 +66,11 @@ class PLDParser {
   /////////////////////////////////////
   ////////////// OPs impl ////////////
   ///////////////////////////////////
-  process_send = (obj) => {};
+  process_send = (DLObject) => {
+    return HoSoHelper.buildHoSoString(DLObject.payload, {
+      type: DLObject.header.type,
+    });
+  };
   process_recv = (obj) => {
     return new PLObject(
       obj.split(HoSoSpecifics.syntax.doubleSeparator)[0],

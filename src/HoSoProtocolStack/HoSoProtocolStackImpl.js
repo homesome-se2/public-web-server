@@ -29,6 +29,7 @@ class HoSoProtocolStackImpl {
     //PLDParser
     m_Layers[0].upperLayer = null;
     m_Layers[0].lowerLayer = m_Layers[1];
+    m_Layers[0].UCReceiverEEHub = this.UCReceiverEEHub;
     //PLDDecoder
     m_Layers[1].upperLayer = m_Layers[0];
     m_Layers[1].lowerLayer = m_Layers[2];
@@ -48,7 +49,7 @@ class HoSoProtocolStackImpl {
   ///////// m-RV-ENTRIES /////////////
   ///////////////////////////////////
   send = (obj) => {
-    this.mLayers[this.mLayers.length].send(obj);
+    this.mLayers[this.mLayers.length - 1].send(obj);
   };
   recv = (obj) => {
     this.UCReceiverEEHub.emitGEvent(
