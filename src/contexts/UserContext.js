@@ -1,4 +1,5 @@
 import React, { Component, createContext } from 'react';
+import HoSoProtocolStackImpl from '../HoSoProtocolStack/HoSoProtocolStackImpl';
 import ConnectionService from '../services/ConnectionService';
 
 export const UserContext = createContext();
@@ -32,6 +33,17 @@ class UserContextProvider extends Component {
       'ws://134.209.198.123:8084/homesome'
     );
     /////////////////////////////// csService: init
+
+    /////////////////////////////// PLDStack: init
+    this.singletonInstances.s_PLDStack = new HoSoProtocolStackImpl(
+      this.singletonInstances.csInstance,
+      this.singletonInstances.s_CService
+        .getCSEEmitterRVHubInstance()
+        .getEEInstance()
+    );
+    /////////////////////////////// PLDStack: init
+
+    //this.auth({}, {});
   }
   /////////////////////////////////////
   /////////////  p-METHODS ///////////
@@ -47,6 +59,21 @@ class UserContextProvider extends Component {
           reject(err);
         });
     });
+  };
+  auth = (state, action) => {
+    this.csConnect()
+      .then((rData) => {
+        this.singletonInstances.s_CService.auth(
+          {
+            username: '',
+            password: '',
+          },
+          {
+            type: 'AUTH_MANUAL_LOGIN',
+          }
+        );
+      })
+      .catch((err) => {});
   };
 
   render() {
