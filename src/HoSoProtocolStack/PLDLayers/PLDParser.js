@@ -1,4 +1,5 @@
 import HoSoHelper from '../../helpers/HoSoHelper';
+import ConnectionService from '../../services/ConnectionService';
 import HoSoSpecifics from '../HoSoSpecifics';
 import PLObject from '../LDOModels/PLObject';
 
@@ -37,6 +38,24 @@ class PLDParser {
     console.log('PLDParser: ', LDO);
 
     if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
+    else
+      return new Promise((resolve, reject) => {
+        this._CServiceInstance
+          .send(LDO, {
+            transmissionMode:
+              ConnectionService.messageTransmissionOptions.transmissionModes
+                .fast,
+            executingMode:
+              ConnectionService.messageTransmissionOptions.executingModes
+                .asyncContinue,
+          })
+          .then((rData) => {
+            resolve(rData);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
   };
   recv = (HoSoMessage) => {
     const LDO = this.process(HoSoMessage, { type: 'RECV' });
