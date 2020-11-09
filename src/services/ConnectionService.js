@@ -1,4 +1,5 @@
 import csEEmitterRVHub from '../EEmitters/csEEmitterRVHub';
+import HoSoHelper from '../helpers/HoSoHelper';
 
 class ConnectionService {
   /////////////////////////////////////
@@ -25,6 +26,9 @@ class ConnectionService {
     this.ws = null;
     this.csEEmitterRVHub = new csEEmitterRVHub();
   }
+  getCSEEmitterRVHubInstance = () => {
+    return this.csEEmitterRVHub;
+  };
   static messageTransmissionOptions = {
     transmissionModes: {
       fast: '@FAST',
@@ -62,25 +66,65 @@ class ConnectionService {
         /////////////////////////////// csEEMitterRVHub: emitOnConnectionOpen
         this.csEEmitterRVHub.emitOnConnectionOpen(this.ws);
         /////////////////////////////// csEEMitterRVHub: emitOnConnectionOpen
+
+        /////////////////////////////// csLiveHooks: init
+        this.initCSLiveHooks();
+        /////////////////////////////// csLiveHooks: init
+        resolve(this.ws);
       };
     });
   };
+  /////////////////////////////////////
+  /////////////  AUTH  ////////////
+  ///////////////////////////////////
+  auth = (state, action) => {
+    switch (action.type) {
+      case 'AUTH_MANUAL_LOGIN':
+        return new Promise((resolve, reject) => {
+          this.send(
+            HoSoHelper.buildHoSoString(
+              { username: state.username, password: state.password },
+              { type: 'AUTH_MANUAL_LOGIN' }
+            ),
+            {
+              transmissionMode:
+                ConnectionService.messageTransmissionOptions.transmissionModes
+                  .fast,
+              executingMode:
+                ConnectionService.messageTransmissionOptions.executingModes
+                  .asyncContinue,
+            }
+          )
+            .then((rData) => {
+              resolve(rData);
+            })
+            .catch((err) => {
+              reject(err);
+            });
+        });
+      case 'AUTH_AUTO_LOGIN':
+      default:
+    }
+  };
+
   /////////////////////////////////////
   /////////////  WS-SEND  ////////////
   ///////////////////////////////////
   //-> {message: ''}, {transmissionMode: 'FAST', executingMode: '@WAIT_RESPONSE_CONTINUE'}
   send = (message, action) => {
     switch (action.transmissionMode) {
-      case 'FAST':
+      case ConnectionService.messageTransmissionOptions.transmissionModes.fast:
         return new Promise((resolve, reject) => {
           if (this.ws.readyState === this.wsConnectionStates.open) {
             this.ws.send(message);
             ///-> only for special dev purposes - use centralized otherwise
             if (
               action.executingMode ===
-              this.transmissionModes.executingModes.waitAndContinue
+              ConnectionService.messageTransmissionOptions.executingModes
+                .waitAndContinue
             ) {
               this.ws.onmessage = (e) => {
+                console.log('response: ', e.data);
                 resolve(e.data); //=TODO: PLUG THE PLDS!!
               };
             } else {
@@ -91,7 +135,7 @@ class ConnectionService {
             reject('error: ws state not open');
           }
         });
-      case 'SAFE':
+      case ConnectionService.messageTransmissionOptions.transmissionModes.safe:
       default:
         return new Promise((resolve, reject) => {
           this.ws.onopen = (e) => {
@@ -100,7 +144,8 @@ class ConnectionService {
               ///-> only for special dev purposes - use centralized otherwise
               if (
                 action.executingMode ===
-                this.transmissionModes.executingModes.waitAndContinue
+                ConnectionService.messageTransmissionOptions.executingModes
+                  .waitAndContinue
               ) {
                 this.ws.onmessage = (e) => {
                   resolve(e.data); //=TODO: PLUG THE PLDS!!
@@ -134,6 +179,7 @@ class ConnectionService {
     };
 
     this.ws.onmessage = (e) => {
+      console.log('message received: ', e.data);
       /////////////////////////////// csEEMitterRVHub: emitOnMessageReceived
       this.csEEmitterRVHub.emitOnMessageReceived(this.ws);
       /////////////////////////////// csEEMitterRVHub: emitOnMessageReceived
