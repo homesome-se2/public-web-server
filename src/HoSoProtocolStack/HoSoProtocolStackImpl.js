@@ -5,12 +5,20 @@ import PLDEncapsulator from './PLDLayers/PLDEncapsulator';
 import UCReceiverEEHub from '../contexts/UCReceiverEEHub';
 
 class HoSoProtocolStackImpl {
-  constructor(CServiceInstance) {
+  /////////////////////////////////////
+  ////////////// DEF /////////////////
+  ///////////////////////////////////
+  constructor(CServiceInstance, csReceiverEEHub) {
     this.mLayers = [];
-    this.UCReceiverEEHub = new UCReceiverEEHub();
+    this.UCReceiverEEHub = new UCReceiverEEHub(); //wong update name
+    this.csReceiverEEHub = csReceiverEEHub;
     this.CServiceInstance = CServiceInstance;
     this.createStack();
+    this.initCSHooks();
   }
+  /////////////////////////////////////
+  ///////// CREATE-STACK /////////////
+  ///////////////////////////////////
   createStack = () => {
     let m_Layers = [
       new PLDParser(),
@@ -36,6 +44,9 @@ class HoSoProtocolStackImpl {
     this.mLayers.push(...m_Layers);
     console.log('HoSoProtocolStackImpl (mLayers): ', this.mLayers);
   };
+  /////////////////////////////////////
+  ///////// m-RV-ENTRIES /////////////
+  ///////////////////////////////////
   send = (obj) => {
     this.mLayers[this.mLayers.length].send(obj);
   };
@@ -49,6 +60,23 @@ class HoSoProtocolStackImpl {
   };
   getUCReceiverEEHub = () => {
     return this.UCReceiverEEHub;
+  };
+  /////////////////////////////////////
+  ///////////// cs-HOOKS /////////////
+  ///////////////////////////////////
+  initCSHooks = () => {
+    this.csReceiverEEHub.subscribe(
+      '$onWSConnectionOpen-CSEEmitterRVHub',
+      (...args) => {
+        console.log('csHook event fired(open): ', args);
+      }
+    );
+    this.csReceiverEEHub.subscribe(
+      '$onWSMessageReceived-CSEEmitterRVHub',
+      (...args) => {
+        console.log('csHook event fired(message): ', args);
+      }
+    );
   };
 }
 
