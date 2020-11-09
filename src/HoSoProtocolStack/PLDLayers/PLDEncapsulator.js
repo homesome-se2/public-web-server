@@ -1,5 +1,5 @@
 import UContextAdapter from '../../contexts/UContextAdapter';
-import UCReceiverEEHub from '../../contexts/UCReceiverEEHub';
+import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
 import AuthRequest from '../../models/AuthRequest';
 import ENLObject from '../LDOModels/ENLObject';
 
@@ -7,10 +7,10 @@ class PLDEncapsulator {
   /////////////////////////////////////
   ////////////// DEF /////////////////
   ///////////////////////////////////
-  constructor(upperLayer, lowerLayer, UCReceiverEEHub) {
+  constructor(upperLayer, lowerLayer, ucEEmitterRVHub) {
     this.upperLayer = upperLayer;
     this.lowerLayer = lowerLayer;
-    this.UCReceiverEEHub = UCReceiverEEHub;
+    this.ucEEmitterRVHub = ucEEmitterRVHub;
   }
   /**
    * @param {Object} layer
@@ -27,8 +27,8 @@ class PLDEncapsulator {
   /**
    * @param {Object} layer
    */
-  set UCReceiverEEHub(adapter) {
-    this._UCReceiverEEHub = adapter;
+  set ucEEmitterRVHub(adapter) {
+    this._ucEEmitterRVHub = adapter;
   }
   /////////////////////////////////////
   ////////////// IOPs  ///////////////
@@ -44,6 +44,7 @@ class PLDEncapsulator {
     console.log('PLDEncapsulator: ', this);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
+    else return new Promise((resolve, reject) => {});
   };
   process = (obj, action) => {
     switch (action.type) {
@@ -81,8 +82,8 @@ class PLDEncapsulator {
   process_recv = (obj) => {
     switch (obj.payload.type) {
       case 'SUCCESSFUL_MANUAL_LOGIN':
-        this._UCReceiverEEHub.getEEInstance().emit(
-          UCReceiverEEHub.events.onSuccessfulManualLogin,
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onSuccessfulManualLogin,
           new ENLObject({
             C_nameID: obj.payload.data[0],
             C_isAdmin: obj.payload.data[1],
@@ -92,8 +93,8 @@ class PLDEncapsulator {
         );
         break;
       case 'GADGET_LIST':
-        this._UCReceiverEEHub.getEEInstance().emit(
-          UCReceiverEEHub.events.onGadgetFetchRVEEService,
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetFetchRVEEService,
           new ENLObject({
             gadgets: UContextAdapter.buildGadgetObjectArray(obj.payload.data),
           })

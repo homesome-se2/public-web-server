@@ -2,7 +2,7 @@ import PLDParser from './PLDLayers/PLDParser';
 import PLDDecoder from './PLDLayers/PLDDecoder';
 import PLDExecutor from './PLDLayers/PLDExecutor';
 import PLDEncapsulator from './PLDLayers/PLDEncapsulator';
-import UCReceiverEEHub from '../contexts/UCReceiverEEHub';
+import ucEEmitterRVHub from '../EEmitters/RVHubs/ucEEmitterRVHub';
 
 class HoSoProtocolStackImpl {
   /////////////////////////////////////
@@ -10,7 +10,7 @@ class HoSoProtocolStackImpl {
   ///////////////////////////////////
   constructor(CServiceInstance, csReceiverEEHub) {
     this.mLayers = [];
-    this.UCReceiverEEHub = new UCReceiverEEHub(); //wong update name
+    this.UCReceiverEEHub = new ucEEmitterRVHub(); //wong update name
     this.csReceiverEEHub = csReceiverEEHub;
     this.CServiceInstance = CServiceInstance;
     this.createStack();
@@ -53,7 +53,7 @@ class HoSoProtocolStackImpl {
   };
   recv = (obj) => {
     this.UCReceiverEEHub.emitGEvent(
-      UCReceiverEEHub.events.onHoSoMessageReceived,
+      ucEEmitterRVHub.events.onHoSoMessageReceived,
       obj
     );
     console.log('receiving data: ', obj);
