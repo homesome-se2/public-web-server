@@ -5,7 +5,7 @@ class HoSoHelper {
     switch (action.type) {
       case 'AUTH_MANUAL_LOGIN':
         return (
-          HoSoSpecifics.commandCodes.sending.auth.autoLogin +
+          HoSoSpecifics.commandCodes.sending.auth.manualLogin +
           HoSoSpecifics.syntax.doubleSeparator +
           state.username +
           HoSoSpecifics.syntax.doubleSeparator +
