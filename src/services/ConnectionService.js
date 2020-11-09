@@ -4,7 +4,6 @@ class ConnectionService {
   /////////////////////////////////////
   ////////////// DEF /////////////////
   ///////////////////////////////////
-
   wsConnectionStates = {
     connecting: 0,
     open: 1,
@@ -26,6 +25,16 @@ class ConnectionService {
     this.ws = null;
     this.csEEmitterRVHub = new csEEmitterRVHub();
   }
+  static messageTransmissionOptions = {
+    transmissionModes: {
+      fast: '@FAST',
+      safe: '@SAFE',
+    },
+    executingModes: {
+      waitAndContinue: '@WAIT_RESPONSE_CONTINUE',
+      asyncContinue: '@EXEC_CONTINUE',
+    },
+  };
 
   /////////////////////////////////////
   /////////////  CONNECT  ////////////
@@ -56,6 +65,58 @@ class ConnectionService {
       };
     });
   };
+  /////////////////////////////////////
+  /////////////  WS-SEND  ////////////
+  ///////////////////////////////////
+  //-> {message: ''}, {transmissionMode: 'FAST', executingMode: '@WAIT_RESPONSE_CONTINUE'}
+  send = (message, action) => {
+    switch (action.transmissionMode) {
+      case 'FAST':
+        return new Promise((resolve, reject) => {
+          if (this.ws.readyState === this.wsConnectionStates.open) {
+            this.ws.send(message);
+            ///-> only for special dev purposes - use centralized otherwise
+            if (
+              action.executingMode ===
+              this.transmissionModes.executingModes.waitAndContinue
+            ) {
+              this.ws.onmessage = (e) => {
+                resolve(e.data); //=TODO: PLUG THE PLDS!!
+              };
+            } else {
+              resolve();
+            }
+          } else {
+            console.log('error: ws state not open');
+            reject('error: ws state not open');
+          }
+        });
+      case 'SAFE':
+      default:
+        return new Promise((resolve, reject) => {
+          this.ws.onopen = (e) => {
+            if (this.ws.readyState === this.wsConnectionStates.open) {
+              this.ws.send(message);
+              ///-> only for special dev purposes - use centralized otherwise
+              if (
+                action.executingMode ===
+                this.transmissionModes.executingModes.waitAndContinue
+              ) {
+                this.ws.onmessage = (e) => {
+                  resolve(e.data); //=TODO: PLUG THE PLDS!!
+                };
+              } else {
+                resolve();
+              }
+            } else {
+              console.log('error: ws state not open');
+              reject('error: ws state not open');
+            }
+          };
+        });
+    }
+  };
+
   /////////////////////////////////////
   /////////////  C-TEARDOWN  /////////
   ///////////////////////////////////
