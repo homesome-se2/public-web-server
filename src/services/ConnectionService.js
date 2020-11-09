@@ -122,7 +122,7 @@ class ConnectionService {
   initCSLiveHooks = () => {
     console.log('cs-LIVEHOOKS: initialized');
     /////////////////////////////// csEEMitterRVHub: emitonCSLiveHooksInitialized
-    this.csEEmitterRVHub.emitonCSLiveHooksInitialized(this.ws);
+    this.csEEmitterRVHub.emitOnCSLiveHooksInitialized(this.ws);
     /////////////////////////////// csEEMitterRVHub: emitonCSLiveHooksInitialized
 
     this.ws.onopen = (e) => {
@@ -133,7 +133,11 @@ class ConnectionService {
       /////////////////////////////// csEEMitterRVHub: emitOnConnectionOpen
     };
 
-    this.ws.onmessage = (e) => {};
+    this.ws.onmessage = (e) => {
+      /////////////////////////////// csEEMitterRVHub: emitOnMessageReceived
+      this.csEEmitterRVHub.emitOnMessageReceived(this.ws);
+      /////////////////////////////// csEEMitterRVHub: emitOnMessageReceived
+    };
   };
 
   /////////////////////////////////////
