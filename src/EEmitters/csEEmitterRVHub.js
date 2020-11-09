@@ -25,13 +25,13 @@ class csEEmitterRVHub {
   ////////////// l-EMITTERS ///////////
   /////////////////////////////////////
   emitOnConnectionOpen = (...args) => {
-    this.EEInstance.emit(this.events.onConnectionOpen, ...args);
+    this.EEInstance.emit(csEEmitterRVHub.events.onConnectionOpen, ...args);
   };
   emitOnConnectionOpening = (...args) => {
-    this.EEInstance.emit(this.events.onConnectionOpening, ...args);
+    this.EEInstance.emit(csEEmitterRVHub.events.onConnectionOpening, ...args);
   };
   emitOnConnectionClosed = (...args) => {
-    this.EEInstance.emit(this.events.onConnectionClosed, ...args);
+    this.EEInstance.emit(csEEmitterRVHub.events.onConnectionClosed, ...args);
   };
 }
 
