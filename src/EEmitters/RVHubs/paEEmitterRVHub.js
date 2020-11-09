@@ -1,6 +1,6 @@
 import EEmitter from './EEmitter';
 
-class paEmitterRVHub {
+class paEEmitterRVHub {
   /////////////////////////////////////
   ////////////// EVENTS ///////////////
   /////////////////////////////////////
@@ -26,13 +26,13 @@ class paEmitterRVHub {
   ////////////// l-EMITTERS ///////////
   /////////////////////////////////////
   emitOnParsingStarted = (...args) => {
-    this.EEInstance.emit(paEmitterRVHub.events.onParsingStarted, ...args);
+    this.EEInstance.emit(paEEmitterRVHub.events.onParsingStarted, ...args);
   };
   emitOnParsingCompleted = (...args) => {
-    this.EEInstance.emit(paEmitterRVHub.events.onParsingCompleted, ...args);
+    this.EEInstance.emit(paEEmitterRVHub.events.onParsingCompleted, ...args);
   };
   emitOnParsingError = (...args) => {
-    this.EEInstance.emit(paEmitterRVHub.events.onParsingError, ...args);
+    this.EEInstance.emit(paEEmitterRVHub.events.onParsingError, ...args);
   };
 }
-export default paEmitterRVHub;
+export default paEEmitterRVHub;
