@@ -81,7 +81,6 @@ class PLDEncapsulator {
   process_recv = (obj) => {
     switch (obj.payload.type) {
       case 'SUCCESSFUL_MANUAL_LOGIN':
-        console.log('EEMIIIIIIIT!');
         this._ucEEmitterRVHub.getEEInstance().emit(
           ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
           new ENLObject({
@@ -94,7 +93,7 @@ class PLDEncapsulator {
         break;
       case 'GADGET_LIST':
         this._ucEEmitterRVHub.getEEInstance().emit(
-          ucEEmitterRVHub.events.onGadgetFetchRVEEService,
+          ucEEmitterRVHub.events.onGadgetFetchCompleteRVEEService,
           new ENLObject({
             gadgets: UContextAdapter.buildGadgetObjectArray(obj.payload.data),
           })
