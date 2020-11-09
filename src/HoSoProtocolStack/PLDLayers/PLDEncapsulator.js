@@ -1,5 +1,7 @@
 import UContextAdapter from '../../contexts/UContextAdapter';
 import UCReceiverEEHub from '../../contexts/UCReceiverEEHub';
+import AuthRequest from '../../models/AuthRequest';
+import ELObject from '../LDOModels/ELObject';
 import ENLObject from '../LDOModels/ENLObject';
 
 class PLDEncapsulator {
@@ -32,7 +34,12 @@ class PLDEncapsulator {
   /////////////////////////////////////
   ////////////// IOPs  ///////////////
   ///////////////////////////////////
-  send = (UContextAdapterObject) => {};
+  send = (UContextAdapterObject) => {
+    const LDO = this.process(UContextAdapterObject, { type: 'SEND' });
+    console.log('PLDEncapsulator: ', LDO);
+
+    if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
+  };
   recv = (ELObject) => {
     const LDO = this.process(ELObject, { type: 'RECV' });
     console.log('PLDEncapsulator: ', this);
@@ -61,7 +68,17 @@ class PLDEncapsulator {
   /////////////////////////////////////
   ////////////// OPs impl ////////////
   ///////////////////////////////////
-  process_send = (obj) => {};
+  process_send = (obj) => {
+    switch (obj.constructor) {
+      case AuthRequest:
+        return new ENLObject({
+          type: obj.type,
+          data: obj.state,
+        });
+      default:
+        return new ENLObject({ type: '!ERR: WRONG FORMAT', data: null });
+    }
+  };
   process_recv = (obj) => {
     switch (obj.payload.type) {
       case 'SUCCESSFUL_MANUAL_LOGIN':
@@ -86,6 +103,9 @@ class PLDEncapsulator {
       default:
         break;
     }
+  };
+  appendRequest = (type) => {
+    return type + '_REQUEST';
   };
 }
 
