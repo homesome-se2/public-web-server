@@ -31,7 +31,12 @@ class PLDExecutor {
   /////////////////////////////////////
   ////////////// IOPs  ///////////////
   ///////////////////////////////////
-  send = (ELObject) => {};
+  send = (ENLObject) => {
+    const LDO = this.process(ENLObject, { type: 'SEND' });
+    console.log('PLDExecutor: ', LDO);
+
+    if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
+  };
   recv = (DLObject) => {
     const LDO = this.process(DLObject, { type: 'RECV' });
     console.log('PLDExecutor: ', LDO);
@@ -60,7 +65,12 @@ class PLDExecutor {
   /////////////////////////////////////
   ////////////// OPs impl ////////////
   ///////////////////////////////////
-  process_send = (obj) => {};
+  process_send = (ENLObject) => {
+    return new ELObject({
+      type: ENLObject.props.type,
+      data: ENLObject.props.data,
+    });
+  };
   process_recv = (obj) => {
     if (Object.entries(obj.header.directives).length > 0)
       this.exec(obj.header.directives);
