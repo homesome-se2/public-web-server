@@ -10,7 +10,7 @@ class HoSoProtocolStackImpl {
   ///////////////////////////////////
   constructor(CServiceInstance, csReceiverEEHub) {
     this.mLayers = [];
-    this.UCReceiverEEHub = new ucEEmitterRVHub(); //wong update name
+    this.ucEEmitterRVHub = new ucEEmitterRVHub(); //wong update name
     this.csReceiverEEHub = csReceiverEEHub;
     this.CServiceInstance = CServiceInstance;
     this.createStack();
@@ -40,7 +40,7 @@ class HoSoProtocolStackImpl {
     //PLDEncapsulator
     m_Layers[3].upperLayer = m_Layers[2];
     m_Layers[3].lowerLayer = null;
-    m_Layers[3].UCReceiverEEHub = this.UCReceiverEEHub;
+    m_Layers[3].ucEEmitterRVHub = this.ucEEmitterRVHub;
 
     this.mLayers.push(...m_Layers);
     console.log('HoSoProtocolStackImpl (mLayers): ', this.mLayers);
@@ -52,15 +52,15 @@ class HoSoProtocolStackImpl {
     this.mLayers[this.mLayers.length - 1].send(obj);
   };
   recv = (obj) => {
-    this.UCReceiverEEHub.emitGEvent(
+    this.ucEEmitterRVHub.emitGEvent(
       ucEEmitterRVHub.events.onHoSoMessageReceived,
       obj
     );
     console.log('receiving data: ', obj);
     this.mLayers[0].recv(obj);
   };
-  getUCReceiverEEHub = () => {
-    return this.UCReceiverEEHub;
+  getucEEmitterRVHub = () => {
+    return this.ucEEmitterRVHub;
   };
   /////////////////////////////////////
   ///////////// cs-HOOKS /////////////

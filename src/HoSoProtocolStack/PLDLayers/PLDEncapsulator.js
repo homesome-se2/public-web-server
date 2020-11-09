@@ -44,7 +44,6 @@ class PLDEncapsulator {
     console.log('PLDEncapsulator: ', this);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
-    else return new Promise((resolve, reject) => {});
   };
   process = (obj, action) => {
     switch (action.type) {
@@ -82,8 +81,9 @@ class PLDEncapsulator {
   process_recv = (obj) => {
     switch (obj.payload.type) {
       case 'SUCCESSFUL_MANUAL_LOGIN':
+        console.log('EEMIIIIIIIT!');
         this._ucEEmitterRVHub.getEEInstance().emit(
-          ucEEmitterRVHub.events.onSuccessfulManualLogin,
+          ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
           new ENLObject({
             C_nameID: obj.payload.data[0],
             C_isAdmin: obj.payload.data[1],
