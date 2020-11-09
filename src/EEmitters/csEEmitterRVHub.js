@@ -8,6 +8,7 @@ class csEEmitterRVHub {
     onConnectionOpen: '$onWSConnectionOpen-CSEEmitterRVHub',
     onConnectionOpening: '$onWSConnectionOpening-CSEEmitterRVHub',
     onConnectionClosed: '$onWSConnectionClosed-CSEEmitterRVHub',
+    onCSLiveHooksInitialized: '$onWSonCSLiveHooksInitialized-CSEEmitterRVHub',
   };
   constructor() {
     this.EEInstance = new EEmitter();
@@ -32,6 +33,12 @@ class csEEmitterRVHub {
   };
   emitOnConnectionClosed = (...args) => {
     this.EEInstance.emit(csEEmitterRVHub.events.onConnectionClosed, ...args);
+  };
+  emitonCSLiveHooksInitialized = (...args) => {
+    this.EEInstance.emit(
+      csEEmitterRVHub.events.onCSLiveHooksInitialized,
+      ...args
+    );
   };
 }
 

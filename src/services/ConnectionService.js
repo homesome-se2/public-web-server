@@ -116,6 +116,25 @@ class ConnectionService {
         });
     }
   };
+  /////////////////////////////////////
+  /////////////  cs-LIVEHOOKS ////////
+  ///////////////////////////////////
+  initCSLiveHooks = () => {
+    console.log('cs-LIVEHOOKS: initialized');
+    /////////////////////////////// csEEMitterRVHub: emitonCSLiveHooksInitialized
+    this.csEEmitterRVHub.emitonCSLiveHooksInitialized(this.ws);
+    /////////////////////////////// csEEMitterRVHub: emitonCSLiveHooksInitialized
+
+    this.ws.onopen = (e) => {
+      console.log('ConnectionService initialized. (reset)(websocket)');
+      console.log('WS:ReadyState: ' + this.ws.readyState);
+      /////////////////////////////// csEEMitterRVHub: emitOnConnectionOpen
+      this.csEEmitterRVHub.emitOnConnectionOpen(this.ws);
+      /////////////////////////////// csEEMitterRVHub: emitOnConnectionOpen
+    };
+
+    this.ws.onmessage = (e) => {};
+  };
 
   /////////////////////////////////////
   /////////////  C-TEARDOWN  /////////
