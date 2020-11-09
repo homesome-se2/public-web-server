@@ -76,6 +76,7 @@ class HoSoProtocolStackImpl {
       '$onWSMessageReceived-CSEEmitterRVHub',
       (...args) => {
         console.log('csHook event fired(message): ', args);
+        this.recv(...args);
       }
     );
   };
