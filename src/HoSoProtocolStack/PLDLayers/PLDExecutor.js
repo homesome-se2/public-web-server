@@ -1,12 +1,14 @@
+import HoSoHelper from '../../helpers/HoSoHelper';
 import ELObject from '../LDOModels/ELObject';
 
 class PLDExecutor {
   /////////////////////////////////////
   ////////////// DEF /////////////////
   ///////////////////////////////////
-  constructor(upperLayer, lowerLayer) {
+  constructor(upperLayer, lowerLayer, CService) {
     this.upperLayer = upperLayer;
     this.lowerLayer = lowerLayer;
+    this.CServiceInstance = CService;
   }
   /**
    * @param {Object} layer
@@ -19,6 +21,12 @@ class PLDExecutor {
    */
   set lowerLayer(layer) {
     this._lowerLayer = layer;
+  }
+  /**
+   * @param {Object} layer
+   */
+  set CServiceInstance(CServiceInstance) {
+    this._CServiceInstance = CServiceInstance;
   }
   /////////////////////////////////////
   ////////////// IOPs  ///////////////
@@ -54,12 +62,18 @@ class PLDExecutor {
   ///////////////////////////////////
   process_send = (obj) => {};
   process_recv = (obj) => {
-    if (!Object.entries(obj.header.directives).length === 0)
+    if (Object.entries(obj.header.directives).length > 0)
       this.exec(obj.header.directives);
     return new ELObject({ type: obj.header.type, data: obj.payload });
   };
-  exec = (directives) => {
+  exec = (ENLDObject) => {
     //exec async directives
+    let d_Promises = [];
+
+    console.log('ws: ', this._CServiceInstance);
+
+    console.log('im executing directives: ', ENLDObject);
+    console.log('im executing directives length: ', ENLDObject.length);
   };
 }
 

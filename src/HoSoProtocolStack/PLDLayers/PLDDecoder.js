@@ -69,7 +69,7 @@ class PLDDecoder {
             type: 'GADGET_LIST',
             directives: [
               new ENLDObject(
-                'GADGETS_GROUPS_FETCH_DIR',
+                'FETCH_AND_MERGE',
                 [
                   HoSoHelper.buildHoSoString(
                     {},
