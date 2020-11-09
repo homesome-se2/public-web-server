@@ -1,4 +1,4 @@
-import EEmitter from './EEmitter';
+import EEmitter from '../EEmitter';
 
 class csEEmitterRVHub {
   /////////////////////////////////////

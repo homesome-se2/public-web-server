@@ -1,7 +1,6 @@
 import UContextAdapter from '../../contexts/UContextAdapter';
 import UCReceiverEEHub from '../../contexts/UCReceiverEEHub';
 import AuthRequest from '../../models/AuthRequest';
-import ELObject from '../LDOModels/ELObject';
 import ENLObject from '../LDOModels/ENLObject';
 
 class PLDEncapsulator {

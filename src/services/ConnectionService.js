@@ -1,4 +1,4 @@
-import csEEmitterRVHub from '../EEmitters/csEEmitterRVHub';
+import csEEmitterRVHub from '../EEmitters/RVHubs/csEEmitterRVHub';
 import HoSoHelper from '../helpers/HoSoHelper';
 
 class ConnectionService {
