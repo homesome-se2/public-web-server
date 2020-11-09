@@ -138,6 +138,16 @@ class ConnectionService {
       this.csEEmitterRVHub.emitOnMessageReceived(this.ws);
       /////////////////////////////// csEEMitterRVHub: emitOnMessageReceived
     };
+    this.ws.onerror = (e) => {
+      /////////////////////////////// csEEMitterRVHub: emitOnConnectionError
+      this.csEEmitterRVHub.emitOnConnectionError(this.ws);
+      /////////////////////////////// csEEMitterRVHub: emitOnConnectionError
+    };
+    this.ws.onclose = (e) => {
+      /////////////////////////////// csEEMitterRVHub: emitOnConnectionClosed
+      this.csEEmitterRVHub.emitOnConnectionClosed(this.ws);
+      /////////////////////////////// csEEMitterRVHub: emitOnConnectionClosed
+    };
   };
 
   /////////////////////////////////////

@@ -8,6 +8,7 @@ class csEEmitterRVHub {
     onConnectionOpen: '$onWSConnectionOpen-CSEEmitterRVHub',
     onConnectionOpening: '$onWSConnectionOpening-CSEEmitterRVHub',
     onConnectionClosed: '$onWSConnectionClosed-CSEEmitterRVHub',
+    onConnectionError: '$onWSonConnectionError-CSEEmitterRVHub',
     onCSLiveHooksInitialized: '$onWSonCSLiveHooksInitialized-CSEEmitterRVHub',
     onMessageReceived: '$onWSMessageReceived-CSEEmitterRVHub',
   };
@@ -43,6 +44,9 @@ class csEEmitterRVHub {
   };
   emitOnMessageReceived = (...args) => {
     this.EEInstance.emit(csEEmitterRVHub.events.emitOnMessageReceived, ...args);
+  };
+  emitOnConnectionError = (...args) => {
+    this.EEInstance.emit(csEEmitterRVHub.events.onConnectionError, ...args);
   };
 }
 
