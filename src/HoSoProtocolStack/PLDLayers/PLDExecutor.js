@@ -1,3 +1,5 @@
+import { resolveOnChange } from 'antd/lib/input/Input';
+import ConnectionService from '../../services/ConnectionService';
 import ELObject from '../LDOModels/ELObject';
 
 class PLDExecutor {
@@ -38,7 +40,7 @@ class PLDExecutor {
   };
   recv = (DLObject) => {
     const LDO = this.process(DLObject, { type: 'RECV' });
-    console.log('PLDExecutor: ', LDO);
+    console.log('=PLDExecutor: ', LDO);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
   };
@@ -72,17 +74,50 @@ class PLDExecutor {
   };
   process_recv = (obj) => {
     if (Object.entries(obj.header.directives).length > 0)
-      this.exec(obj.header.directives);
+      this.exec(obj.header.directives).then((auxData) => {
+        console.log('@auxData: ', auxData);
+        return new ELObject({
+          type: obj.header.type,
+          data: obj.payload,
+          auxData: 'auxData',
+        });
+      });
     return new ELObject({ type: obj.header.type, data: obj.payload });
   };
   exec = (ENLDObject) => {
     //exec async directives
-    let d_Promises = [];
-
-    console.log('ws: ', this._CServiceInstance);
-
     console.log('im executing directives: ', ENLDObject);
     console.log('im executing directives length: ', ENLDObject.length);
+
+    let d_Promises = [];
+
+    return new Promise((resolve, reject) => {
+      for (let i = 0; i < ENLDObject.length; i++) {
+        d_Promises.push(
+          this._CServiceInstance
+            .send(ENLDObject[i].executorParams[0], {
+              transmissionMode:
+                ConnectionService.messageTransmissionOptions.transmissionModes
+                  .fast,
+              executingMode: ENLDObject[i].executingMode,
+            })
+            .then((rData) => {
+              resolve(rData);
+            })
+            .catch((err) => {
+              reject(err);
+            })
+        );
+      }
+
+      Promise.all(d_Promises)
+        .then((rData) => {
+          resolve(rData);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   };
 }
 
