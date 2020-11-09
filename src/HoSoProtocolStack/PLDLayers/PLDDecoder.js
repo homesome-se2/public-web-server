@@ -26,7 +26,12 @@ class PLDDecoder {
   /////////////////////////////////////
   ////////////// IOPs  ///////////////
   ///////////////////////////////////
-  send = (ELObject) => {};
+  send = (ELObject) => {
+    const LDO = this.process(ELObject, { type: 'SEND' });
+    console.log('PLDDecoder: ', LDO);
+
+    if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
+  };
   recv = (PLObject) => {
     const LDO = this.process(PLObject, { type: 'RECV' });
     console.log('PLDDecoder: ', LDO);
@@ -55,7 +60,15 @@ class PLDDecoder {
   /////////////////////////////////////
   ////////////// OPs impl ////////////
   ///////////////////////////////////
-  process_send = (obj) => {};
+  process_send = (ELObject) => {
+    return new DLObject(
+      {
+        type: ELObject.payload.type,
+        directives: {},
+      }, //header
+      ELObject.payload.data // payload
+    );
+  };
   process_recv = (obj) => {
     switch (obj.commandCode) {
       case HoSoSpecifics.commandCodes.receiving.auth.successfulManualLogin:
