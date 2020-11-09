@@ -5,9 +5,10 @@ import PLDEncapsulator from './PLDLayers/PLDEncapsulator';
 import UCReceiverEEHub from '../contexts/UCReceiverEEHub';
 
 class HoSoProtocolStackImpl {
-  constructor() {
+  constructor(CServiceInstance) {
     this.mLayers = [];
     this.UCReceiverEEHub = new UCReceiverEEHub();
+    this.CServiceInstance = CServiceInstance;
     this.createStack();
   }
   createStack = () => {
@@ -26,6 +27,7 @@ class HoSoProtocolStackImpl {
     //PLDExecutor
     m_Layers[2].upperLayer = m_Layers[1];
     m_Layers[2].lowerLayer = m_Layers[3];
+    m_Layers[2].CServiceInstance = this.CServiceInstance;
     //PLDEncapsulator
     m_Layers[3].upperLayer = m_Layers[2];
     m_Layers[3].lowerLayer = null;
