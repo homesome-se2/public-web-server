@@ -29,7 +29,7 @@ class HoSoProtocolStackImpl {
     //PLDParser
     m_Layers[0].upperLayer = null;
     m_Layers[0].lowerLayer = m_Layers[1];
-    m_Layers[0].UCReceiverEEHub = this.UCReceiverEEHub;
+    m_Layers[0].CServiceInstance = this.CServiceInstance;
     //PLDDecoder
     m_Layers[1].upperLayer = m_Layers[0];
     m_Layers[1].lowerLayer = m_Layers[2];
