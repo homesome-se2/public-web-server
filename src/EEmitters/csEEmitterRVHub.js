@@ -43,7 +43,7 @@ class csEEmitterRVHub {
     );
   };
   emitOnMessageReceived = (...args) => {
-    this.EEInstance.emit(csEEmitterRVHub.events.emitOnMessageReceived, ...args);
+    this.EEInstance.emit(csEEmitterRVHub.events.onMessageReceived, ...args);
   };
   emitOnConnectionError = (...args) => {
     this.EEInstance.emit(csEEmitterRVHub.events.onConnectionError, ...args);
