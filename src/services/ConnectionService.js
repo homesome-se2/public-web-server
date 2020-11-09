@@ -181,12 +181,12 @@ class ConnectionService {
     this.ws.onmessage = (e) => {
       console.log('message received: ', e.data);
       /////////////////////////////// csEEMitterRVHub: emitOnMessageReceived
-      this.csEEmitterRVHub.emitOnMessageReceived(this.ws);
+      this.csEEmitterRVHub.emitOnMessageReceived(e.data);
       /////////////////////////////// csEEMitterRVHub: emitOnMessageReceived
     };
     this.ws.onerror = (e) => {
       /////////////////////////////// csEEMitterRVHub: emitOnConnectionError
-      this.csEEmitterRVHub.emitOnConnectionError(this.ws);
+      this.csEEmitterRVHub.emitOnConnectionError(e.data);
       /////////////////////////////// csEEMitterRVHub: emitOnConnectionError
     };
     this.ws.onclose = (e) => {
