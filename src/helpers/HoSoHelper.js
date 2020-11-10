@@ -34,11 +34,11 @@ class HoSoHelper {
           HoSoSpecifics.commandCodes.sending.gadgetState.fetchGadgetGroups +
           HoSoSpecifics.syntax.doubleSeparator
         );
-      case 'GADGET_ALTER_GADGET':
+      case 'GADGET_ALTER_GADGET_STATE':
         return (
           HoSoSpecifics.commandCodes.sending.gadgetState.alterGadgetState +
           HoSoSpecifics.syntax.doubleSeparator +
-          state.gadgetID +
+          state.gadgetId +
           HoSoSpecifics.syntax.doubleSeparator +
           state.newState
         );

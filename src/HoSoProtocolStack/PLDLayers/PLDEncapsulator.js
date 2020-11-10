@@ -1,5 +1,6 @@
 import UContextAdapter from '../../contexts/UContextAdapter';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
+import AlterGadgetStateRequest from '../../models/AlterGadgetStateRequest';
 import AuthRequest from '../../models/AuthRequest';
 import HoSoSpecifics from '../HoSoSpecifics';
 import ENLObject from '../LDOModels/ENLObject';
@@ -75,8 +76,13 @@ class PLDEncapsulator {
           type: obj.type,
           data: obj.state,
         });
+      case AlterGadgetStateRequest:
+        return new ENLObject({
+          type: 'GADGET_ALTER_GADGET_STATE',
+          data: obj,
+        });
       default:
-        return new ENLObject({ type: '!ERR: WRONG FORMAT', data: null });
+        return new ENLObject({ type: '!ERR: UNSUPPORTED REQUEST', data: null });
     }
   };
   process_recv = (obj) => {
