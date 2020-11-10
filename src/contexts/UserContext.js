@@ -6,6 +6,7 @@ import AlterGadgetStateRequest from '../models/AlterGadgetStateRequest';
 import ConnectionService from '../services/ConnectionService';
 import UContextAdapter from './UContextAdapter';
 import LSTokenService from '../services/LSTokenService';
+import AuthCryptoGuard from '../helpers/AuthCryptoGuard';
 
 export const UserContext = createContext();
 
@@ -203,11 +204,18 @@ class UserContextProvider extends Component {
   /////////////  l-METHODS ///////////
   ///////////////////////////////////
   setupLSTS = (data) => {
-    console.log('!!!', data.props);
     LSTokenService.setAdminFlag(!!data.props.C_isAdmin);
     LSTokenService.setHomeAlias(data.props.H_Alias);
     LSTokenService.setUsername(data.props.C_nameID);
     LSTokenService.setToken(data.props.C_SessionKey);
+    LSTokenService.setHash(
+      AuthCryptoGuard.getBase64Encoding(
+        AuthCryptoGuard.generateHash(
+          data.props.C_SessionKey,
+          data.props.C_nameID
+        )
+      )
+    );
   };
 
   render() {
