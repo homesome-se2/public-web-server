@@ -114,6 +114,16 @@ class PLDEncapsulator {
             gadgetsGroups: groups,
           })
         );
+        break;
+      case 'GADGET_STATE_CHANGE':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetStateChangeRVEEService,
+          new ENLObject({
+            gadgetID: obj.payload.data[0],
+            newState: obj.payload.data[1],
+          })
+        );
+        break;
       default:
         break;
     }

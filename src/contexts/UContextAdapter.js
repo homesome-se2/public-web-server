@@ -20,6 +20,15 @@ class UContextAdapter {
     state.gadgetsGroups = update[0].props?.gadgetsGroups;
     return state;
   };
+  static updateUCGadgetState = (state, ...update) => {
+    for (let g of state.gadgets) {
+      if (g.id === update[0].props?.gadgetID)
+        g.state = update[0].props?.newState;
+    }
+    console.log('+g:', state);
+
+    return state;
+  };
   static buildGadgetObjectArray = (paramsArray) => {
     let gadgetList = [];
     for (let i = 0; i < Number(paramsArray[0]); i++) {

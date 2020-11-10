@@ -103,6 +103,14 @@ class PLDDecoder {
           }, //header
           obj.params // payload
         );
+      case HoSoSpecifics.commandCodes.receiving.gadgetState.gadgetStateChange:
+        return new DLObject(
+          {
+            type: 'GADGET_STATE_CHANGE',
+            directives: [],
+          }, //header
+          obj.params // payload
+        );
       default:
     }
   };
