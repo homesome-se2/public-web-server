@@ -55,6 +55,18 @@ class LSTokenService {
   static clearStorage = () => {
     localStorage.clear();
   };
+  static isFieldValid = (value) => {
+    return !(value === null) && value.length > 0;
+  };
+  static isEligibleForAutoAuth = () => {
+    return (
+      LSTokenService.isFieldValid(localStorage.getItem(this.paths.isAdmin)) &&
+      LSTokenService.isFieldValid(localStorage.getItem(this.paths.token)) &&
+      LSTokenService.isFieldValid(LSTokenService.getHash()) &&
+      LSTokenService.isFieldValid(LSTokenService.getUsername()) &&
+      LSTokenService.isFieldValid(LSTokenService.getHomeAlias())
+    );
+  };
 }
 
 export default LSTokenService;
