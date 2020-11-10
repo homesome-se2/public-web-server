@@ -223,7 +223,10 @@ class UserContextProvider extends Component {
       <UserContext.Provider
         value={{
           ...this.state,
-          csConnect: this.csConnect,
+          connect: this.csConnect,
+          auth: this.auth,
+          update: this.update,
+          singletonInstances: this.singletonInstances,
         }}
       >
         {this.props.children}
