@@ -4,6 +4,7 @@ class LSTokenService {
     token: 'C_sessionKey',
     isAdmin: 'C_isAdmin',
     homeAlias: 'H_alias',
+    hash: 'V_hash',
   };
   static hcStates = {
     error: 'INVALID',
@@ -44,6 +45,12 @@ class LSTokenService {
   };
   static getHomeAlias = () => {
     return localStorage.getItem(this.paths.homeAlias);
+  };
+  static setHash = (hash) => {
+    localStorage.setItem(this.paths.hash, hash);
+  };
+  static getHash = () => {
+    return localStorage.getItem(this.paths.hash);
   };
   static clearStorage = () => {
     localStorage.clear();
