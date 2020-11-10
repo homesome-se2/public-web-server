@@ -6,7 +6,8 @@ class ProtectedRoutes extends Component {
   state = {};
   render() {
     const Component = this.props.component;
-    const isAuthenticated = LSTokenService.isAuth();
+    const isAuthenticated =
+      LSTokenService.isAuth() && LSTokenService.isEligibleForAutoAuth();
 
     //TODO: TOKEN VERIFICATION
 

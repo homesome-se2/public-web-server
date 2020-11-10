@@ -5,7 +5,6 @@ import GadgetControlCompactSwitch from '../gadget-control-compact-switch/GadgetC
 import GadgeControlCompactBinarySensor from '../gadget-control-compact-binarySensor/GadgetControlCompactBinarySensor';
 import GadgetControlCompactSensor from '../gadget-control-compact-sensor/GadgetControlCompactSensor';
 import { UserContext } from '../../../contexts/UserContext';
-import ConnectionService from '../../../services/ConnectionService';
 
 class GadgetCard extends Component {
   static contextType = UserContext;

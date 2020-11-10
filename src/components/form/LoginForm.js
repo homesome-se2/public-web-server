@@ -67,7 +67,9 @@ class LoginForm extends Component {
       .subscribe(
         ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
         (...args) => {
-          this.navigate('dashboard', {});
+          setTimeout(() => {
+            this.navigate('dashboard', {});
+          }, 500);
         }
       );
   };
