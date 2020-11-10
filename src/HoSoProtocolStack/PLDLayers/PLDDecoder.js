@@ -76,6 +76,11 @@ class PLDDecoder {
           { type: 'SUCCESSFUL_MANUAL_LOGIN', directives: {} }, //header
           obj.params // payload
         );
+      case HoSoSpecifics.commandCodes.receiving.auth.successfulAutoLogin:
+        return new DLObject(
+          { type: 'SUCCESSFUL_AUTO_LOGIN', directives: {} }, //header
+          obj.params // payload
+        );
       case HoSoSpecifics.commandCodes.receiving.gadgetState.fetchGadgets:
         return new DLObject(
           {
@@ -113,7 +118,7 @@ class PLDDecoder {
         );
       case HoSoSpecifics.commandCodes.receiving.auth.unsuccessfulLogin:
         return new DLObject(
-          { type: 'UNSUCCESSFUL_MANUAL_LOGIN', directives: {} }, //header
+          { type: 'UNSUCCESSFUL_LOGIN', directives: {} }, //header
           obj.params // payload
         );
       case HoSoSpecifics.commandCodes.receiving.global.exception:

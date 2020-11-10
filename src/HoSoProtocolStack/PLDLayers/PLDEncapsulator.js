@@ -99,9 +99,22 @@ class PLDEncapsulator {
           })
         );
         break;
-      case 'UNSUCCESSFUL_MANUAL_LOGIN':
+      case 'SUCCESSFUL_AUTO_LOGIN':
+        console.log('!!!', obj);
         this._ucEEmitterRVHub.getEEInstance().emit(
-          ucEEmitterRVHub.events.onUnSuccessfulManualLoginRVEEService,
+          ucEEmitterRVHub.events.onSuccessfulAutoLoginRVEEService,
+          new ENLObject({
+            isAuth: true,
+            C_nameID: obj.payload.data[0],
+            C_isAdmin: obj.payload.data[1],
+            H_Alias: obj.payload.data[2],
+            C_SessionKey: obj.payload.data[3],
+          })
+        );
+        break;
+      case 'UNSUCCESSFUL_LOGIN':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onUnSuccessfulLoginRVEEService,
           new ENLObject({
             isAuth: false,
             C_nameID: HoSoSpecifics.syntax.invalid,
