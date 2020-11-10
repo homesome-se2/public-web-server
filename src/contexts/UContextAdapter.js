@@ -6,6 +6,7 @@ class UContextAdapter {
   }
   CChangeListener = () => {};
   static updateUCUserData = (state, ...update) => {
+    state.isAuth = update[0].props.isAuth;
     state.username = update[0].props.C_nameID;
     state.isAdmin = update[0].props.C_isAdmin;
     state.token = update[0].props.C_SessionKey;

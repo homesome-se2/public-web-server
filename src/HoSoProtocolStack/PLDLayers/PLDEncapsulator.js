@@ -91,10 +91,23 @@ class PLDEncapsulator {
         this._ucEEmitterRVHub.getEEInstance().emit(
           ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
           new ENLObject({
+            isAuth: true,
             C_nameID: obj.payload.data[0],
             C_isAdmin: obj.payload.data[1],
             H_Alias: obj.payload.data[2],
             C_SessionKey: obj.payload.data[3],
+          })
+        );
+        break;
+      case 'UNSUCCESSFUL_MANUAL_LOGIN':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onUnSuccessfulManualLoginRVEEService,
+          new ENLObject({
+            isAuth: false,
+            C_nameID: HoSoSpecifics.syntax.invalid,
+            C_isAdmin: HoSoSpecifics.syntax.invalid,
+            H_Alias: HoSoSpecifics.syntax.invalid,
+            C_SessionKey: HoSoSpecifics.syntax.invalid,
           })
         );
         break;

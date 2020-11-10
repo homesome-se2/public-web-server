@@ -2,6 +2,7 @@ class HoSoSpecifics {
   static syntax = {
     singleSeparator: ':',
     doubleSeparator: '::',
+    invalid: '_INVALID_',
   };
   static commandCodes = {
     sending: {

@@ -28,7 +28,7 @@ class PLDDecoder {
   ///////////////////////////////////
   send = (ELObject) => {
     const LDO = this.process(ELObject, { type: 'SEND' });
-    console.log('PLDDecoder: ', LDO);
+    console.log('+PLDDecoder: ', LDO);
 
     if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
   };
@@ -109,6 +109,11 @@ class PLDDecoder {
             type: 'GADGET_STATE_CHANGE',
             directives: [],
           }, //header
+          obj.params // payload
+        );
+      case HoSoSpecifics.commandCodes.receiving.auth.unsuccessfulLogin:
+        return new DLObject(
+          { type: 'UNSUCCESSFUL_MANUAL_LOGIN', directives: {} }, //header
           obj.params // payload
         );
       default:
