@@ -1,120 +1,66 @@
-/*Components*/ 
+.gadget-card {
+  padding: 1em;
+}
+.active {
+  background-color: #3f6cff !important;
+}
+.gadget-card .MuiPaper-root {
+  padding: 1.2em 1em;
+  min-width: 250px;
+  text-align: left;
+  border-radius: 15px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
 
-/*gadget-card*/
-#gadget-card{
-    margin: 5px;
-    width: 15rem;
-    height: 5rem;
-    border-radius: 17px;
-    background-color: #3F6CFF;
-    color: #ffff;
-    text-align: center;
-  }
-  /*gadget-card-white --*/
-  #gadget-card-white{
-    margin: 5px;
-    width: 15rem;
-    height: 5rem;
-    border-radius: 17px;
-    background-color: #FFFF;
-    color: #b1b3b9;
-    text-align: center;
+.gadget-card .active .text-wrapper {
+  color: white !important;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.gadget-card .active .icon {
+  background: white !important;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
 
-  }
-  
-  /* text wrapper - gadget name and status (connected/disconnected) */
-  #gadget-text-wrapper{
-    text-align:left;
-    position: relative;
-    left:23px;
-    top:15px;
-    display: inline-block; 
-    
-  }
+.gadget-card .text-wrapper {
+  margin-left: 4em;
+}
 
- 
-  /* Holding image */
-  .fixed-wrapper{
-    position: absolute;
-    left:2.6rem;
-    
-  }
-  
-  .gadgetImage{
-    position: relative;
-    right:20px;
-    top: 18px;
-    width:30px;
-    height:35px;
-  }
-  
-  
-  /*gadget-card-control*/
-  #gadget-card-control{
-    text-align: center;
-    float: right;
-    margin-top: 8px;
-    margin-right: 5px;
-    width: 3rem;
-    height: 4rem;
-    border-radius: 17px;
-    background-color: #0031CC;
-    
-  }
-  /*gadget-card-control-white --*/
-  #gadget-card-control-white{
-    text-align: center;
-    float: right;
-    margin-top: 8px;
-    margin-right: 5px;
-    width: 3rem;
-    height: 4rem;
-    border-radius: 17px;
-    background-color: #f0f3f8;
-  }
+.gadget-card .text-wrapper .gadget-alias {
+  font-weight: 400 !important;
+  font-size: 0.9em;
+}
+.gadget-card .text-wrapper .gadget-status {
+  font-weight: 300 !important;
+  font-size: 0.88em;
+}
 
-  #sensor-wrapper{
-    float: right;
-    margin-top: 1.3rem;
-    margin-right: 1.5rem;
-    width:3rem;
-    font-size: x-large;
-    color:#0031CC;
-    font-weight: 650;
-  }
-
-  /* Gadget state text*/
-   .On{
+.gadget-card .icon {
+  background: #bec4d7;
+  width: 30px;
+  height: 30px;
+  float: left;
+  border-radius: 100%;
   position: relative;
-  top:14px;
-  }
-  
-  /* Gadget state text*/
- .Off{
-    position: relative;
-    top:4px;
-  
-  }
-  
-  /* toggle: up gadget-card-control*/
-  .up{
-    position: relative;
-    margin:5px 5px;
-  
-    bottom: 42px;
-  
-    width: 2.4rem;
-    height: 1.7rem;
-    border-radius: 11px;
-    background-color: #ffff;
-   }
-   /* toggle: original position gadget-card-control*/
-  .standard{
-    position: relative;
-    margin:5px 5px;
-    bottom:15px;
-    width: 2.4rem;
-    height: 1.7rem;
-    border-radius: 11px;
-    background-color: #ffff;
-  }
+  top: 5px;
+}
+
+.gadget-card .gadget-control-compact-switch {
+  float: right;
+}
+
+.gadget-card .gadget-control-compact-binarySensor {
+  float: right;
+  position: relative;
+  top: -35px;
+  height: 0px;
+}
+
+.gadget-card .gadget-control-compact-sensor {
+  float: right;
+  position: relative;
+  top: -27px;
+  height: 0px;
+}

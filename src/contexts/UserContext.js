@@ -1,132 +1,221 @@
-import React, { Component, createContext } from "react";
-import ConnectionService from "../services/ConnectionService";
-import LSTokenService from "../services/LSTokenService";
+import React, { Component, createContext } from 'react';
+import ucEEmitterRVHub from '../EEmitters/RVHubs/ucEEmitterRVHub';
+import HoSoProtocolStackImpl from '../HoSoProtocolStack/HoSoProtocolStackImpl';
+import AuthRequest from '../models/AuthRequest';
+import AlterGadgetStateRequest from '../models/AlterGadgetStateRequest';
+import ConnectionService from '../services/ConnectionService';
+import UContextAdapter from './UContextAdapter';
+import LSTokenService from '../services/LSTokenService';
+import AuthCryptoGuard from '../helpers/AuthCryptoGuard';
 
 export const UserContext = createContext();
 
 class UserContextProvider extends Component {
+  /////////////////////////////////////
+  /////////////  s-CxSTATE ///////////
+  ///////////////////////////////////
   state = {
-    username: "",
-    isAdmin: "",
-    homeAlias: "",
-    token: "",
+    username: '',
+    isAdmin: '',
+    homeAlias: '',
+    token: '',
+    isAuth: '',
     gadgets: [],
-    csInstance: new ConnectionService("ws://134.209.198.123:8084/homesome"),
-    subscribers: {
-      connectionOpenRV: null,
-      gadgetFetchRV: null,
-      gadgetStateUpdate: null,
-    },
   };
-  updateGadgets = (gadgets) => {
-    this.setState({ gadgets: gadgets });
+  /////////////////////////////////////
+  /////////////  i-SINGLETON /////////
+  ///////////////////////////////////
+  singletonInstances = {
+    s_CService: null,
+    s_PLDStack: null,
   };
-  setUsername = (username) => {
-    this.setState({ username: username });
-  };
-  setAdminFlag = (adminFlag) => {
-    this.setState({ isAdmin: adminFlag });
-  };
-  setHomeAlias = (homeAlias) => {
-    this.setState({ homeAlias: homeAlias });
-  };
-  setToken = (token) => {
-    this.setState({ token: token });
-  };
-  updateGadget = (gadgetId, updatedValue) => {
-    this.state.gadgets.find( (gadget, index, arr) => {
-        if(gadget.id === gadgetId){
-            gadget.state = updatedValue;
-            const scGadgets = [...this.state.gadgets];
-            scGadgets[index] = gadget;
-            console.log('onGadgetStateUpdateRV service found: ', gadget);
-            this.setState({gadgets: scGadgets});
-         return true;
-        }
-        return false;
-      });
-      return false;
-  };
-  setupEESubscribers = () => {
-    console.log(this.state.csInstance.getWSReceiverEEmitterInstance);
-    this.setState({
-      subscribers: {
-        gadgetStateUpdate: this.state.csInstance
-          .getWSReceiverEEmitterInstance()
-          .subscribe(
-            ConnectionService.wsReceiverEEmitterEvent.onGadgetStateUpdateRV,
-            (...args) => {
-              console.log("onGadgetStateUpdateRV: ", args);
-              this.updateGadget(args[0].gadgetId, args[0].updatedValue);
-            }
-          ),
-      },
-    });
-    this.setState({
-      subscribers: {
-        connectionOpenRV: this.state.csInstance
-          .getWSReceiverEEmitterInstance()
-          .subscribe(
-            ConnectionService.wsReceiverEEmitterEvent.onConnectionOpenRV,
-            (...args) => {
-              console.log("onConnectionOpenRV: ", args);
-            }
-          ),
-      },
-    });
-    this.setState({
-      subscribers: {
-        connectionOpenRV: this.state.csInstance
-          .getWSReceiverEEmitterInstance()
-          .subscribe(
-            ConnectionService.wsReceiverEEmitterEvent.onGadgetFecthRV,
-            (...args) => {
-              console.log("onGadgetFecthRV: ", args);
-              this.updateGadgets(args[0].gadgets);
-            }
-          ),
-      },
-    });
-  };
+  /////////////////////////////////////
+  /////////  react-LIFECYCLE /////////
+  ///////////////////////////////////
+  componentDidMount() {
+    console.log('UserContextProvider mounted.');
 
-  setupContextState = (data) => {
-    this.setUsername(data.username);
-    this.setHomeAlias(data.homeAlias);
-    this.setAdminFlag(data.isAdmin);
-    this.setToken(data.token);
-  };
+    /////////////////////////////// csService: init
+    this.singletonInstances.s_CService = new ConnectionService(
+      'ws://134.209.198.123:8084/homesome'
+    );
+    /////////////////////////////// csService: init
 
-  setupLSTS = (data) => {
-    LSTokenService.setAdminFlag(!!data.isAdmin);
-    LSTokenService.setHomeAlias(data.homeAlias);
-    LSTokenService.setUsername(data.username);
-    LSTokenService.setToken(data.token);
-  };
-
+    /////////////////////////////// PLDStack: init
+    this.singletonInstances.s_PLDStack = new HoSoProtocolStackImpl(
+      this.singletonInstances.s_CService,
+      this.singletonInstances.s_CService
+        .getCSEEmitterRVHubInstance()
+        .getEEInstance()
+    );
+    /////////////////////////////// PLDStack: init
+  }
+  /////////////////////////////////////
+  /////////////  p-METHODS ///////////
+  ///////////////////////////////////
   csConnect = () => {
-    this.setupEESubscribers();
-    return this.state.csInstance.connect();
-  };
-  login = (username, password) => {
     return new Promise((resolve, reject) => {
-      this.state.csInstance
-        .auth(ConnectionService.authTypes.manualLogin, username, password)
+      this.singletonInstances.s_CService
+        .connect()
         .then((rData) => {
-          console.log("rdata: ", rData);
-          //you're auth with no errors!
-          this.initLiveHooks();
-          this.setupContextState(rData);
-          this.setupLSTS(rData);
-
           resolve(rData);
         })
-        .catch((rData) => {
-          reject(rData);
+        .catch((err) => {
+          reject(err);
         });
     });
   };
-  initLiveHooks = () => {
-    this.state.csInstance.initLiveHooks();
+  /////////////////////////////////////
+  /////////////  auth  ///////////////
+  ///////////////////////////////////
+  //-> {username: '', password: ''}, {type: 'AUTH_MANUAL_LOGIN'}
+  auth = (state, action) => {
+    this.csConnect()
+      .then((rData) => {
+        switch (action.type) {
+          case 'AUTH_MANUAL_LOGIN':
+            this.singletonInstances.s_PLDStack.send(
+              new AuthRequest(action.type, { ...state })
+            );
+            break;
+          case 'AUTH_AUTO_LOGIN':
+          default:
+            this.singletonInstances.s_PLDStack.send(
+              new AuthRequest('AUTH_AUTO_LOGIN', { ...state })
+            );
+        }
+        this.ucHooks();
+      })
+      .catch((err) => {});
+  };
+  /////////////////////////////////////
+  //////// alter-GADGET-S ////////////
+  ///////////////////////////////////
+  update = (state) => {
+    this.singletonInstances.s_PLDStack.send(
+      new AlterGadgetStateRequest(state.gadgetId, state.newState)
+    );
+  };
+
+  /////////////////////////////////////
+  ////////  ucReceiverEEHub  /////////
+  ///////////////////////////////////
+  ucHooks = () => {
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
+        (...args) => {
+          console.log('sucessful manual login (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(UContextAdapter.updateUCUserData(this.state, ...args));
+          this.setupLSTS(...args);
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onSuccessfulAutoLoginRVEEService,
+        (...args) => {
+          console.log('sucessful auto login (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCUserData(this.state, {
+              props: {
+                C_SessionKey: LSTokenService.getToken(),
+                C_isAdmin: LSTokenService.getAdminFlag(),
+                C_nameID: LSTokenService.getUsername(),
+                H_Alias: LSTokenService.getHomeAlias(),
+                isAuth: true,
+              },
+            })
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onUnSuccessfulLoginRVEEService,
+        (...args) => {
+          console.log('unsucessful login (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(UContextAdapter.updateUCUserData(this.state, ...args));
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetFetchCompleteRVEEService,
+        (...args) => {
+          console.log('gadget fetch (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCGadgetData(this.state, ...args)
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetGroupFetchCompleteRVEEService,
+        (...args) => {
+          console.log('gadget groups (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCGadgetGroupData(this.state, ...args)
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetStateChangeRVEEService,
+        (...args) => {
+          console.log('gadget state change (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCGadgetState(this.state, ...args)
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onServerExceptionRVEEService,
+        (...args) => {
+          console.log('server exception (ucHook): ', ...args);
+        }
+      );
+  };
+  /////////////////////////////////////
+  /////////////  l-METHODS ///////////
+  ///////////////////////////////////
+  setupLSTS = (data) => {
+    LSTokenService.setAdminFlag(!!data.props.C_isAdmin);
+    LSTokenService.setHomeAlias(data.props.H_Alias);
+    LSTokenService.setUsername(data.props.C_nameID);
+    LSTokenService.setToken(data.props.C_SessionKey);
+    LSTokenService.setHash(
+      AuthCryptoGuard.getBase64Encoding(
+        AuthCryptoGuard.generateHash(
+          data.props.C_SessionKey,
+          data.props.C_nameID
+        )
+      )
+    );
   };
 
   render() {
@@ -134,13 +223,10 @@ class UserContextProvider extends Component {
       <UserContext.Provider
         value={{
           ...this.state,
-          updateGadgets: this.updateGadgets,
-          setUsername: this.setUsername,
-          setAdminFlag: this.setAdminFlag,
-          setHomeAlias: this.setHomeAlias,
-          setToken: this.setToken,
-          csConnect: this.csConnect,
-          login: this.login,
+          connect: this.csConnect,
+          auth: this.auth,
+          update: this.update,
+          singletonInstances: this.singletonInstances,
         }}
       >
         {this.props.children}

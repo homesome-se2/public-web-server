@@ -1,0 +1,14 @@
+.pane-detail {
+  text-align: center;
+}
+
+.pane-detail .header {
+  text-align: left;
+  font-size: 1.3em;
+}
+
+.pane-detail .sub-header {
+  text-align: left;
+  font-size: 0.9em;
+  margin-top: -10px;
+}

@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import "./LoginForm.css";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import './LoginForm.css';
 
-import { TextField } from "@material-ui/core";
-import ControlsHeroButton from "../controls/controls-hero-button/ControlsHeroButton";
-import { UserContext } from "../../contexts/UserContext";
+import { TextField } from '@material-ui/core';
+import ControlsHeroButton from '../controls/controls-hero-button/ControlsHeroButton';
+import { UserContext } from '../../contexts/UserContext';
+import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
 
 class LoginForm extends Component {
   static contextType = UserContext;
@@ -12,8 +13,8 @@ class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       attemptedLogin: 0,
       invalid: false,
     };
@@ -36,17 +37,11 @@ class LoginForm extends Component {
     this.setState({ attemptedLogin: this.state.attemptedLogin + 1 });
 
     if (this.areFieldsValid()) {
-      this.context.csConnect();
-      this.context
-        .login(this.state.username, this.state.password)
-        .then((rData) => {
-          console.log("then: ", rData);
-          this.navigate("dashboard", {});
-        })
-        .catch((rData) => {
-          console.log("catch: ", rData);
-          if(!rData.isAuth) this.setState({invalid: true});
-        });
+      this.context.auth(
+        { username: this.state.username, password: this.state.password },
+        { type: 'AUTH_MANUAL_LOGIN' }
+      );
+      this.setupEESubscribers();
     } else {
       this.setState({ invalid: true });
     }
@@ -54,6 +49,29 @@ class LoginForm extends Component {
 
   areFieldsValid = () => {
     return this.state.username.length >= 3 && this.state.password.length >= 3;
+  };
+
+  setupEESubscribers = () => {
+    this.context.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onUnSuccessfulLoginRVEEService,
+        (...args) => {
+          this.setState({ invalid: true });
+        }
+      );
+    this.context.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
+        (...args) => {
+          setTimeout(() => {
+            this.navigate('dashboard', {});
+          }, 500);
+        }
+      );
   };
 
   render() {

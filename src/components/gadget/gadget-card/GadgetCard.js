@@ -1,78 +1,84 @@
-import React, {Component} from 'react';
-import "../../gadget/gadget-card/gadgetCard.css"
-/*
-    import GadgetCard from './components/gadget/gadget-card/GadgetCard';
-    <GadgetCard name="Lamp1" state={numeric or true-false} design={numeric or true-false} image={src} />
- */
+import React, { Component } from 'react';
+import '../../gadget/gadget-card/gadgetCard.css';
+import { Paper } from '@material-ui/core';
+import GadgetControlCompactSwitch from '../gadget-control-compact-switch/GadgetControlCompactSwitch';
+import GadgeControlCompactBinarySensor from '../gadget-control-compact-binarySensor/GadgetControlCompactBinarySensor';
+import GadgetControlCompactSensor from '../gadget-control-compact-sensor/GadgetControlCompactSensor';
+import { UserContext } from '../../../contexts/UserContext';
 
 class GadgetCard extends Component {
-    constructor(props){
-        super(props)
-        //reading values instead of toggling on/off button state
-        this.read = {isRead: this.props.read}
-        //on or off
-        this.state = {isToggled: this.props.state}
-        //default design or white design
-        this.design = {isDefault: this.props.design}
+  static contextType = UserContext;
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    /*     let x = 0;
+    window.setInterval(
+      () => {
+        console.log('updated to :', x);
+        if (x === 0) x = 1;
+        else x = 0;
+        this.context.update({
+          gadgetId: 2,
+          newState: x,
+        });
+      },
+      5000,
+      x
+    ); */
+  }
+
+  renderCompactComponent = () => {
+    switch (this.props.gadget.type) {
+      case 'SWITCH':
+        return <GadgetControlCompactSwitch checkedState={this.isActive()} />;
+      case 'BINARY_SENSOR':
+        return <GadgeControlCompactBinarySensor state={this.isActive()} />;
+      case 'SENSOR':
+        return <GadgetControlCompactSensor state={this.props.gadget.state} />;
+      default:
     }
-    
-    
-    handleClick(){
-        if(this.state.isToggled){
-            this.setState({isToggled: false })
-        }else{
-            this.setState({isToggled: true })
-
-        }
+  };
+  isActive = () => {
+    return (
+      this.props.gadget.type === 'SWITCH' && this.props.gadget.state === '1.0'
+    );
+  };
+  getNewState = () => {
+    switch (this.props.gadget.type) {
+      case 'SWITCH':
+        return this.props.gadget.state === '1.0' ? 0.0 : 1.0;
+      default:
     }
-
-    render() { 
-        const isRead    = this.read.isRead;
-        const isToggled = this.state.isToggled;
-        const isDefault = this.design.isDefault;
-        return (
-            
-            <div id={isDefault? "gadget-card" : "gadget-card-white"}>
-             <div className="fixed-wrapper"> 
-            <img src={this.props.image}  className="gadgetImage" />
-            </div>  
-
-             {isRead?
-             <>
-              <div id="gadget-text-wrapper">
-              <section><b> {this.props.name}</b></section>
-              <section><small>{isToggled? 'Connected‎':'Disconnected'}</small></section>
-               </div>
-
-            <div id="sensor-wrapper" >
-                +17C
-            </div>
-                </>
-             :
-             
-            <>
-            <div id="gadget-text-wrapper">
-               <section><b> {this.props.name}</b></section>
-               <section><small>{isToggled? 'Connected‎':'Disconnected'}</small></section>
-                </div>
-                <div id={isDefault? "gadget-card-control" : "gadget-card-control-white"} >
-                <section className="Off">Off</section>
-                <section className="On">On</section>
-                
-                    <div 
-                    onClick={()=> this.handleClick()}
-                    className={isToggled? 'up' : 'standard'}
-                    >    
-                    </div>
-                </div>
-                </>
-                }
-
-            </div>
-
-            
-              );
+  };
+  alterState = () => {
+    if (1) {
+      this.context.update({
+        gadgetId: this.props.gadget.id,
+        newState: this.getNewState(),
+      });
     }
+  };
+  render() {
+    return (
+      <div className={`gadget-card`}>
+        <Paper
+          elevation={0}
+          className={`${this.isActive() ? ' active' : ''}`}
+          onClick={this.alterState}
+        >
+          <div className="icon"></div>
+          <div className="text-wrapper">
+            <div className="gadget-alias">{this.props.gadget.alias}</div>
+            <div className="gadget-status">connected</div>
+          </div>
+          <div className="control-wrapper">{this.renderCompactComponent()}</div>
+        </Paper>
+      </div>
+    );
+  }
 }
- 
 export default GadgetCard;

@@ -1,0 +1,14 @@
+.pane-room-selection {
+  height: 100%;
+}
+
+.pane-room-selection .header {
+  text-align: left;
+  font-size: 1.3em;
+}
+
+.pane-room-selection .sub-header {
+  text-align: left;
+  font-size: 0.9em;
+  margin-top: -10px;
+}

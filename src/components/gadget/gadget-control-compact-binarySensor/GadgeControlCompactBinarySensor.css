@@ -1,0 +1,16 @@
+.gadget-control-compact-binarySensor .led-indicator {
+  width: 15px;
+  height: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.5em;
+  background: #f0f3f8;
+  border-radius: 100%;
+}
+.gadget-control-compact-binarySensor .led-status {
+  font-size: 0.8em;
+}
+
+.gadget-control-compact-binarySensor .led-indicator.active {
+  background: #56ff3f !important;
+}
