@@ -1,6 +1,11 @@
 import React, { Component, createContext } from 'react';
+import ucEEmitterRVHub from '../EEmitters/RVHubs/ucEEmitterRVHub';
 import HoSoProtocolStackImpl from '../HoSoProtocolStack/HoSoProtocolStackImpl';
+import AuthRequest from '../models/AuthRequest';
+import AlterGadgetStateRequest from '../models/AlterGadgetStateRequest';
 import ConnectionService from '../services/ConnectionService';
+import UContextAdapter from './UContextAdapter';
+import LSTokenService from '../services/LSTokenService';
 
 export const UserContext = createContext();
 
@@ -13,6 +18,7 @@ class UserContextProvider extends Component {
     isAdmin: '',
     homeAlias: '',
     token: '',
+    isAuth: '',
     gadgets: [],
   };
   /////////////////////////////////////
@@ -36,14 +42,12 @@ class UserContextProvider extends Component {
 
     /////////////////////////////// PLDStack: init
     this.singletonInstances.s_PLDStack = new HoSoProtocolStackImpl(
-      this.singletonInstances.csInstance,
+      this.singletonInstances.s_CService,
       this.singletonInstances.s_CService
         .getCSEEmitterRVHubInstance()
         .getEEInstance()
     );
     /////////////////////////////// PLDStack: init
-
-    //this.auth({}, {});
   }
   /////////////////////////////////////
   /////////////  p-METHODS ///////////
@@ -60,20 +64,150 @@ class UserContextProvider extends Component {
         });
     });
   };
+  /////////////////////////////////////
+  /////////////  auth  ///////////////
+  ///////////////////////////////////
+  //-> {username: '', password: ''}, {type: 'AUTH_MANUAL_LOGIN'}
   auth = (state, action) => {
     this.csConnect()
       .then((rData) => {
-        this.singletonInstances.s_CService.auth(
-          {
-            username: '',
-            password: '',
-          },
-          {
-            type: 'AUTH_MANUAL_LOGIN',
-          }
-        );
+        switch (action.type) {
+          case 'AUTH_MANUAL_LOGIN':
+            this.singletonInstances.s_PLDStack.send(
+              new AuthRequest(action.type, { ...state })
+            );
+            break;
+          case 'AUTH_AUTO_LOGIN':
+          default:
+            this.singletonInstances.s_PLDStack.send(
+              new AuthRequest('AUTH_AUTO_LOGIN', { ...state })
+            );
+        }
+        this.ucHooks();
       })
       .catch((err) => {});
+  };
+  /////////////////////////////////////
+  //////// alter-GADGET-S ////////////
+  ///////////////////////////////////
+  update = (state) => {
+    this.singletonInstances.s_PLDStack.send(
+      new AlterGadgetStateRequest(state.gadgetId, state.newState)
+    );
+  };
+
+  /////////////////////////////////////
+  ////////  ucReceiverEEHub  /////////
+  ///////////////////////////////////
+  ucHooks = () => {
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
+        (...args) => {
+          console.log('sucessful manual login (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(UContextAdapter.updateUCUserData(this.state, ...args));
+          this.setupLSTS(...args);
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onSuccessfulAutoLoginRVEEService,
+        (...args) => {
+          console.log('sucessful auto login (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCUserData(this.state, {
+              props: {
+                C_SessionKey: LSTokenService.getToken(),
+                C_isAdmin: LSTokenService.getAdminFlag(),
+                C_nameID: LSTokenService.getUsername(),
+                H_Alias: LSTokenService.getHomeAlias(),
+                isAuth: true,
+              },
+            })
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onUnSuccessfulLoginRVEEService,
+        (...args) => {
+          console.log('unsucessful login (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(UContextAdapter.updateUCUserData(this.state, ...args));
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetFetchCompleteRVEEService,
+        (...args) => {
+          console.log('gadget fetch (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCGadgetData(this.state, ...args)
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetGroupFetchCompleteRVEEService,
+        (...args) => {
+          console.log('gadget groups (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCGadgetGroupData(this.state, ...args)
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetStateChangeRVEEService,
+        (...args) => {
+          console.log('gadget state change (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCGadgetState(this.state, ...args)
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onServerExceptionRVEEService,
+        (...args) => {
+          console.log('server exception (ucHook): ', ...args);
+        }
+      );
+  };
+  /////////////////////////////////////
+  /////////////  l-METHODS ///////////
+  ///////////////////////////////////
+  setupLSTS = (data) => {
+    console.log('!!!', data.props);
+    LSTokenService.setAdminFlag(!!data.props.C_isAdmin);
+    LSTokenService.setHomeAlias(data.props.H_Alias);
+    LSTokenService.setUsername(data.props.C_nameID);
+    LSTokenService.setToken(data.props.C_SessionKey);
   };
 
   render() {
