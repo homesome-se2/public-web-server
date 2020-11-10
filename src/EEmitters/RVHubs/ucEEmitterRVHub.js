@@ -7,6 +7,8 @@ class ucEEmitterRVHub {
     onSuccessfulManualLoginRVEEService:
       '$onHosoSuccessfulManaulLoginRVEEService',
     onGadgetFetchCompleteRVEEService: '$onHosoGadgetListReceiveRVEEService',
+    onGadgetGroupFetchCompleteRVEEService:
+      '$onHosoGadgetGroupReceiveRVEEService',
   };
   constructor() {
     this.EEInstance = new EEmitter();
