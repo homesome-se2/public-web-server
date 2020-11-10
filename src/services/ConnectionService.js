@@ -48,7 +48,7 @@ class ConnectionService {
       if (this.wsState === this.wsConnectionStates.open) {
         this.disconnect();
         console.log('ws socket already open');
-        reject('WS_ALREADY_OPEN'); //=todo: UPDATE DISCONNECT/RECONNECT POLICY
+        //reject('WS_ALREADY_OPEN'); //=todo: UPDATE DISCONNECT/RECONNECT POLICY
       }
       this.wsState = this.wsConnectionStates.connecting;
       this.ws = new WebSocket(this.wsUrl);
