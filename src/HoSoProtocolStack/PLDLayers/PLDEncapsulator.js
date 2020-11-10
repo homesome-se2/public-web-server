@@ -143,6 +143,15 @@ class PLDEncapsulator {
           })
         );
         break;
+      case 'SERVER_EXCEPTION':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onServerExceptionRVEEService,
+          new ENLObject({
+            errorCode: HoSoSpecifics.commandCodes.receiving.global.exception,
+            description: obj.payload.data[0],
+          })
+        );
+        break;
       default:
         break;
     }

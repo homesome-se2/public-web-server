@@ -116,6 +116,11 @@ class PLDDecoder {
           { type: 'UNSUCCESSFUL_MANUAL_LOGIN', directives: {} }, //header
           obj.params // payload
         );
+      case HoSoSpecifics.commandCodes.receiving.global.exception:
+        return new DLObject(
+          { type: 'SERVER_EXCEPTION', directives: {} }, //header
+          obj.params // payload
+        );
       default:
     }
   };
