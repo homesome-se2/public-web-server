@@ -1,6 +1,7 @@
 import UContextAdapter from '../../contexts/UContextAdapter';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
 import AuthRequest from '../../models/AuthRequest';
+import HoSoSpecifics from '../HoSoSpecifics';
 import ENLObject from '../LDOModels/ENLObject';
 
 class PLDEncapsulator {
@@ -99,6 +100,20 @@ class PLDEncapsulator {
           })
         );
         break;
+      case 'GADGET_GROUPS':
+        const groups = [];
+        for (let g of obj.payload.data) {
+          groups.push({
+            name: g.split(HoSoSpecifics.syntax.singleSeparator)[0],
+            gadgetIds: g.split(HoSoSpecifics.syntax.singleSeparator).slice(1),
+          });
+        }
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetGroupFetchCompleteRVEEService,
+          new ENLObject({
+            gadgetsGroups: groups,
+          })
+        );
       default:
         break;
     }

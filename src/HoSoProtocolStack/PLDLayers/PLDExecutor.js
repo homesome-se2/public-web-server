@@ -79,7 +79,7 @@ class PLDExecutor {
         return new ELObject({
           type: obj.header.type,
           data: obj.payload,
-          auxData: 'auxData',
+          auxData: auxData,
         });
       });
     return new ELObject({ type: obj.header.type, data: obj.payload });

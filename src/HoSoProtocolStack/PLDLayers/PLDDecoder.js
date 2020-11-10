@@ -89,9 +89,17 @@ class PLDDecoder {
                     { type: 'GADGET_FETCH_GADGETS_GROUPS' }
                   ),
                 ],
-                ENLDObject.executingMode.waitAndContinue
+                ENLDObject.executingMode.asyncContinue
               ),
             ],
+          }, //header
+          obj.params // payload
+        );
+      case HoSoSpecifics.commandCodes.receiving.gadgetState.fetchGadgetGroups:
+        return new DLObject(
+          {
+            type: 'GADGET_GROUPS',
+            directives: [],
           }, //header
           obj.params // payload
         );
