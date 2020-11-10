@@ -8,7 +8,7 @@ class ProtectedRoutes extends Component {
   render() {
     const Component = this.props.component;
     const isAuthenticated =
-      LSTokenService.isAuth() &&
+      LSTokenService.isEligibleForAutoAuth() &&
       AuthCryptoGuard.verify(
         AuthCryptoGuard.getBase64Encoding(
           AuthCryptoGuard.generateHash(
@@ -17,7 +17,8 @@ class ProtectedRoutes extends Component {
           )
         ),
         LSTokenService.getHash()
-      );
+      ) &&
+      0;
 
     //TODO: TOKEN VERIFICATION
 
