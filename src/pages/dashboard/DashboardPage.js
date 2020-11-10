@@ -1,47 +1,75 @@
-import React, { Component } from "react";
-import { Row, Col } from "antd"
-import PaneDetails from '../../components/pane/panedetails/PaneDetails'
-import PaneRoomSelection from '../../components/pane/paneroomselection/PaneRoomSelection';
-import PaneActiveArea from '../../components/pane/paneactivearea/PaneActiveArea';
-import GadgetCard from '../../components/gadget/gadget-card/GadgetCard';
-import { UserContext } from "../../contexts/UserContext";
-import 'antd/dist/antd.css';
+import React, { Component } from 'react';
+import { UserContext } from '../../contexts/UserContext';
 import './DashboardPage.css';
-
-
-
+import PaneRoomSelection from '../../components/pane/pane-room-selection/PaneRoomSelection';
+import { Grid } from '@material-ui/core';
+import PaneActiveArea from '../../components/pane/pane-active-area/PaneActiveArea';
+import PaneDetail from '../../components/pane/pane-detail/PaneDetail';
+import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
+import LSTokenService from '../../services/LSTokenService';
 
 class DashboardPage extends Component {
   static contextType = UserContext;
+
   constructor(props) {
     super(props);
     this.state = {};
-
-
   }
   componentDidMount() {
+    if (!!!this.context.isAuth) {
+      setTimeout(() => {
+        console.log(LSTokenService.getUsername(), LSTokenService.getToken());
+        this.context.auth(
+          {
+            username: LSTokenService.getUsername(),
+            token: LSTokenService.getToken(),
+          },
+          { type: 'AUTH_AUTO_LOGIN' }
+        );
+      }, 1000);
+    }
   }
 
+  setupEESubscribers = () => {
+    this.context.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onUnSuccessfulLoginRVEEService,
+        (...args) => {
+          this.setState({ invalid: true });
+        }
+      );
+    this.context.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
+        (...args) => {
+          this.navigate('dashboard', {});
+        }
+      );
+  };
 
   render() {
     return (
       <div className="dashboard-page">
-        <Row gutter={16} className="main-app-row">
-          <Col xs={24} sm={24} lg={4}>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          <Grid item xs={2}>
             <PaneRoomSelection />
-          </Col>
-          <Col xs={24} sm={24} lg={14}>
-            <div style={{backgroundColor:'#f3f6ff',width:'100%',height:'85%'}}>
-           <PaneActiveArea />
-              <GadgetCard name="Kitchen Lamp" state={1} design={1} read={0}  />
-              <GadgetCard name="Living Room TV" state={1} design={0} read={0} />
-              <GadgetCard name="Temperature" state={1} design={0} read={1} />
-            </div>
-          </Col>
-          <Col xs={24} sm={24} lg={6}>
-            <PaneDetails />
-          </Col>
-        </Row>
+          </Grid>
+          <Grid item xs={8}>
+            <PaneActiveArea />
+          </Grid>
+          <Grid item xs={2}>
+            <PaneDetail />
+          </Grid>
+        </Grid>
       </div>
     );
   }

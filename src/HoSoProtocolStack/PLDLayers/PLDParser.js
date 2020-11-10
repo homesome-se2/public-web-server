@@ -35,7 +35,7 @@ class PLDParser {
   ///////////////////////////////////
   send = (DLObject) => {
     const LDO = this.process(DLObject, { type: 'SEND' });
-    console.log('PLDParser: ', LDO);
+    console.log('######YOU SENT: ', LDO);
 
     if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
     else
@@ -50,9 +50,11 @@ class PLDParser {
                 .asyncContinue,
           })
           .then((rData) => {
+            console.log('######YOU GOT RESOLVED: ', rData);
             resolve(rData);
           })
           .catch((err) => {
+            console.log('######YOU GOT REJECTED: ', err);
             reject(err);
           });
       });
