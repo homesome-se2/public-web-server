@@ -7,6 +7,7 @@ import ConnectionService from '../services/ConnectionService';
 import UContextAdapter from './UContextAdapter';
 import LSTokenService from '../services/LSTokenService';
 import AuthCryptoGuard from '../helpers/AuthCryptoGuard';
+import stEEmitterRVHub from '../EEmitters/RVHubs/stEEmitterRVHub';
 
 export const UserContext = createContext();
 
@@ -21,6 +22,7 @@ class UserContextProvider extends Component {
     token: '',
     isAuth: '',
     gadgets: [],
+    lifecycleHooks: new stEEmitterRVHub(),
   };
   /////////////////////////////////////
   /////////////  i-SINGLETON /////////
@@ -49,6 +51,10 @@ class UserContextProvider extends Component {
         .getEEInstance()
     );
     /////////////////////////////// PLDStack: init
+
+    /////////////////////////////// lifecycleHooks: emitOnStateMounted
+    this.state.lifecycleHooks.emitOnStateMounted(this.state);
+    /////////////////////////////// lifecycleHooks: emitOnStateMounted
   }
   /////////////////////////////////////
   /////////////  p-METHODS ///////////
@@ -77,12 +83,22 @@ class UserContextProvider extends Component {
             this.singletonInstances.s_PLDStack.send(
               new AuthRequest(action.type, { ...state })
             );
+            /////////////////////////////// lifecycleHooks: emitOnUserAuthStarted
+            this.state.lifecycleHooks.emitOnUserAuthStarted(action.type, {
+              ...state,
+            });
+            /////////////////////////////// lifecycleHooks: emitOnUserAuthStarted
             break;
           case 'AUTH_AUTO_LOGIN':
           default:
             this.singletonInstances.s_PLDStack.send(
               new AuthRequest('AUTH_AUTO_LOGIN', { ...state })
             );
+            /////////////////////////////// lifecycleHooks: emitOnUserAuthStarted
+            this.state.lifecycleHooks.emitOnUserAuthStarted(action.type, {
+              ...state,
+            });
+          /////////////////////////////// lifecycleHooks: emitOnUserAuthStarted
         }
         this.ucHooks();
       })
@@ -109,7 +125,17 @@ class UserContextProvider extends Component {
         (...args) => {
           console.log('sucessful manual login (ucHook): ', ...args);
           console.log('!old state: ', this.state);
-          this.setState(UContextAdapter.updateUCUserData(this.state, ...args));
+          this.setState(
+            UContextAdapter.updateUCUserData(this.state, ...args),
+            () => {
+              /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+              this.state.lifecycleHooks.emitOnUserAuthComplete(
+                this.state,
+                ...args
+              );
+              /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+            }
+          );
           this.setupLSTS(...args);
           console.log('!current state: ', this.state);
         }
@@ -123,15 +149,26 @@ class UserContextProvider extends Component {
           console.log('sucessful auto login (ucHook): ', ...args);
           console.log('!old state: ', this.state);
           this.setState(
-            UContextAdapter.updateUCUserData(this.state, {
-              props: {
-                C_SessionKey: LSTokenService.getToken(),
-                C_isAdmin: LSTokenService.getAdminFlag(),
-                C_nameID: LSTokenService.getUsername(),
-                H_Alias: LSTokenService.getHomeAlias(),
-                isAuth: true,
+            UContextAdapter.updateUCUserData(
+              this.state,
+              {
+                props: {
+                  C_SessionKey: LSTokenService.getToken(),
+                  C_isAdmin: LSTokenService.getAdminFlag(),
+                  C_nameID: LSTokenService.getUsername(),
+                  H_Alias: LSTokenService.getHomeAlias(),
+                  isAuth: true,
+                },
               },
-            })
+              () => {
+                /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+                this.state.lifecycleHooks.emitOnUserAuthComplete(
+                  this.state,
+                  ...args
+                );
+                /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+              }
+            )
           );
           console.log('!current state: ', this.state);
         }
@@ -144,7 +181,17 @@ class UserContextProvider extends Component {
         (...args) => {
           console.log('unsucessful login (ucHook): ', ...args);
           console.log('!old state: ', this.state);
-          this.setState(UContextAdapter.updateUCUserData(this.state, ...args));
+          this.setState(
+            UContextAdapter.updateUCUserData(this.state, ...args),
+            () => {
+              /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+              this.state.lifecycleHooks.emitOnUserAuthComplete(
+                this.state,
+                ...args
+              );
+              /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+            }
+          );
           console.log('!current state: ', this.state);
         }
       );
@@ -171,7 +218,12 @@ class UserContextProvider extends Component {
           console.log('gadget groups (ucHook): ', ...args);
           console.log('!old state: ', this.state);
           this.setState(
-            UContextAdapter.updateUCGadgetGroupData(this.state, ...args)
+            UContextAdapter.updateUCGadgetGroupData(this.state, ...args),
+            () => {
+              /////////////////////////////// lifecycleHooks: onStateReady
+              this.state.lifecycleHooks.emitOnStateReady(this.state, ...args);
+              /////////////////////////////// lifecycleHooks: onStateReady
+            }
           );
           console.log('!current state: ', this.state);
         }
