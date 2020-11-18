@@ -29,6 +29,18 @@ class stEEmitterRVHub {
   /////////////////////////////////////
   ////////////// l-EMITTERS ///////////
   /////////////////////////////////////
+  emitOnStateMounted = (...args) => {
+    this.EEInstance.emit(stEEmitterRVHub.events.onStateMounted, ...args);
+  };
+  emitOnUserAuthStarted = (...args) => {
+    this.EEInstance.emit(stEEmitterRVHub.events.onUserAuthStarted, ...args);
+  };
+  emitOnUserAuthComplete = (...args) => {
+    this.EEInstance.emit(stEEmitterRVHub.events.onUserAuthComplete, ...args);
+  };
+  emitOnStateReady = (...args) => {
+    this.EEInstance.emit(stEEmitterRVHub.events.onStateReady, ...args);
+  };
 }
 
 export default stEEmitterRVHub;
