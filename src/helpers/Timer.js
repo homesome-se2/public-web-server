@@ -1,16 +1,16 @@
 class Timer {
   constructor(start, end) {
-    this.start = start;
-    this.end = end;
+    this.startTime = start;
+    this.endTime = end;
   }
 
-  static start = () => {
-    this.start = new Date();
-  };
-  static end = () => {
-    this.end = new Date();
-    return this.end - this.start;
-  };
+  start() {
+    this.startTime = new Date();
+  }
+  end() {
+    this.endTime = new Date();
+    return this.endTime - this.startTime;
+  }
 }
 
 export default Timer;

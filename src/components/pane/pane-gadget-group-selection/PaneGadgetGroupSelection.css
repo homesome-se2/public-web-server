@@ -1,0 +1,14 @@
+.pane-gadget-group-selection {
+  height: 100%;
+}
+
+.pane-gadget-group-selection .header {
+  text-align: left;
+  font-size: 1.3em;
+}
+
+.pane-gadget-group-selection .sub-header {
+  text-align: left;
+  font-size: 0.9em;
+  margin-top: -10px;
+}

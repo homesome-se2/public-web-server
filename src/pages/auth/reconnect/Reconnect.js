@@ -10,6 +10,7 @@ import Timer from '../../../helpers/Timer';
 
 class Reconnect extends Component {
   static contextType = UserContext;
+  eTimer = new Timer(0, 0);
 
   state = {
     progress: 0,
@@ -29,14 +30,14 @@ class Reconnect extends Component {
         this.authDataReady(args);
       });
 
-    Timer.start();
+    this.eTimer.start();
   }
 
   authDataReady = (data) => {
-    const elapsed = Timer.end();
+    const elapsed = this.eTimer.end();
     if (data.isAuth) {
-      if (elapsed < 6000)
-        this.wait(6000 - elapsed).then(() => {
+      if (elapsed < 1000)
+        this.wait(1000 - elapsed).then(() => {
           this.navigate('dashboard', {});
         });
       else this.navigate('dashboard', {});

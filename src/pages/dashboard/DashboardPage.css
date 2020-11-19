@@ -3,6 +3,9 @@
   padding: 0 !important;
   height: 100vh;
 }
+.dashboard-page .pane-grid-item {
+  max-width: 180px !important;
+}
 .MuiGrid-item {
   height: 100%;
 }
