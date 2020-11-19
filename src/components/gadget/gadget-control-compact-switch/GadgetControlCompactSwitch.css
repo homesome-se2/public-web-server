@@ -5,28 +5,26 @@
   top: -10px;
   right: 13px;
 }
-input:focus {
+.gadget-control-compact-switch input:focus {
   outline: none;
 }
-.wrapper {
+.gadget-control-compact-switch .wrapper {
   transform: rotate(-90deg);
 }
-.switch {
+.gadget-control-compact-switch .switch {
   position: relative;
   display: inline-block;
   width: 63px;
   height: 50px;
 }
 
-/* Hide default HTML checkbox */
-.switch input {
+.gadget-control-compact-switch .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
-.slider {
+.gadget-control-compact-switch .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -38,7 +36,7 @@ input:focus {
   transition: 0.4s;
 }
 
-.slider:before {
+.gadget-control-compact-switch .slider:before {
   position: absolute;
   content: '';
   height: 42px;
@@ -49,24 +47,24 @@ input:focus {
   transition: 0.4s;
 }
 
-input:checked + .slider {
+.gadget-control-compact-switch input:checked + .slider {
   background-color: #0031cc;
 }
 
-input:focus + .slider {
+.gadget-control-compact-switch input:focus + .slider {
   box-shadow: 0 0 1px #0031cc;
 }
 
-input:checked + .slider:before {
+.gadget-control-compact-switch input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
-.slider.round {
+.gadget-control-compact-switch .slider.round {
   border-radius: 15px;
 }
 
-.slider.round:before {
+.gadget-control-compact-switch .slider.round:before {
   border-radius: 10px;
 }

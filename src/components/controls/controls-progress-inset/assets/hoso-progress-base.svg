@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="354" height="317" viewBox="0 0 354 317">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e4e9f2;
+        stroke: #fff;
+        stroke-linejoin: round;
+        stroke-opacity: 0.5;
+        stroke-width: 2px;
+        fill-rule: evenodd;
+        filter: url(#filter);
+      }
+    </style>
+    <filter id="filter" x="12204" y="1865" width="356" height="319" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="4.472" in="SourceAlpha"/>
+      <feFlood result="flood" flood-color="#4a4c50" flood-opacity="0.3"/>
+      <feComposite result="composite" operator="out" in2="blur"/>
+      <feOffset result="offset"/>
+      <feComposite result="composite-2" operator="in" in2="SourceAlpha"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="translate(-12205 -1866)" style="fill: #e4e9f2; filter: url(#filter)">
+    <path id="base_expanded" data-name="base expanded" class="cls-1" d="M12554.4,1985.04c-1.6-21.87-24.6-42.4-55.1-59.89-31.2-17.91-82.9-48.38-82.9-48.38s-9.4-7.77-34.3-7.77a0.182,0.182,0,0,1-.2,0c-24.9,0-34.3,7.77-34.3,7.77s-51.7,30.47-82.9,48.38c-30.5,17.49-53.5,38.02-55.1,59.89-1.6,21.23,0,36.97,0,96.76,0,69.47,43.5,70.28,70.7,75.48,53.1,10.18,59.9,22.68,101.6,22.72h0.2c41.7-.04,48.5-12.54,101.6-22.72,27.2-5.2,70.7-6.01,70.7-75.48C12554.4,2022.01,12556,2006.27,12554.4,1985.04Z" style="stroke: inherit; filter: none; fill: inherit"/>
+  </g>
+  <use transform="translate(-12205 -1866)" xlink:href="#base_expanded" style="stroke: #fff; filter: none; fill: none"/>
+</svg>
