@@ -18,7 +18,7 @@ class ProtectedRoutes extends Component {
   stateDidMount = () => {};
 
   isAuthorized = () => {
-    if (this.context != null && this.context.isAuth) return 1;
+    if (this.context != null && !!this.context.isAuth) return 1;
     if (LSTokenService.isEligibleForAutoAuth()) return 0;
     return -1;
   };
