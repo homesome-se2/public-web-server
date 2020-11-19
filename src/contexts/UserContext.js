@@ -149,26 +149,23 @@ class UserContextProvider extends Component {
           console.log('sucessful auto login (ucHook): ', ...args);
           console.log('!old state: ', this.state);
           this.setState(
-            UContextAdapter.updateUCUserData(
-              this.state,
-              {
-                props: {
-                  C_SessionKey: LSTokenService.getToken(),
-                  C_isAdmin: LSTokenService.getAdminFlag(),
-                  C_nameID: LSTokenService.getUsername(),
-                  H_Alias: LSTokenService.getHomeAlias(),
-                  isAuth: true,
-                },
+            UContextAdapter.updateUCUserData(this.state, {
+              props: {
+                C_SessionKey: LSTokenService.getToken(),
+                C_isAdmin: LSTokenService.getAdminFlag(),
+                C_nameID: LSTokenService.getUsername(),
+                H_Alias: LSTokenService.getHomeAlias(),
+                isAuth: true,
               },
-              () => {
-                /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
-                this.state.lifecycleHooks.emitOnUserAuthComplete(
-                  this.state,
-                  ...args
-                );
-                /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
-              }
-            )
+            }),
+            () => {
+              /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+              this.state.lifecycleHooks.emitOnUserAuthComplete(
+                this.state,
+                ...args
+              );
+              /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+            }
           );
           console.log('!current state: ', this.state);
         }
