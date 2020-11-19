@@ -19,6 +19,7 @@ class UContextAdapter {
   };
   static updateUCGadgetGroupData = (state, ...update) => {
     state.gadgetsGroups = update[0].props?.gadgetsGroups;
+    state.selectedGadgetGroup = update[0].props?.gadgetsGroups[0];
     return state;
   };
   static updateUCGadgetState = (state, ...update) => {

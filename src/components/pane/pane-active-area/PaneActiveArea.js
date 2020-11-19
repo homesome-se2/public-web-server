@@ -51,7 +51,10 @@ class PaneActiveArea extends Component {
               alignItems="flex-start"
             >
               {this.context.gadgets.map((gadget, key) => {
-                return <GadgetCard gadget={gadget} key={gadget.id} />;
+                if (
+                  this.context.selectedGadgetGroup.gadgetIds.includes(gadget.id)
+                )
+                  return <GadgetCard gadget={gadget} key={gadget.id} />;
               })}
             </Grid>
           </div>

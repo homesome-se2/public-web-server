@@ -7,6 +7,7 @@ import PaneActiveArea from '../../components/pane/pane-active-area/PaneActiveAre
 import PaneDetail from '../../components/pane/pane-detail/PaneDetail';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
 import LSTokenService from '../../services/LSTokenService';
+import PaneGadgetGroupSelection from '../../components/pane/pane-gadget-group-selection/PaneGadgetGroupSelection';
 
 class DashboardPage extends Component {
   static contextType = UserContext;
@@ -15,20 +16,7 @@ class DashboardPage extends Component {
     super(props);
     this.state = {};
   }
-  componentDidMount() {
-    if (!!!this.context.isAuth) {
-      setTimeout(() => {
-        console.log(LSTokenService.getUsername(), LSTokenService.getToken());
-        this.context.auth(
-          {
-            username: LSTokenService.getUsername(),
-            token: LSTokenService.getToken(),
-          },
-          { type: 'AUTH_AUTO_LOGIN' }
-        );
-      }, 1000);
-    }
-  }
+  componentDidMount() {}
 
   setupEESubscribers = () => {
     this.context.singletonInstances.s_PLDStack
@@ -60,8 +48,8 @@ class DashboardPage extends Component {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <Grid item xs={2}>
-            <PaneRoomSelection />
+          <Grid item xs={2} className="pane-grid-item">
+            <PaneGadgetGroupSelection />
           </Grid>
           <Grid item xs={8}>
             <PaneActiveArea />

@@ -22,6 +22,8 @@ class UserContextProvider extends Component {
     token: '',
     isAuth: '',
     gadgets: [],
+    gadgetsGroups: [],
+    selectedGadgetGroup: null,
     lifecycleHooks: new stEEmitterRVHub(),
   };
   /////////////////////////////////////
@@ -266,6 +268,18 @@ class UserContextProvider extends Component {
       )
     );
   };
+  /////////////////////////////////////
+  /////////  g-GroupSelection ////////
+  ///////////////////////////////////
+  updateGadgetGroupSelection = (groupName) => {
+    for (let group of this.state.gadgetsGroups) {
+      if (group.name === groupName) {
+        this.setState({ selectedGadgetGroup: group });
+        return true;
+      }
+    }
+    return false;
+  };
 
   render() {
     return (
@@ -276,6 +290,7 @@ class UserContextProvider extends Component {
           auth: this.auth,
           update: this.update,
           singletonInstances: this.singletonInstances,
+          updateGadgetGroupSelection: this.updateGadgetGroupSelection,
         }}
       >
         {this.props.children}
