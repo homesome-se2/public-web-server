@@ -9,9 +9,7 @@ class PaneGadgetGroupSelection extends Component {
       <div className="pane-gadget-group-selection">
         <div className="content-wrapper">
           <h1 className="header black-medium">Categories</h1>
-          <h2 className="sub-header light-grey">
-            Select the category you want to filter the gadgets by
-          </h2>
+          <h2 className="sub-header light-grey">Filter gadgets by category</h2>
         </div>
         <ControlsGroupSelector></ControlsGroupSelector>
       </div>

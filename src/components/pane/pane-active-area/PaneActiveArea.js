@@ -55,6 +55,8 @@ class PaneActiveArea extends Component {
                   this.context.selectedGadgetGroup.gadgetIds.includes(gadget.id)
                 )
                   return <GadgetCard gadget={gadget} key={gadget.id} />;
+
+                return null;
               })}
             </Grid>
           </div>

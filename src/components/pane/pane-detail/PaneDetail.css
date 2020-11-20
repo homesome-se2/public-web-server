@@ -12,3 +12,10 @@
   font-size: 0.9em;
   margin-top: -10px;
 }
+
+.pane-detail .frozen {
+  color: #dce0eb;
+  font-weight: 300;
+  font-size: 1em;
+  margin-top: 15em;
+}

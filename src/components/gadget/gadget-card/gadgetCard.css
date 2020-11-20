@@ -4,6 +4,7 @@
 .gadget-card .active {
   background-color: #3f6cff !important;
 }
+
 .gadget-card .MuiPaper-root {
   padding: 1.2em 1em;
   min-width: 250px;
@@ -11,6 +12,14 @@
   border-radius: 15px;
   -webkit-transition: 0.4s;
   transition: 0.4s;
+  cursor: pointer;
+}
+.gadget-card .MuiPaper-root:hover {
+  box-shadow: 0px 0px 30px 15px rgba(218, 224, 241, 0.75);
+}
+
+.gadget-card .MuiPaper-root.active:hover {
+  box-shadow: 0px 0px 20px 5px rgb(185, 193, 216);
 }
 
 .gadget-card .active .text-wrapper {

@@ -22,7 +22,7 @@ class ControlsGroupSelector extends Component {
         <ul>
           {this.context.gadgetsGroups.map((gadgetGroup, key) => {
             return (
-              <li>
+              <li key={key}>
                 <ControlsGroupSelectorItem
                   gadgetName={gadgetGroup.name}
                   key={key}

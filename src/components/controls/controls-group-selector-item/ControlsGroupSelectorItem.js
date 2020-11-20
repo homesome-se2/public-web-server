@@ -13,7 +13,7 @@ class ControlsGroupSelectorItem extends Component {
   };
 
   render() {
-    const { gadgetName, icon, active } = this.props;
+    const { gadgetName, active } = this.props;
     return (
       <div
         className="controls-group-selector-item"
