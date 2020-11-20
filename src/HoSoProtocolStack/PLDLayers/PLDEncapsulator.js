@@ -37,13 +37,13 @@ class PLDEncapsulator {
   ///////////////////////////////////
   send = (UContextAdapterObject) => {
     const LDO = this.process(UContextAdapterObject, { type: 'SEND' });
-    console.log('PLDEncapsulator: ', LDO);
+    console.log('PLDEncapsulator| send: ', LDO);
 
     if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
   };
   recv = (ELObject) => {
     const LDO = this.process(ELObject, { type: 'RECV' });
-    console.log('PLDEncapsulator: ', this);
+    console.log('PLDEncapsulator| recv: ', this);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
   };

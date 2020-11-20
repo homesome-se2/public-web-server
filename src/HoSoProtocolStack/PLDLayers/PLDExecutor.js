@@ -33,13 +33,13 @@ class PLDExecutor {
   ///////////////////////////////////
   send = (ENLObject) => {
     const LDO = this.process(ENLObject, { type: 'SEND' });
-    console.log('PLDExecutor: ', LDO);
+    console.log('PLDExecutor| send: ', LDO);
 
     if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
   };
   recv = (DLObject) => {
     const LDO = this.process(DLObject, { type: 'RECV' });
-    console.log('=PLDExecutor: ', LDO);
+    console.log('PLDExecutor| recv: ', LDO);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
   };
