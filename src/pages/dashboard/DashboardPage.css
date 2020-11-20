@@ -5,6 +5,7 @@
 }
 .dashboard-page .flex-grow {
   flex-grow: 1;
+  min-width: 500px;
 }
 .dashboard-page .pane-grid-item {
   max-width: 180px !important;
