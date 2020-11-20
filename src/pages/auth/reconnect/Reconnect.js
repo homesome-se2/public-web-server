@@ -36,12 +36,15 @@ class Reconnect extends Component {
   authDataReady = (data) => {
     const elapsed = this.eTimer.end();
     if (data.isAuth) {
-      if (elapsed < 1000)
-        this.wait(1000 - elapsed).then(() => {
+      if (elapsed < 4000)
+        this.wait(4000 - elapsed).then(() => {
           this.navigate('dashboard', {});
         });
       else this.navigate('dashboard', {});
-    } else this.navigate('login', {});
+    } else {
+      LSTokenService.clearStorage();
+      this.navigate('login', {});
+    }
   };
 
   autoAuth = () => {

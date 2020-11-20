@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import './DashboardPage.css';
-import PaneRoomSelection from '../../components/pane/pane-room-selection/PaneRoomSelection';
 import { Grid } from '@material-ui/core';
 import PaneActiveArea from '../../components/pane/pane-active-area/PaneActiveArea';
 import PaneDetail from '../../components/pane/pane-detail/PaneDetail';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
-import LSTokenService from '../../services/LSTokenService';
 import PaneGadgetGroupSelection from '../../components/pane/pane-gadget-group-selection/PaneGadgetGroupSelection';
 
 class DashboardPage extends Component {
@@ -51,7 +49,7 @@ class DashboardPage extends Component {
           <Grid item xs={2} className="pane-grid-item">
             <PaneGadgetGroupSelection />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item className="flex-grow">
             <PaneActiveArea />
           </Grid>
           <Grid item xs={2}>

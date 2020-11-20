@@ -14,7 +14,7 @@
 }
 .reconnect-page .status::after {
   content: '';
-  animation: status-animation 6s ease infinite;
+  animation: status-animation 4s ease infinite;
 }
 
 @keyframes status-animation {

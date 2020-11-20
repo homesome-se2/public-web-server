@@ -9,6 +9,8 @@ class PaneDetail extends Component {
         <div className="content-wrapper">
           <h1 className="header black-medium">Detail pane</h1>
           <h2 className="sub-header light-grey">Gadget's details</h2>
+
+          <h1 className="frozen light-grey">FROZEN UPON PATCH#1.2 & QUOS#2</h1>
         </div>
       </div>
     );
