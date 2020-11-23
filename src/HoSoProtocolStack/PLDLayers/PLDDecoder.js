@@ -28,13 +28,13 @@ class PLDDecoder {
   ///////////////////////////////////
   send = (ELObject) => {
     const LDO = this.process(ELObject, { type: 'SEND' });
-    console.log('+PLDDecoder: ', LDO);
+    console.log('PLDDecoder| send: ', LDO);
 
     if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
   };
   recv = (PLObject) => {
     const LDO = this.process(PLObject, { type: 'RECV' });
-    console.log('PLDDecoder: ', LDO);
+    console.log('PLDDecoder| recv:', LDO);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
   };

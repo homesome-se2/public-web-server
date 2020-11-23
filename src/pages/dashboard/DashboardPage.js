@@ -49,7 +49,7 @@ class DashboardPage extends Component {
           <Grid item xs={2} className="pane-grid-item">
             <PaneGadgetGroupSelection />
           </Grid>
-          <Grid item className="flex-grow">
+          <Grid item className="flex-grow" xs={8}>
             <PaneActiveArea />
           </Grid>
           <Grid item xs={2}>

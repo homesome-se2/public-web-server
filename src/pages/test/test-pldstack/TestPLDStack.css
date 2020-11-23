@@ -1,0 +1,36 @@
+.test-pldstack {
+  background-color: #f3f6ff;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.test-pldstack .full {
+}
+
+.test-pldstack .title {
+  font-weight: 300;
+  color: #373840;
+  font-size: 2em;
+}
+
+.test-pldstack .subtitle {
+  font-weight: 300;
+  color: #cdd1da;
+  margin-top: -1em;
+  font-size: 1.3em;
+}
+
+.test-pldstack .MuiButton-outlinedPrimary {
+  margin: 0 1em;
+}
+
+.test-pldstack .category {
+  font-weight: 300;
+  color: #cdd1da;
+  font-size: 1em;
+}
+.test-pldstack .MuiGrid-justify-xs-center {
+  margin: 2em 0;
+}

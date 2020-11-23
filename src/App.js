@@ -9,6 +9,8 @@ import GadgetContextProvider from './contexts/GadgetContext';
 
 import './App.css';
 import Reconnect from './pages/auth/reconnect/Reconnect';
+import TestProgress from './pages/test/test-progress/TestProgress';
+import TestPLDStack from './pages/test/test-pldstack/TestPLDStack';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Switch>
               <Route path="/login" component={LoginPage} />
               <Route path="/reconnect" component={Reconnect} />
+              <Route path="/test/progress" component={TestProgress} />
+              <Route path="/test/pld" component={TestPLDStack} />
               <ProtectedRoute exact={true} path="/" component={DashboardPage} />
               <ProtectedRoute component={DashboardPage} />
             </Switch>

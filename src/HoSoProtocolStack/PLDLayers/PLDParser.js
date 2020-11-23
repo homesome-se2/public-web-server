@@ -35,7 +35,7 @@ class PLDParser {
   ///////////////////////////////////
   send = (DLObject) => {
     const LDO = this.process(DLObject, { type: 'SEND' });
-    console.log('######YOU SENT: ', LDO);
+    console.log('PLDParser| send: ', LDO);
 
     if (this.getUpperlayer()) this.getUpperlayer().send(LDO);
     else
@@ -61,7 +61,7 @@ class PLDParser {
   };
   recv = (HoSoMessage) => {
     const LDO = this.process(HoSoMessage, { type: 'RECV' });
-    console.log('PLDParser: ', LDO);
+    console.log('PLDParser| recv: ', LDO);
 
     if (this.getLowerlayer()) this.getLowerlayer().recv(LDO);
   };
