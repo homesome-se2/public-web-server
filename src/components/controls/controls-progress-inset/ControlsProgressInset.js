@@ -10,7 +10,7 @@ class ControlsProgressInset extends Component {
     return 'scale(' + scaleValue + ')';
   };
   render() {
-    const { scale, type, progress } = this.props;
+    const { scale, type, progress, active } = this.props;
 
     return (
       <div
@@ -23,7 +23,9 @@ class ControlsProgressInset extends Component {
             <div
               style={{ height: this.buildProgressPercentage(progress) }}
               className={`active ${
-                type === 'indeterminate' ? ' indeterminate' : 'determinate'
+                type === 'indeterminate' && active
+                  ? ' indeterminate'
+                  : 'determinate'
               }`}
             ></div>
           </div>
