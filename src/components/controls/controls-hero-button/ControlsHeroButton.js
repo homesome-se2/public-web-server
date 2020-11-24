@@ -1,15 +1,20 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './ControlsHeroButton.css';
 
 class ControlsHeroButton extends Component {
-    state = {  }
-    render() { 
-        return ( 
-            <div className={`controls-hero-button${this.props.disable ? ' disabled' : ''}`} onClick={this.props.onButtonClick}>
-                <span className="label">{this.props.label}</span>
-            </div>
-         );
-    }
+  state = {};
+  render() {
+    const { disable, onButtonClick, label } = this.props;
+
+    return (
+      <div
+        className={`controls-hero-button${disable ? ' disabled' : ''}`}
+        onClick={onButtonClick}
+      >
+        <span className="label">{label}</span>
+      </div>
+    );
+  }
 }
- 
+
 export default ControlsHeroButton;
