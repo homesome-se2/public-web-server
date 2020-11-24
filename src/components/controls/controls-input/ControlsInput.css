@@ -1,0 +1,64 @@
+.controls-input {
+}
+.controls-input input {
+  width: 100%;
+  box-sizing: border-box;
+  background: #f3f6ff;
+  border-radius: 15px;
+  padding: 1.2em;
+  color: #373740;
+
+  transition: all 0.4s;
+  border: 3px solid transparent;
+
+  box-shadow: none;
+  outline: none;
+  transition: all 0.6s;
+}
+.controls-input .input-wrapper {
+  position: relative;
+}
+.controls-input input::placeholder {
+  color: #e5ebfe;
+  font-weight: 300 !important;
+  font-size: 0.9em !important;
+}
+.controls-input label {
+  color: #c7cbdc;
+  float: left;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  font-weight: 300;
+}
+
+.controls-input input:hover {
+  background: #ffffff;
+  box-shadow: 0px 0px 40px 5px rgba(233, 237, 245, 0.9);
+}
+.controls-input input.invalid {
+  border: 3px solid #fd3133;
+}
+.controls-input input.valid {
+  border: 3px solid #0083ff;
+}
+.controls-input .icon {
+  width: 43px;
+  height: 43px;
+  position: absolute;
+  top: 27px;
+  right: 0;
+  transform: scale(0.4);
+  visibility: hidden;
+  transition: all 0.6s;
+}
+
+.controls-input .icon.visible {
+  visibility: visible;
+}
+.controls-input .icon.valid {
+  background-image: url(./assets/icon-valid.png);
+}
+.controls-input .icon.invalid {
+  background-image: url(./assets/icon-invalid.png);
+}
