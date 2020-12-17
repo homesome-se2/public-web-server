@@ -81,6 +81,11 @@ class PLDDecoder {
           { type: 'SUCCESSFUL_AUTO_LOGIN', directives: {} }, //header
           obj.params // payload
         );
+      case HoSoSpecifics.commandCodes.receiving.auth.successfulLogout:
+        return new DLObject(
+          { type: 'SUCCESSFUL_LOGOUT', directives: {} }, //header
+          obj.params // payload
+        );
       case HoSoSpecifics.commandCodes.receiving.gadgetState.fetchGadgets:
         return new DLObject(
           {

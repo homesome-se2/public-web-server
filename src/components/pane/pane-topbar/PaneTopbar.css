@@ -36,7 +36,25 @@
   height: 65px;
   background: #8374f3;
   float: right;
+  background-image: url(./assets/logout-btn.png);
+  background-size: 50.5px 44px;
+  background-repeat: no-repeat;
+  background-position: 10px 10px;
+  transition: background-image 0.4s ease;
+  cursor: pointer;
 }
+.pane-topbar .logout-btn:hover,
+.pane-topbar .logout-btn.all:hover {
+  background-image: url(./assets/logout-btn-active.png);
+}
+.pane-topbar .logout-btn.all {
+  background: #93b4f9;
+  background-image: url(./assets/logout-btn.png);
+  background-size: 50.5px 44px;
+  background-repeat: no-repeat;
+  background-position: 10px 10px;
+}
+
 .pane-topbar .user-thumbnail {
   position: relative;
   top: -12px;
@@ -49,6 +67,7 @@
 .pane-topbar .user-info {
   display: inline-block;
   margin-right: 1em;
+  margin-top: 3px;
 }
 .pane-topbar .user-info h1 {
   font-size: 0.9em;

@@ -9,7 +9,8 @@ class HoSoSpecifics {
       auth: {
         manualLogin: '101',
         autoLogin: '103',
-        logOut: '105',
+        logOutThis: '105',
+        logOutAll: '106',
       },
       gadgetState: {
         fetchGadgets: '301',
@@ -25,6 +26,7 @@ class HoSoSpecifics {
         successfulManualLogin: '102',
         successfulAutoLogin: '104',
         unsuccessfulLogin: '903',
+        successfulLogout: '107',
       },
       gadgetState: {
         fetchGadgets: '304',

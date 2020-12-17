@@ -13,6 +13,9 @@ class UContextAdapter {
     state.homeAlias = update[0].props.H_Alias;
     return state;
   };
+  static clearContext = () => {
+    return {};
+  };
   static updateUCGadgetData = (state, ...update) => {
     state.gadgets = update[0].props?.gadgets;
     return state;

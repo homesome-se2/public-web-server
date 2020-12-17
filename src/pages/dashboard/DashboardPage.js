@@ -6,6 +6,9 @@ import PaneActiveArea from '../../components/pane/pane-active-area/PaneActiveAre
 import PaneDetail from '../../components/pane/pane-detail/PaneDetail';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
 import PaneGadgetGroupSelection from '../../components/pane/pane-gadget-group-selection/PaneGadgetGroupSelection';
+import PaneTopbar from '../../components/pane/pane-topbar/PaneTopbar';
+import stEEmitterRVHub from '../../EEmitters/RVHubs/stEEmitterRVHub';
+import { withRouter } from 'react-router-dom';
 
 class DashboardPage extends Component {
   static contextType = UserContext;
@@ -14,7 +17,14 @@ class DashboardPage extends Component {
     super(props);
     this.state = {};
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.context.lifecycleHooks
+      .getEEInstance()
+      .subscribe(stEEmitterRVHub.events.onLougoutState, this.didStateLogout);
+  }
+  didStateLogout = () => {
+    this.navigate('login', {});
+  };
 
   setupEESubscribers = () => {
     this.context.singletonInstances.s_PLDStack
@@ -36,29 +46,19 @@ class DashboardPage extends Component {
         }
       );
   };
-
+  navigate = (target, param) => {
+    this.props.history.push({
+      pathname: `/${target}`,
+      state: param,
+    });
+  };
   render() {
     return (
       <div className="dashboard-page">
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Grid item xs={2} className="pane-grid-item">
-            <PaneGadgetGroupSelection />
-          </Grid>
-          <Grid item className="flex-grow" xs={8}>
-            <PaneActiveArea />
-          </Grid>
-          <Grid item xs={2}>
-            <PaneDetail />
-          </Grid>
-        </Grid>
+        <PaneTopbar />
       </div>
     );
   }
 }
 
-export default DashboardPage;
+export default withRouter(DashboardPage);

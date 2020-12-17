@@ -2,6 +2,7 @@ import UContextAdapter from '../../contexts/UContextAdapter';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
 import AlterGadgetStateRequest from '../../models/AlterGadgetStateRequest';
 import AuthRequest from '../../models/AuthRequest';
+import LogoutRequest from '../../models/LogoutRequest';
 import HoSoSpecifics from '../HoSoSpecifics';
 import ENLObject from '../LDOModels/ENLObject';
 
@@ -81,6 +82,13 @@ class PLDEncapsulator {
           type: 'GADGET_ALTER_GADGET_STATE',
           data: obj,
         });
+      case LogoutRequest:
+        const typeString =
+          obj.type === 'ALL' ? 'AUTH_LOGOUT_ALL' : 'AUTH_LOGOUT_THIS';
+        return new ENLObject({
+          type: typeString,
+          data: obj,
+        });
       default:
         return new ENLObject({ type: '!ERR: UNSUPPORTED REQUEST', data: null });
     }
@@ -100,7 +108,6 @@ class PLDEncapsulator {
         );
         break;
       case 'SUCCESSFUL_AUTO_LOGIN':
-        console.log('!!!', obj);
         this._ucEEmitterRVHub.getEEInstance().emit(
           ucEEmitterRVHub.events.onSuccessfulAutoLoginRVEEService,
           new ENLObject({
@@ -109,6 +116,14 @@ class PLDEncapsulator {
             C_isAdmin: obj.payload.data[1],
             H_Alias: obj.payload.data[2],
             C_SessionKey: obj.payload.data[3],
+          })
+        );
+        break;
+      case 'SUCCESSFUL_LOGOUT':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onSuccessfulLogoutRVEEService,
+          new ENLObject({
+            message: obj.payload.data,
           })
         );
         break;

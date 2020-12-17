@@ -2,6 +2,7 @@
   margin: 0 !important;
   padding: 0 !important;
   height: 100vh;
+  background: #f3f6ff;
 }
 .dashboard-page .flex-grow {
   flex-grow: 1;

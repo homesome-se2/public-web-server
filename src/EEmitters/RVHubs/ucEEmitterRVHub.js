@@ -7,6 +7,7 @@ class ucEEmitterRVHub {
     onSuccessfulManualLoginRVEEService:
       '$onHosoSuccessfulManaulLoginRVEEService',
     onSuccessfulAutoLoginRVEEService: '$onHosoSuccessfulAutoLoginRVEEService',
+    onSuccessfulLogoutRVEEService: '$onHoSoSuccessfulLogoutRVEEService',
     onUnSuccessfulLoginRVEEService: '$onHosoUnSuccessfulLoginRVEEService',
     onServerExceptionRVEEService: '$onHosoServerExceptionRVEEService',
     onGadgetFetchCompleteRVEEService: '$onHosoGadgetListReceiveRVEEService',

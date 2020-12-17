@@ -8,6 +8,7 @@ import UContextAdapter from './UContextAdapter';
 import LSTokenService from '../services/LSTokenService';
 import AuthCryptoGuard from '../helpers/AuthCryptoGuard';
 import stEEmitterRVHub from '../EEmitters/RVHubs/stEEmitterRVHub';
+import LogoutRequest from '../models/LogoutRequest';
 
 export const UserContext = createContext();
 
@@ -107,6 +108,23 @@ class UserContextProvider extends Component {
       .catch((err) => {});
   };
   /////////////////////////////////////
+  /////////////  log-out  /////////////
+  ////////////////////////////////////
+  logout = (state, action) => {
+    switch (action.type) {
+      case 'ALL':
+        this.singletonInstances.s_PLDStack.send(
+          new LogoutRequest('ALL', state)
+        );
+        break;
+      default:
+        this.singletonInstances.s_PLDStack.send(
+          new LogoutRequest('THIS', state)
+        );
+    }
+  };
+
+  /////////////////////////////////////
   //////// alter-GADGET-S ////////////
   ///////////////////////////////////
   update = (state) => {
@@ -198,6 +216,22 @@ class UserContextProvider extends Component {
       .getucEEmitterRVHub()
       .getEEInstance()
       .subscribe(
+        ucEEmitterRVHub.events.onSuccessfulLogoutRVEEService,
+        (...args) => {
+          console.log('successful logout (ucHook): ', ...args);
+          LSTokenService.clearStorage();
+          this.singletonInstances.s_CService.disconnect();
+          this.setState(UContextAdapter.clearContext(), () => {
+            /////////////////////////////// lifecycleHooks: emitLogout
+            this.state.lifecycleHooks.emitLogout(this.state, ...args);
+            /////////////////////////////// lifecycleHooks: emitLogout
+          });
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
         ucEEmitterRVHub.events.onGadgetFetchCompleteRVEEService,
         (...args) => {
           console.log('gadget fetch (ucHook): ', ...args);
@@ -280,7 +314,6 @@ class UserContextProvider extends Component {
     }
     return false;
   };
-
   render() {
     return (
       <UserContext.Provider
@@ -288,6 +321,7 @@ class UserContextProvider extends Component {
           ...this.state,
           connect: this.csConnect,
           auth: this.auth,
+          logout: this.logout,
           update: this.update,
           singletonInstances: this.singletonInstances,
           updateGadgetGroupSelection: this.updateGadgetGroupSelection,

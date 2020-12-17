@@ -11,6 +11,16 @@ class HoSoHelper {
           HoSoSpecifics.syntax.doubleSeparator +
           state.password
         );
+      case 'AUTH_LOGOUT_THIS':
+        return (
+          HoSoSpecifics.commandCodes.sending.auth.logOutThis +
+          HoSoSpecifics.syntax.doubleSeparator
+        );
+      case 'AUTH_LOGOUT_ALL':
+        return (
+          HoSoSpecifics.commandCodes.sending.auth.logOutAll +
+          HoSoSpecifics.syntax.doubleSeparator
+        );
       case 'AUTH_AUTO_LOGIN':
         return (
           HoSoSpecifics.commandCodes.sending.auth.autoLogin +

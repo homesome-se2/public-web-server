@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import UserThumbnail from '../../user/user-thumbnail/UserThumbnail';
 import { UserContext } from '../../../contexts/UserContext';
 import './PaneTopbar.css';
+import stEEmitterRVHub from '../../../EEmitters/RVHubs/stEEmitterRVHub';
 
 class PaneTopbar extends Component {
   static contextType = UserContext;
@@ -14,12 +15,26 @@ class PaneTopbar extends Component {
           <div className="left-container">
             <div className="logo"></div>
           </div>
-          <div className="logout-btn"></div>
+          <div
+            className="logout-btn all"
+            onClick={() => {
+              this.context.logout({ payload: null }, { type: 'ALL' });
+            }}
+          >
+            <div className="icon"></div>
+          </div>
+          <div
+            className="logout-btn this"
+            onClick={() => {
+              this.context.logout({ payload: null }, { type: 'THIS' });
+            }}
+          ></div>
+
           <div className="right-container">
-            <UserThumbnail username={'Homer'} size={40} />
+            <UserThumbnail username={this.context.username} size={40} />
             <div className="user-info">
-              <h1>Homer</h1>
-              <h2>Admin</h2>
+              <h1>{this.context.username}</h1>
+              <h2>{this.context.isAdmin === 'true' ? 'Admin' : 'User'}</h2>
             </div>
           </div>
         </div>
