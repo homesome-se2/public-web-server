@@ -27,7 +27,7 @@ class ControlsInput extends Component {
     }
   };
   render() {
-    const { type, label, placeholder } = this.props;
+    const { type, label, placeholder, disabled } = this.props;
     return (
       <div className={`controls-input ${this.props.className}`}>
         <label>{label}</label>
@@ -41,6 +41,7 @@ class ControlsInput extends Component {
               this.handleChange(e);
             }}
             onBlur={this.handleBlur}
+            disabled={disabled}
           ></input>
           <div
             className={`icon ${this.isValid() ? ' valid' : 'invalid'}${

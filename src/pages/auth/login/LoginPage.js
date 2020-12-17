@@ -20,6 +20,7 @@ class LoginPage extends Component {
     console.log('submit', username, password);
     this.setState({ currentCardAnimation: 'card-lock' });
     this.setState({ currentLogoAnimation: 'logo-lock' });
+    this.setState({ invalid: false });
     this.wait(800).then(() => {
       this.setState({ loaderActive: true });
     });
