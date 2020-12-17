@@ -56,6 +56,17 @@ class DashboardPage extends Component {
     return (
       <div className="dashboard-page">
         <PaneTopbar />
+        <div className="pane-wrapper">
+          <div className="group-sel-wrapper">
+            <PaneGadgetGroupSelection />
+          </div>
+          <div className="active-area-wrapper">
+            <PaneActiveArea />
+          </div>
+          <div className="pane-detail-wrapper">
+            <PaneDetail />
+          </div>
+        </div>
       </div>
     );
   }

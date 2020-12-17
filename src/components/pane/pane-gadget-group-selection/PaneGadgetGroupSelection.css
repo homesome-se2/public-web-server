@@ -1,5 +1,9 @@
 .pane-gadget-group-selection {
   height: 100%;
+  overflow-y: scroll;
+}
+.pane-gadget-group-selection::-webkit-scrollbar {
+  display: none;
 }
 
 .pane-gadget-group-selection .header {
