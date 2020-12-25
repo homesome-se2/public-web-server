@@ -14,6 +14,8 @@ class ucEEmitterRVHub {
     onGadgetGroupFetchCompleteRVEEService:
       '$onHosoGadgetGroupReceiveRVEEService',
     onGadgetStateChangeRVEEService: '$onHosoGadgetStateChangeRVEEService',
+    onGadgetAddedRVEEService: '$onHosoGadgetAddedRVEEService',
+    onGadgetRemovedRVEEService: '$onHosoGadgetRemovedRVEEService',
   };
   constructor() {
     this.EEInstance = new EEmitter();

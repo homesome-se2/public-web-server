@@ -278,6 +278,27 @@ class UserContextProvider extends Component {
     this.singletonInstances.s_PLDStack
       .getucEEmitterRVHub()
       .getEEInstance()
+      .subscribe(ucEEmitterRVHub.events.onGadgetAddedRVEEService, (...args) => {
+        console.log('new gadget added (ucHook): ', ...args);
+        console.log('!old state: ', this.state);
+        this.setState(UContextAdapter.addGadget(this.state, ...args));
+        console.log('!current state: ', this.state);
+      });
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetRemovedRVEEService,
+        (...args) => {
+          console.log('gadget removed (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(UContextAdapter.removeGadget(this.state, ...args));
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
       .subscribe(
         ucEEmitterRVHub.events.onServerExceptionRVEEService,
         (...args) => {
