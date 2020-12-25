@@ -15,7 +15,9 @@ class GadgetControlCompactSwitch extends Component {
               type="checkbox"
               checked={this.props.checkedState}
               onClick={() => {}}
-              onChange={() => {}}
+              onChange={(e) => {
+                this.props.onStateAltered(e);
+              }}
             />
             <span className="slider round"></span>
           </label>

@@ -1,9 +1,39 @@
 .gadget-card {
   padding: 1em;
 }
-.gadget-card .active {
+
+.gadget-card .MuiPaper-root {
+  position: relative;
+}
+.gadget-card .active.init-default {
   background-color: #3f6cff !important;
 }
+
+/*////////////////////////////////////
+/////////////  DANGER ///////////
+//////////////////////////////////*/
+.gadget-card .danger {
+  background-color: #75ff3f !important;
+}
+.gadget-card .active.danger {
+  background-color: #ff3f3f !important;
+}
+/*////////////////////////////////////
+/////////////  DANGER ///////////
+//////////////////////////////////*/
+
+/*////////////////////////////////////
+/////////////  safe ///////////
+//////////////////////////////////*/
+.gadget-card .safe {
+  background-color: #ff3f3f !important;
+}
+.gadget-card .active.safe {
+  background-color: #75ff3f !important;
+}
+/*////////////////////////////////////
+/////////////  safe ///////////
+//////////////////////////////////*/
 
 .gadget-card .MuiPaper-root {
   padding: 1.2em 1em;
@@ -27,12 +57,6 @@
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
-.gadget-card .active .icon {
-  background: white !important;
-  box-shadow: 0px 0px 15px 8px rgba(255, 255, 255, 0.4);
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
 
 .gadget-card .text-wrapper {
   margin-left: 4em;
@@ -46,17 +70,6 @@
   font-weight: 300 !important;
   font-size: 0.88em;
 }
-
-.gadget-card .icon {
-  background: #bec4d7;
-  width: 30px;
-  height: 30px;
-  float: left;
-  border-radius: 100%;
-  position: relative;
-  top: 5px;
-}
-
 .gadget-card .gadget-control-compact-switch {
   float: right;
 }
@@ -73,4 +86,216 @@
   position: relative;
   top: -27px;
   height: 0px;
+}
+
+.gadget-card .gadget-control-compact-setValue {
+  float: right;
+  position: relative;
+  top: -54px;
+  right: -18px;
+  height: 0px;
+}
+
+/*////////////////////////////////////
+/////////////  ICONS ///////////
+//////////////////////////////////*/
+
+.gadget-card .icon {
+  float: left;
+  border-radius: 100%;
+  position: relative;
+
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.gadget-card .icon.default {
+  background: #bec4d7;
+  width: 30px;
+  height: 30px;
+  top: 5px;
+}
+
+.gadget-card .icon.custom {
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  left: -8px;
+}
+
+.gadget-card .active .icon.default {
+  background: white !important;
+  box-shadow: 0px 0px 15px 8px rgba(255, 255, 255, 0.4);
+}
+
+/*////////////////////////////////////
+/////////////  SWITCH-LIGHT ///////////
+//////////////////////////////////*/
+
+.gadget-card .icon.switch-light {
+  background-image: url(./assets/icons/switch/light-inactive.png) !important;
+  top: -11px;
+}
+.gadget-card .active .icon.switch-light {
+  background-image: url(./assets/icons/switch/light-active.png) !important;
+  top: -8px;
+}
+/*////////////////////////////////////
+///////  SWITCH-alarmBurglar ////////
+//////////////////////////////////*/
+
+.gadget-card .icon.switch-alarmBurglar {
+  background-image: url(./assets/icons/switch/alarmBurglar-inactive.png) !important;
+
+  top: -11px;
+}
+.gadget-card .active .icon.switch-alarmBurglar {
+  background-image: url(./assets/icons/switch/alarmBurglar-active.png) !important;
+  top: -8px;
+}
+
+/*////////////////////////////////////
+////////////  SWITCH-FAN ///////////
+//////////////////////////////////*/
+
+.gadget-card .icon.switch-fan {
+  background-image: url(./assets/icons/switch/fan-inactive.png) !important;
+  top: -9px;
+}
+.gadget-card .active .icon.switch-fan {
+  background-image: url(./assets/icons/switch/fan-active.png) !important;
+  top: -5px;
+}
+/*////////////////////////////////////
+////////////  SWITCH-default ///////////
+//////////////////////////////////*/
+
+.gadget-card .icon.switch-default {
+  background-image: url(./assets/icons/switch/default-inactive.png) !important;
+
+  top: -10px;
+}
+.gadget-card .active .icon.switch-default {
+  background-image: url(./assets/icons/switch/default-active.png) !important;
+
+  top: -6px;
+}
+/*////////////////////////////////////
+/////////////  SET_VALUE- ///////////
+//////////////////////////////////*/
+
+.gadget-card .icon.setValue-default {
+  background-image: url(./assets/icons/set-value/default-inactive.png) !important;
+  top: -8px;
+}
+.gadget-card .active .icon.setValue-default {
+  background-image: url(./assets/icons/set-value/default-active.png) !important;
+  top: -8px;
+}
+
+/*////////////////////////////////////
+/////////////  SENSOR-temp ///////////
+//////////////////////////////////*/
+
+.gadget-card .icon.sensor-temp {
+  background-image: url(./assets/icons/sensor/temp-inactive.png) !important;
+  top: -8px;
+}
+.gadget-card .active .icon.sensor-temp {
+  background-image: url(./assets/icons/sensor/temp-active.png) !important;
+  top: -8px;
+}
+
+/*////////////////////////////////////
+/////////////  SENSOR-default ///////////
+//////////////////////////////////*/
+
+.gadget-card .icon.sensor-default {
+  background-image: url(./assets/icons/sensor/default-inactive.png) !important;
+  top: -8px;
+}
+.gadget-card .active .icon.sensor-default {
+  background-image: url(./assets/icons/sensor/default-active.png) !important;
+  top: -8px;
+}
+
+/*////////////////////////////////////
+///////  binarySensor-default ////////
+//////////////////////////////////*/
+
+.gadget-card .icon.binarySensor-default {
+  background-image: url(./assets/icons/sensor/default-inactive.png) !important;
+  top: -8px;
+}
+.gadget-card .active .icon.binarySensor-default {
+  background-image: url(./assets/icons/sensor/default-active.png) !important;
+  top: -8px;
+}
+
+/*////////////////////////////////////
+/////////////  loader ///////////
+//////////////////////////////////*/
+.gadget-card .loader {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 15px;
+  z-index: 11;
+
+  background: #f6f7f8;
+  background: linear-gradient(to right, #e4e9f2 8%, #c8cede 18%, #e4e9f2 33%);
+  opacity: 0.7;
+  cursor: auto;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -282px 0;
+  }
+  100% {
+    background-position: 282px 0;
+  }
+}
+
+.gadget-card .loader-preset .icon {
+  background: #f6f7f8;
+  background-image: initial !important;
+  width: 35px;
+  height: 35px;
+  top: 0px;
+  left: 3px;
+
+  background: linear-gradient(to right, #ff3f3f 8%, #c8cede 18%, #ff3f3f 33%);
+  opacity: 0.7;
+  cursor: auto;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+}
+.gadget-card .loader-preset .gadget-alias,
+.gadget-card .loader-preset .gadget-status {
+  text-indent: -9999px;
+  white-space: nowrap;
+}
+.gadget-card .loader-preset .gadget-alias {
+  background: #bec4d7;
+  width: 100px;
+  position: relative;
+  top: -1px;
+}
+
+.gadget-card .loader-preset .gadget-status {
+  background: #bec4d7;
+  width: 80px;
+  position: relative;
+  top: 2px;
 }

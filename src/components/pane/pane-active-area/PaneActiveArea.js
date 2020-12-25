@@ -52,9 +52,14 @@ class PaneActiveArea extends Component {
             >
               {this.context.gadgets.map((gadget, key) => {
                 if (
-                  this.context.selectedGadgetGroup.gadgetIds.includes(gadget.id)
+                  1 || //=REMOVE-ME, NOTIFY ANTON BUG
+                  (this.context != null &&
+                    this.context.selectedGadgetGroup != null &&
+                    this.context.selectedGadgetGroup.gadgetIds.includes(
+                      gadget.id
+                    ))
                 )
-                  return <GadgetCard gadget={gadget} key={gadget.id} />;
+                  return <GadgetCard gadget={gadget} key={key} />;
 
                 return null;
               })}

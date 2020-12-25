@@ -1,0 +1,91 @@
+.gadget-control-compact-setValue {
+  position: relative;
+  transition: all 0.4s;
+}
+.gadget-control-compact-setValue .percentage {
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  text-align: center;
+  transition: all 0.4s;
+}
+
+.gadget-control-compact-setValue .percentage.upper {
+  color: #afb1b7;
+  top: 12px;
+}
+
+.active .gadget-control-compact-setValue .percentage.lower {
+  color: #3f6cff;
+  font-weight: 800;
+}
+
+.gadget-control-compact-setValue .percentage.lower {
+  color: #ffffff;
+  top: 48px;
+}
+.gadget-control-compact-setValue .slider-wrapper {
+  width: 63px;
+  height: 50px;
+  position: relative;
+  transform: rotate(-90deg);
+}
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .gadget-control-compact-setValue input[type='range'] {
+    overflow: hidden;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #f0f3f8;
+    border-radius: 15px;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    outline: none;
+  }
+
+  .active .gadget-control-compact-setValue input[type='range'] {
+    background-color: #0031cc;
+  }
+
+  .gadget-control-compact-setValue
+    input[type='range']::-webkit-slider-runnable-track {
+    height: 50px;
+    -webkit-appearance: none;
+    color: #3f6cff;
+    margin-top: -1px;
+  }
+
+  .gadget-control-compact-setValue input[type='range']::-webkit-slider-thumb {
+    width: 5px;
+    -webkit-appearance: none;
+    height: 51px;
+    cursor: ns-resize;
+    background: #ffff;
+    box-shadow: -80px 0 0 79px #3f6cff;
+  }
+
+  .active
+    .gadget-control-compact-setValue
+    input[type='range']::-webkit-slider-thumb {
+    background: #3f6cff;
+    box-shadow: -80px 0 0 79px #ffff;
+  }
+}
+
+/*firefox*/
+.gadget-control-compact-setValueinput[type='range']::-moz-range-progress {
+  background-color: #3f6cff;
+}
+.gadget-control-compact-setValue input[type='range']::-moz-range-track {
+  background-color: #f0f3f8;
+}
+
+/* IE*/
+.gadget-control-compact-setValue cinput[type='range']::-ms-fill-lower {
+  background-color: #3f6cff;
+}
+.gadget-control-compact-setValue input[type='range']::-ms-fill-upper {
+  background-color: #f0f3f8;
+}

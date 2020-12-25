@@ -47,6 +47,42 @@
   transition: 0.4s;
 }
 
+/*////////////////////////////////////
+/////////////  DANGER ///////////
+//////////////////////////////////*/
+.danger .gadget-control-compact-switch .slider {
+  background-color: #56de21;
+}
+.danger .gadget-control-compact-switch input:checked + .slider {
+  background-color: #bb1010;
+}
+
+.danger .gadget-control-compact-switch input:focus + .slider {
+  box-shadow: 0 0 1px #bb1010;
+}
+
+/*////////////////////////////////////
+/////////////  DANGER ///////////
+//////////////////////////////////*/
+
+/*////////////////////////////////////
+/////////////  safe ///////////
+//////////////////////////////////*/
+.safe .gadget-control-compact-switch .slider {
+  background-color: #bb1010;
+}
+.safe .gadget-control-compact-switch input:checked + .slider {
+  background-color: #56de21;
+}
+
+.safe .gadget-control-compact-switch input:focus + .slider {
+  box-shadow: 0 0 1px #56de21;
+}
+
+/*////////////////////////////////////
+/////////////  safe ///////////
+//////////////////////////////////*/
+
 .gadget-control-compact-switch input:checked + .slider {
   background-color: #0031cc;
 }
