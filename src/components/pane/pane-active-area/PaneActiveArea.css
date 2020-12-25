@@ -34,4 +34,42 @@
   background: #e4e7f2;
   margin-left: auto;
   margin-right: auto;
+  display: block;
+  float: left;
+}
+.pane-active-area .left-wrapper {
+  float: left;
+  width: 50%;
+}
+.pane-active-area .right-wrapper {
+  float: right;
+  width: 50%;
+}
+.pane-active-area .search-bar {
+  width: 200px;
+  box-sizing: border-box;
+  background: #dee6f3;
+  border-radius: 15px;
+  padding: 0.9em;
+  color: #373740;
+
+  transition: all 0.4s;
+  border: 3px solid transparent;
+
+  box-shadow: none;
+  outline: none;
+  transition: all 0.6s;
+  float: right;
+}
+.pane-active-area .right-wrapper .home-alias {
+  font-size: 0.9em;
+  text-align: right;
+}
+.pane-active-area .right-wrapper .home-alias h1 {
+  color: #5c5e65;
+}
+
+.pane-active-area .right-wrapper .home-alias span {
+  color: #c7cbdc;
+  font-weight: 400;
 }
