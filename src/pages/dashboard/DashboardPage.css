@@ -47,8 +47,11 @@ h2.medium-subtitle {
   border-radius: 40px 0 0 0;
   background: white;
 }
+.pane-wrapper .pane-detail-wrapper {
+  width: 450px;
+}
 .pane-wrapper .active-area-wrapper {
-  min-width: 60%;
+  width: 100%;
 }
 .pane-wrapper .group-sel-wrapper {
   width: 190px;

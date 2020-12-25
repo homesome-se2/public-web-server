@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './PaneActiveArea.css';
 
-import { Grid } from '@material-ui/core';
 import GadgetCard from '../../gadget/gadget-card/GadgetCard';
 import { UserContext } from '../../../contexts/UserContext.js';
 import ucEEmitterRVHub from '../../../EEmitters/RVHubs/ucEEmitterRVHub';
@@ -67,12 +66,7 @@ class PaneActiveArea extends Component {
               ></input>
             </div>
             <div className="divider"></div>
-            <Grid
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="flex-start"
-            >
+            <div className="gadget-grid-wrapper">
               {this.context.gadgets.map((gadget, key) => {
                 if (
                   //1 || //=REMOVE-ME, NOTIFY ANTON BUG
@@ -88,7 +82,7 @@ class PaneActiveArea extends Component {
 
                 return null;
               })}
-            </Grid>
+            </div>
           </div>
         </div>
       </div>
