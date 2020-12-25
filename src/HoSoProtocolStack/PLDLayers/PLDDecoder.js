@@ -73,12 +73,40 @@ class PLDDecoder {
     switch (obj.commandCode) {
       case HoSoSpecifics.commandCodes.receiving.auth.successfulManualLogin:
         return new DLObject(
-          { type: 'SUCCESSFUL_MANUAL_LOGIN', directives: {} }, //header
+          {
+            type: 'SUCCESSFUL_MANUAL_LOGIN',
+            directives: [
+              new ENLDObject(
+                'FETCH_AND_MERGE',
+                [
+                  HoSoHelper.buildHoSoString(
+                    {},
+                    { type: 'GADGET_FETCH_GADGETS_LIST' }
+                  ),
+                ],
+                ENLDObject.executingMode.asyncContinue
+              ),
+            ],
+          }, //header
           obj.params // payload
         );
       case HoSoSpecifics.commandCodes.receiving.auth.successfulAutoLogin:
         return new DLObject(
-          { type: 'SUCCESSFUL_AUTO_LOGIN', directives: {} }, //header
+          {
+            type: 'SUCCESSFUL_AUTO_LOGIN',
+            directives: [
+              new ENLDObject(
+                'FETCH_AND_MERGE',
+                [
+                  HoSoHelper.buildHoSoString(
+                    {},
+                    { type: 'GADGET_FETCH_GADGETS_LIST' }
+                  ),
+                ],
+                ENLDObject.executingMode.asyncContinue
+              ),
+            ],
+          }, //header
           obj.params // payload
         );
       case HoSoSpecifics.commandCodes.receiving.auth.successfulLogout:
@@ -124,6 +152,16 @@ class PLDDecoder {
       case HoSoSpecifics.commandCodes.receiving.auth.unsuccessfulLogin:
         return new DLObject(
           { type: 'UNSUCCESSFUL_LOGIN', directives: {} }, //header
+          obj.params // payload
+        );
+      case HoSoSpecifics.commandCodes.receiving.gadgetState.gadgetAddition:
+        return new DLObject(
+          { type: 'GADGET_ADDED', directives: {} }, //header
+          obj.params // payload
+        );
+      case HoSoSpecifics.commandCodes.receiving.gadgetState.gadgetRemoval:
+        return new DLObject(
+          { type: 'GADGET_REMOVED', directives: {} }, //header
           obj.params // payload
         );
       case HoSoSpecifics.commandCodes.receiving.global.exception:

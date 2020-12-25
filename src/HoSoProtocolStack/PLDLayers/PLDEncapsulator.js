@@ -171,6 +171,27 @@ class PLDEncapsulator {
           })
         );
         break;
+      case 'GADGET_ADDED':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetAddedRVEEService,
+          new ENLObject({
+            gadgetID: obj.payload.data[0],
+            alias: obj.payload.data[1],
+            type: obj.payload.data[2],
+            valueTemplate: obj.payload.data[3],
+            state: obj.payload.data[4],
+            pollDelaySec: obj.payload.data[5],
+          })
+        );
+        break;
+      case 'GADGET_REMOVED':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetRemovedRVEEService,
+          new ENLObject({
+            gadgetID: obj.payload.data[0],
+          })
+        );
+        break;
       case 'SERVER_EXCEPTION':
         this._ucEEmitterRVHub.getEEInstance().emit(
           ucEEmitterRVHub.events.onServerExceptionRVEEService,

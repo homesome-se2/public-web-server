@@ -32,7 +32,7 @@ class HoSoSpecifics {
         fetchGadgets: '304',
         fetchGadgetGroups: '373',
         gadgetStateChange: '316',
-        GadgetAddition: '352',
+        gadgetAddition: '352',
         gadgetRemoval: '354',
       },
       global: {
