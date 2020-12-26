@@ -52,6 +52,12 @@ class DashboardPage extends Component {
       state: param,
     });
   };
+  isGadgetSelected = () => {
+    return (
+      this.context.selectedGadget != null &&
+      this.context.selectedGadget !== 'unset'
+    );
+  };
   render() {
     return (
       <div className="dashboard-page">
@@ -63,7 +69,11 @@ class DashboardPage extends Component {
           <div className="active-area-wrapper">
             <PaneActiveArea />
           </div>
-          <div className="pane-detail-wrapper">
+          <div
+            className={`pane-detail-wrapper ${
+              this.isGadgetSelected() ? 'open' : ''
+            }`}
+          >
             <PaneDetail />
           </div>
         </div>

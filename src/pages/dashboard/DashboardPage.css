@@ -48,10 +48,14 @@ h2.medium-subtitle {
   background: white;
 }
 .pane-wrapper .pane-detail-wrapper {
-  width: 450px;
+  width: 150px;
+  transition: width 0.4s;
 }
 .pane-wrapper .active-area-wrapper {
   width: 100%;
+}
+.pane-wrapper .pane-detail-wrapper.open {
+  width: 450px;
 }
 .pane-wrapper .group-sel-wrapper {
   width: 190px;
