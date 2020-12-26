@@ -111,6 +111,9 @@ class GadgetCard extends Component {
       default:
     }
   };
+  updateSelectedGadgetCard = () => {
+    this.context.selectGadget(this.props.gadget);
+  };
   valueChanged = (e) => {
     console.log('slider value: ', e);
     this.setState({ value: e });
@@ -144,7 +147,9 @@ class GadgetCard extends Component {
           className={` ${this.generateActiveColorClass()} ${
             this.isActive() ? ' active' : ''
           }`}
-          onClick={(e) => {}}
+          onClick={(e) => {
+            this.updateSelectedGadgetCard();
+          }}
         >
           <div
             className="loader"
