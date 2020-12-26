@@ -25,6 +25,7 @@ class UserContextProvider extends Component {
     gadgets: [],
     gadgetsGroups: [],
     selectedGadgetGroup: null,
+    selectedGadget: null,
     lifecycleHooks: new stEEmitterRVHub(),
   };
   /////////////////////////////////////
@@ -133,6 +134,12 @@ class UserContextProvider extends Component {
     );
   };
 
+  /////////////////////////////////////
+  //////// selected-gadget ///////////
+  ///////////////////////////////////
+  selectGadget = (state) => {
+    this.setState({ selectedGadget: state });
+  };
   /////////////////////////////////////
   ////////  ucReceiverEEHub  /////////
   ///////////////////////////////////
@@ -344,6 +351,7 @@ class UserContextProvider extends Component {
           auth: this.auth,
           logout: this.logout,
           update: this.update,
+          selectGadget: this.selectGadget,
           singletonInstances: this.singletonInstances,
           updateGadgetGroupSelection: this.updateGadgetGroupSelection,
         }}
