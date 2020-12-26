@@ -16,7 +16,6 @@ class GadgetControlCompactSetValue extends Component {
   };
 
   render() {
-    const { state } = this.props;
     return (
       <div className="gadget-control-compact-setValue">
         <div className="wrapper">
@@ -29,6 +28,7 @@ class GadgetControlCompactSetValue extends Component {
               min="0"
               max="100"
               step="1.0"
+              value={this.state.percentage}
               className="v-slider"
               onChange={(e) => {
                 this.handleChange(e);

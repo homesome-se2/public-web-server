@@ -1,0 +1,46 @@
+.gadget-control-expanded-switch {
+  height: 200px;
+}
+.gadget-control-expanded-switch .switch {
+  position: relative;
+}
+.gadget-control-expanded-switch .switch .outer {
+  background: #f2f7fb;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.gadget-control-expanded-switch .switch .inner {
+  background: white;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  z-index: 1;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  box-shadow: 0px 0px 20px 15px rgba(229, 231, 234, 1);
+  transition: all 0.4s;
+  cursor: pointer;
+}
+.gadget-control-expanded-switch .switch.active .inner {
+  background: #0284ff;
+  box-shadow: 0px 0px 5px 10px rgba(123, 191, 255, 0.3);
+}
+.gadget-control-expanded-switch .switch.active .inner:hover {
+  /*box-shadow: 0px 0px 20px 15px rgba(123, 191, 255, 0.3);*/
+}
+.gadget-control-expanded-switch .switch .inner:hover {
+  box-shadow: 0px 0px 5px 10px rgba(229, 231, 234, 1);
+}
+.gadget-control-expanded-switch .switch h2 {
+  color: #f2f7fb;
+  font-weight: 300;
+  position: relative;
+  top: 45px;
+}
