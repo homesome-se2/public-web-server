@@ -13,6 +13,34 @@ class PaneDetail extends Component {
     );
   };
 
+  getStatus = () => {
+    if (this.context.selectedGadget != null)
+      switch (this.context.selectedGadget.type) {
+        case 'SWITCH':
+          return this.context.selectedGadget.state === '1.0' ? 'on' : 'off';
+        case 'SET_VALUE':
+          return this.context.selectedGadget.state;
+        case 'BINARY_SENSOR':
+          return this.context.selectedGadget.state;
+        case 'SENSOR':
+          return this.context.selectedGadget.state;
+        default:
+      }
+  };
+
+  renderExpandedComponent = () => {
+    if (this.context.selectedGadget != null)
+      switch (this.context.selectedGadget.type) {
+        case 'SWITCH':
+          return <GadgetControlExpandedSwitch />;
+        case 'SET_VALUE':
+          return null;
+        case 'BINARY_SENSOR':
+          return null;
+        case 'SENSOR':
+        default:
+      }
+  };
   capitalizeString = (string) => {
     return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
   };
@@ -54,12 +82,12 @@ class PaneDetail extends Component {
             }
           />
           <div className="control-wrapper">
-            <GadgetControlExpandedSwitch />
+            {this.renderExpandedComponent()}
           </div>
           <div className="state-wrapper">
             <h2 className="sub-header center light-grey">Status</h2>
             <h1>
-              The gadget is <span className="active">on</span>
+              The gadget is <span className="active">{this.getStatus()}</span>
             </h1>
           </div>
           <div className="divider"></div>

@@ -147,10 +147,13 @@ class GadgetCard extends Component {
           className={` ${this.generateActiveColorClass()} ${
             this.isActive() ? ' active' : ''
           }`}
-          onClick={(e) => {
-            this.updateSelectedGadgetCard();
-          }}
         >
+          <div
+            className="interactive-area"
+            onClick={(e) => {
+              this.updateSelectedGadgetCard();
+            }}
+          ></div>
           <div
             className="loader"
             style={{ display: this.state.loading ? 'block' : 'none' }}

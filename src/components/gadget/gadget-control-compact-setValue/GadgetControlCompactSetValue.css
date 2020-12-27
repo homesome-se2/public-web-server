@@ -1,6 +1,7 @@
 .gadget-control-compact-setValue {
   position: relative;
   transition: all 0.4s;
+  z-index: 2;
 }
 .gadget-control-compact-setValue .percentage {
   position: relative;

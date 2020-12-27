@@ -6,6 +6,8 @@
   margin-bottom: 0.5em;
   background: #f0f3f8;
   border-radius: 100%;
+
+  z-index: 2;
 }
 .gadget-control-compact-binarySensor .led-status {
   font-size: 0.8em;
