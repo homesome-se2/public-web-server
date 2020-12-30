@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { UserContext } from '../../../../contexts/UserContext';
+import { UserContext } from '../../../contexts/UserContext';
 import './GadgetControlExpandedSetValue.css';
 
 class GadgetControlExpandedSetValue extends Component {
@@ -11,7 +11,12 @@ class GadgetControlExpandedSetValue extends Component {
 
   handleChange = (e) => {
     this.setState({ percentage: e.target.value });
-    //this.props.onValueChange(e.target.value);
+  };
+  alterState = () => {
+    this.context.update({
+      gadgetId: this.context.selectedGadget.id,
+      newState: this.state.percentage,
+    });
   };
   render() {
     return (
@@ -33,7 +38,7 @@ class GadgetControlExpandedSetValue extends Component {
                 this.handleChange(e);
               }}
               onBlur={(e) => {
-                //this.props.onStateAltered(e);
+                this.alterState();
               }}
             ></input>
           </div>

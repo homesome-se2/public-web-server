@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
-import GadgetControlExpandedSetValue from '../../gadget/gadget-card/gadget-control-expanded-setValue/GadgetControlExpandedSetValue';
 import GadgetControlExpandedSwitch from '../../gadget/gadget-control-expanded-switch/GadgetControlExpandedSwitch';
+import GadgetControlExpandedSetValue from '../../gadget/gadget-control-expanded-setValue/GadgetControlExpandedSetValue';
 import './PaneDetail.css';
 
 class PaneDetail extends Component {
