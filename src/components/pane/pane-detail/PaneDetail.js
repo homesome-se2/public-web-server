@@ -4,6 +4,7 @@ import GadgetControlExpandedSwitch from '../../gadget/gadget-control-expanded-sw
 import GadgetControlExpandedSetValue from '../../gadget/gadget-control-expanded-setValue/GadgetControlExpandedSetValue';
 import GadgetControlExpandedSensor from '../../gadget/gadget-control-expanded-sensor/GadgetControlExpandedSensor';
 import './PaneDetail.css';
+import GadgetControlExpandedBinarySensor from '../../gadget/gadget-control-expanded-binarySensor/GadgetControlExpandedBinarySensor';
 
 class PaneDetail extends Component {
   static contextType = UserContext;
@@ -38,7 +39,10 @@ class PaneDetail extends Component {
         case 'SET_VALUE':
           return '0% to 100%';
         case 'BINARY_SENSOR':
-          return this.context.selectedGadget.state;
+          return this.getBinarySensorStatus(
+            this.context.selectedGadget.valueTemplate,
+            Number(this.context.selectedGadget.state) >= 1
+          );
         case 'SENSOR':
           return this.context.selectedGadget.valueTemplate === 'temp'
             ? '-20°C to +60°C'
@@ -49,6 +53,19 @@ class PaneDetail extends Component {
       }
   };
 
+  getBinarySensorStatus = (vTemplate, state) => {
+    switch (vTemplate) {
+      case 'detectorBurglar':
+        return state ? 'Detector triggered!' : 'No detection occured';
+      case 'door':
+        return state ? 'The door is open' : 'The door is closed';
+      case 'person':
+        return state ? 'The person is Home' : 'The person is Away';
+      default:
+        return state ? 'Sensor reported On' : 'Sensor reported Off';
+    }
+  };
+
   renderExpandedComponent = () => {
     if (this.context.selectedGadget != null)
       switch (this.context.selectedGadget.type) {
@@ -57,13 +74,15 @@ class PaneDetail extends Component {
         case 'SET_VALUE':
           return <GadgetControlExpandedSetValue />;
         case 'BINARY_SENSOR':
-          return null;
+          return <GadgetControlExpandedBinarySensor />;
         case 'SENSOR':
           return <GadgetControlExpandedSensor />;
         default:
       }
   };
   capitalizeString = (string) => {
+    if (string === 'SET_VALUE') return 'SetValue';
+    if (string === 'BINARY_SENSOR') return 'BSensor';
     return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
   };
 
