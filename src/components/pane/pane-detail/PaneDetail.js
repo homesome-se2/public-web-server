@@ -9,6 +9,10 @@ import GadgetControlExpandedBinarySensor from '../../gadget/gadget-control-expan
 class PaneDetail extends Component {
   static contextType = UserContext;
 
+  state = {
+    newGadgetAlias: ' ',
+  };
+
   isGadgetSelected = () => {
     return (
       this.context.selectedGadget != null &&
@@ -90,6 +94,17 @@ class PaneDetail extends Component {
     this.context.selectGadget(null);
   };
 
+  updateAlias = (e) => {
+    this.setState({ newGadgetAlias: e.target.value });
+  };
+  alterAlias = (e) => {
+    console.log(this.state.newGadgetAlias);
+    this.context.updateAlias({
+      gadgetId: this.context.selectedGadget.gadgetID,
+      newAlias: this.state.newGadgetAlias,
+    });
+  };
+
   state = {};
   render() {
     return (
@@ -115,12 +130,14 @@ class PaneDetail extends Component {
           <h2 className="sub-header light-grey">Device alias</h2>
           <input
             type="text"
-            className="i-gadget-alias"
-            value={
+            placeholder={
               this.context.selectedGadget != null
                 ? this.context.selectedGadget.alias
-                : 'UNSET'
+                : 'Unset'
             }
+            className="i-gadget-alias"
+            onChange={this.updateAlias}
+            onBlur={this.alterAlias}
           />
           <div className="control-wrapper">
             {this.renderExpandedComponent()}
