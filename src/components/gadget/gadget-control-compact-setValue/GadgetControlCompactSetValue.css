@@ -1,4 +1,5 @@
-.gadget-control-compact-setValue {
+.gadget-control-compact-setValue,
+.gadget-control-expanded-setValue {
   position: relative;
   transition: all 0.4s;
   z-index: 2;
@@ -33,7 +34,8 @@
 }
 /*Chrome*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  .gadget-control-compact-setValue input[type='range'] {
+  .gadget-control-compact-setValue input[type='range'],
+  .gadget-control-expanded-setValue input[type='range'] {
     overflow: hidden;
     width: 100%;
     -webkit-appearance: none;
@@ -46,11 +48,14 @@
     outline: none;
   }
 
-  .active .gadget-control-compact-setValue input[type='range'] {
+  .active .gadget-control-compact-setValue input[type='range'],
+  .active .gadget-control-expanded-setValue input[type='range'] {
     background-color: #0031cc;
   }
 
   .gadget-control-compact-setValue
+    input[type='range']::-webkit-slider-runnable-track,
+  .gadget-control-expanded-setValue
     input[type='range']::-webkit-slider-runnable-track {
     height: 50px;
     -webkit-appearance: none;
@@ -58,7 +63,8 @@
     margin-top: -1px;
   }
 
-  .gadget-control-compact-setValue input[type='range']::-webkit-slider-thumb {
+  .gadget-control-compact-setValue input[type='range']::-webkit-slider-thumb,
+  .gadget-control-expanded-setValue input[type='range']::-webkit-slider-thumb {
     width: 5px;
     -webkit-appearance: none;
     height: 51px;
@@ -69,6 +75,9 @@
 
   .active
     .gadget-control-compact-setValue
+    input[type='range']::-webkit-slider-thumb,
+  .active
+    .gadget-control-expanded-setValue
     input[type='range']::-webkit-slider-thumb {
     background: #3f6cff;
     box-shadow: -80px 0 0 79px #ffff;
@@ -76,17 +85,21 @@
 }
 
 /*firefox*/
-.gadget-control-compact-setValueinput[type='range']::-moz-range-progress {
+.gadget-control-compact-setValueinput[type='range']::-moz-range-progress,
+.gadget-control-expanded-setValueinput[type='range']::-moz-range-progress {
   background-color: #3f6cff;
 }
-.gadget-control-compact-setValue input[type='range']::-moz-range-track {
+.gadget-control-compact-setValue input[type='range']::-moz-range-track,
+.gadget-control-expanded-setValue input[type='range']::-moz-range-track {
   background-color: #f0f3f8;
 }
 
 /* IE*/
-.gadget-control-compact-setValue cinput[type='range']::-ms-fill-lower {
+.gadget-control-compact-setValue cinput[type='range']::-ms-fill-lower,
+.gadget-control-expanded-setValue cinput[type='range']::-ms-fill-lower {
   background-color: #3f6cff;
 }
-.gadget-control-compact-setValue input[type='range']::-ms-fill-upper {
+.gadget-control-compact-setValue input[type='range']::-ms-fill-upper,
+.gadget-control-expanded-setValue input[type='range']::-ms-fill-upper {
   background-color: #f0f3f8;
 }
