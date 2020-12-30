@@ -1,5 +1,6 @@
 import UContextAdapter from '../../contexts/UContextAdapter';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
+import AlterGadgetAliasRequest from '../../models/AlterGadgetAliasRequest';
 import AlterGadgetStateRequest from '../../models/AlterGadgetStateRequest';
 import AuthRequest from '../../models/AuthRequest';
 import LogoutRequest from '../../models/LogoutRequest';
@@ -80,6 +81,11 @@ class PLDEncapsulator {
       case AlterGadgetStateRequest:
         return new ENLObject({
           type: 'GADGET_ALTER_GADGET_STATE',
+          data: obj,
+        });
+      case AlterGadgetAliasRequest:
+        return new ENLObject({
+          type: 'GADGET_ALTER_GADGET_ALIAS',
           data: obj,
         });
       case LogoutRequest:
@@ -168,6 +174,15 @@ class PLDEncapsulator {
           new ENLObject({
             gadgetID: obj.payload.data[0],
             newState: obj.payload.data[1],
+          })
+        );
+        break;
+      case 'GADGET_ALIAS_CHANGE':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetAliasChangeRVEEService,
+          new ENLObject({
+            gadgetID: obj.payload.data[0],
+            newAlias: obj.payload.data[1],
           })
         );
         break;

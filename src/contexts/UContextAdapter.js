@@ -5,6 +5,14 @@ class UContextAdapter {
     this.CChangeListener();
   }
   CChangeListener = () => {};
+  static updateUCGadgetAlias = (state, ...update) => {
+    for (let g of state.gadgets) {
+      if (g.id === update[0].props?.gadgetID)
+        g.alias = update[0].props?.newAlias;
+    }
+
+    return state;
+  };
   static updateUCUserData = (state, ...update) => {
     state.isAuth = update[0].props.isAuth;
     state.username = update[0].props.C_nameID;
@@ -30,7 +38,6 @@ class UContextAdapter {
       if (g.id === update[0].props?.gadgetID)
         g.state = update[0].props?.newState;
     }
-    console.log('+g:', state);
 
     return state;
   };

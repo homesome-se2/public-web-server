@@ -14,6 +14,7 @@ class ucEEmitterRVHub {
     onGadgetGroupFetchCompleteRVEEService:
       '$onHosoGadgetGroupReceiveRVEEService',
     onGadgetStateChangeRVEEService: '$onHosoGadgetStateChangeRVEEService',
+    onGadgetAliasChangeRVEEService: '$onHosoGadgetAliasChangeRVEEService',
     onGadgetAddedRVEEService: '$onHosoGadgetAddedRVEEService',
     onGadgetRemovedRVEEService: '$onHosoGadgetRemovedRVEEService',
   };

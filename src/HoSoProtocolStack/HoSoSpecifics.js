@@ -16,6 +16,7 @@ class HoSoSpecifics {
         fetchGadgets: '301',
         fetchGadgetGroups: '370',
         alterGadgetState: '311',
+        alterGadgetAlias: '401',
       },
       global: {
         ping: 'ping',
@@ -34,6 +35,7 @@ class HoSoSpecifics {
         gadgetStateChange: '316',
         gadgetAddition: '352',
         gadgetRemoval: '354',
+        gadgetAliasChange: '404',
       },
       global: {
         exception: '901',

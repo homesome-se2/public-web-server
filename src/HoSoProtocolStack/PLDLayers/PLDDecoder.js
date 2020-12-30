@@ -149,6 +149,14 @@ class PLDDecoder {
           }, //header
           obj.params // payload
         );
+      case HoSoSpecifics.commandCodes.receiving.gadgetState.gadgetAliasChange:
+        return new DLObject(
+          {
+            type: 'GADGET_ALIAS_CHANGE',
+            directives: [],
+          },
+          obj.params // payload
+        );
       case HoSoSpecifics.commandCodes.receiving.auth.unsuccessfulLogin:
         return new DLObject(
           { type: 'UNSUCCESSFUL_LOGIN', directives: {} }, //header

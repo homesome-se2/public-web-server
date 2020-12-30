@@ -9,6 +9,7 @@ import LSTokenService from '../services/LSTokenService';
 import AuthCryptoGuard from '../helpers/AuthCryptoGuard';
 import stEEmitterRVHub from '../EEmitters/RVHubs/stEEmitterRVHub';
 import LogoutRequest from '../models/LogoutRequest';
+import AlterGadgetAliasRequest from '../models/AlterGadgetAliasRequest';
 
 export const UserContext = createContext();
 
@@ -131,6 +132,15 @@ class UserContextProvider extends Component {
   update = (state) => {
     this.singletonInstances.s_PLDStack.send(
       new AlterGadgetStateRequest(state.gadgetId, state.newState)
+    );
+  };
+
+  /////////////////////////////////////
+  //////// alter-GADGET-A ////////////
+  ///////////////////////////////////
+  updateAlias = (state) => {
+    this.singletonInstances.s_PLDStack.send(
+      new AlterGadgetAliasRequest(state.gadgetId, state.newAlias)
     );
   };
 
@@ -285,6 +295,20 @@ class UserContextProvider extends Component {
     this.singletonInstances.s_PLDStack
       .getucEEmitterRVHub()
       .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetAliasChangeRVEEService,
+        (...args) => {
+          console.log('gadget alias change (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCGadgetAlias(this.state, ...args)
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
       .subscribe(ucEEmitterRVHub.events.onGadgetAddedRVEEService, (...args) => {
         console.log('new gadget added (ucHook): ', ...args);
         console.log('!old state: ', this.state);
@@ -351,6 +375,7 @@ class UserContextProvider extends Component {
           auth: this.auth,
           logout: this.logout,
           update: this.update,
+          updateAlias: this.updateAlias,
           selectGadget: this.selectGadget,
           singletonInstances: this.singletonInstances,
           updateGadgetGroupSelection: this.updateGadgetGroupSelection,
