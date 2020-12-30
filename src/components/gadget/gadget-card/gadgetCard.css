@@ -224,11 +224,50 @@
 //////////////////////////////////*/
 
 .gadget-card .icon.binarySensor-default {
-  background-image: url(./assets/icons/sensor/default-inactive.png) !important;
+  background-image: url(./assets/icons/binarySensor/default.png) !important;
   top: -8px;
 }
 .gadget-card .active .icon.binarySensor-default {
-  background-image: url(./assets/icons/sensor/default-active.png) !important;
+  background-image: url(./assets/icons/binarySensor/default-active.png) !important;
+  top: -8px;
+}
+
+/*////////////////////////////////////
+//  binarySensor-burglarDeector /////
+//////////////////////////////////*/
+
+.gadget-card .icon.binarySensor-detectorBurglar {
+  background-image: url(./assets/icons/binarySensor/detectorBurglar.png) !important;
+  top: -8px;
+}
+.gadget-card .active .icon.binarySensor-detectorBurglar {
+  background-image: url(./assets/icons/binarySensor/detectorBurglar-active.png) !important;
+  top: -8px;
+}
+
+/*////////////////////////////////////
+//  binarySensor-door /////
+//////////////////////////////////*/
+
+.gadget-card .icon.binarySensor-door {
+  background-image: url(./assets/icons/binarySensor/door.png) !important;
+  top: -8px;
+}
+.gadget-card .active .icon.binarySensor-door {
+  background-image: url(./assets/icons/binarySensor/door-active.png) !important;
+  top: -8px;
+}
+
+/*////////////////////////////////////
+//  binarySensor-person /////
+//////////////////////////////////*/
+
+.gadget-card .icon.binarySensor-person {
+  background-image: url(./assets/icons/binarySensor/person.png) !important;
+  top: -8px;
+}
+.gadget-card .active .icon.binarySensor-person {
+  background-image: url(./assets/icons/binarySensor/person-active.png) !important;
   top: -8px;
 }
 

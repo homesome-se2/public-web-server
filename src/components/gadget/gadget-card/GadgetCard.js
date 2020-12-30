@@ -37,7 +37,16 @@ class GadgetCard extends Component {
           return <div className="icon custom sensor-temp"></div>;
 
         return <div className="icon custom sensor-default"></div>;
-      case 'BINARY_SENSOR': /* =TODO [AMID] */
+      case 'BINARY_SENSOR':
+        if (this.props.gadget.valueTemplate === 'detectorBurglar')
+          return (
+            <div className="icon custom binarySensor-detectorBurglar"></div>
+          );
+        if (this.props.gadget.valueTemplate === 'door')
+          return <div className="icon custom binarySensor-door"></div>;
+        if (this.props.gadget.valueTemplate === 'person')
+          return <div className="icon custom binarySensor-person"></div>;
+        return <div className="icon custom binarySensor-default"></div>;
       default:
         return <div className="icon default"></div>;
     }
@@ -67,7 +76,12 @@ class GadgetCard extends Component {
           />
         );
       case 'BINARY_SENSOR':
-        return <GadgeControlCompactBinarySensor state={this.isActive()} />;
+        return (
+          <GadgeControlCompactBinarySensor
+            state={this.isActive()}
+            vTemplate={this.props.gadget.valueTemplate}
+          />
+        );
       case 'SENSOR':
         return (
           <GadgetControlCompactSensor
@@ -96,7 +110,8 @@ class GadgetCard extends Component {
   isActive = () => {
     switch (this.props.gadget.type) {
       case 'SWITCH':
-        if (this.props.gadget.state === '1.0') return true;
+      case 'BINARY_SENSOR':
+        if (Number(this.props.gadget.state >= 1)) return true;
         return false;
       case 'SET_VALUE':
         if (parseFloat(this.state.value) > 50.0) return true; //this.props.gadget.state
