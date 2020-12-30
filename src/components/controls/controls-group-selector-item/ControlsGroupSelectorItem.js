@@ -11,6 +11,13 @@ class ControlsGroupSelectorItem extends Component {
   handleClick = (e) => {
     this.props.onSelectionChange(this.props.gadgetName);
   };
+  generateThumbnail = (string) => {
+    const ws = string.indexOf(' ');
+    const nLegalPOS = ws <= string.length ? ws : ws + 1;
+    if (ws >= 0) return string[0].toUpperCase() + string[nLegalPOS];
+    if (string.length > 1) return string[0].toUpperCase() + string[1];
+    return string[0].toUpperCase();
+  };
 
   render() {
     const { gadgetName, active } = this.props;
@@ -23,7 +30,7 @@ class ControlsGroupSelectorItem extends Component {
       >
         <div className={`wrapper${active ? ' active' : ''}`}>
           <div className="group-name">{gadgetName}</div>
-          <div className="group-icon"></div>
+          <div className="group-icon">{this.generateThumbnail(gadgetName)}</div>
         </div>
       </div>
     );

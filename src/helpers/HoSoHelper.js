@@ -11,6 +11,16 @@ class HoSoHelper {
           HoSoSpecifics.syntax.doubleSeparator +
           state.password
         );
+      case 'AUTH_LOGOUT_THIS':
+        return (
+          HoSoSpecifics.commandCodes.sending.auth.logOutThis +
+          HoSoSpecifics.syntax.doubleSeparator
+        );
+      case 'AUTH_LOGOUT_ALL':
+        return (
+          HoSoSpecifics.commandCodes.sending.auth.logOutAll +
+          HoSoSpecifics.syntax.doubleSeparator
+        );
       case 'AUTH_AUTO_LOGIN':
         return (
           HoSoSpecifics.commandCodes.sending.auth.autoLogin +
@@ -33,6 +43,14 @@ class HoSoHelper {
         return (
           HoSoSpecifics.commandCodes.sending.gadgetState.fetchGadgetGroups +
           HoSoSpecifics.syntax.doubleSeparator
+        );
+      case 'GADGET_ALTER_GADGET_ALIAS':
+        return (
+          HoSoSpecifics.commandCodes.sending.gadgetState.alterGadgetAlias +
+          HoSoSpecifics.syntax.doubleSeparator +
+          state.gadgetId +
+          HoSoSpecifics.syntax.doubleSeparator +
+          state.newAlias
         );
       case 'GADGET_ALTER_GADGET_STATE':
         return (

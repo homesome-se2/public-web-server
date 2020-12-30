@@ -1,7 +1,9 @@
 import UContextAdapter from '../../contexts/UContextAdapter';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
+import AlterGadgetAliasRequest from '../../models/AlterGadgetAliasRequest';
 import AlterGadgetStateRequest from '../../models/AlterGadgetStateRequest';
 import AuthRequest from '../../models/AuthRequest';
+import LogoutRequest from '../../models/LogoutRequest';
 import HoSoSpecifics from '../HoSoSpecifics';
 import ENLObject from '../LDOModels/ENLObject';
 
@@ -81,6 +83,18 @@ class PLDEncapsulator {
           type: 'GADGET_ALTER_GADGET_STATE',
           data: obj,
         });
+      case AlterGadgetAliasRequest:
+        return new ENLObject({
+          type: 'GADGET_ALTER_GADGET_ALIAS',
+          data: obj,
+        });
+      case LogoutRequest:
+        const typeString =
+          obj.type === 'ALL' ? 'AUTH_LOGOUT_ALL' : 'AUTH_LOGOUT_THIS';
+        return new ENLObject({
+          type: typeString,
+          data: obj,
+        });
       default:
         return new ENLObject({ type: '!ERR: UNSUPPORTED REQUEST', data: null });
     }
@@ -100,7 +114,6 @@ class PLDEncapsulator {
         );
         break;
       case 'SUCCESSFUL_AUTO_LOGIN':
-        console.log('!!!', obj);
         this._ucEEmitterRVHub.getEEInstance().emit(
           ucEEmitterRVHub.events.onSuccessfulAutoLoginRVEEService,
           new ENLObject({
@@ -109,6 +122,14 @@ class PLDEncapsulator {
             C_isAdmin: obj.payload.data[1],
             H_Alias: obj.payload.data[2],
             C_SessionKey: obj.payload.data[3],
+          })
+        );
+        break;
+      case 'SUCCESSFUL_LOGOUT':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onSuccessfulLogoutRVEEService,
+          new ENLObject({
+            message: obj.payload.data,
           })
         );
         break;
@@ -153,6 +174,36 @@ class PLDEncapsulator {
           new ENLObject({
             gadgetID: obj.payload.data[0],
             newState: obj.payload.data[1],
+          })
+        );
+        break;
+      case 'GADGET_ALIAS_CHANGE':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetAliasChangeRVEEService,
+          new ENLObject({
+            gadgetID: obj.payload.data[0],
+            newAlias: obj.payload.data[1],
+          })
+        );
+        break;
+      case 'GADGET_ADDED':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetAddedRVEEService,
+          new ENLObject({
+            gadgetID: obj.payload.data[0],
+            alias: obj.payload.data[1],
+            type: obj.payload.data[2],
+            valueTemplate: obj.payload.data[3],
+            state: obj.payload.data[4],
+            pollDelaySec: obj.payload.data[5],
+          })
+        );
+        break;
+      case 'GADGET_REMOVED':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onGadgetRemovedRVEEService,
+          new ENLObject({
+            gadgetID: obj.payload.data[0],
           })
         );
         break;

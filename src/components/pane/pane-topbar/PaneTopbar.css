@@ -1,0 +1,79 @@
+.pane-topbar {
+  width: 100%;
+  height: 65px;
+  top: 0;
+  left: 0;
+  background: #0d2450;
+}
+.pane-topbar .wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: inherit;
+}
+.pane-topbar .left-container {
+  float: left;
+  padding: 1em 3em;
+}
+.pane-topbar .right-container {
+  float: right;
+  height: inherit;
+}
+.pane-topbar .left-container,
+.pane-topbar .right-container {
+  display: inline-block !important;
+}
+.pane-topbar .logo {
+  background-image: url(../../../assets/images/hs-webjs-logo-topbar.png);
+  width: 196.4px;
+  height: 33.2px;
+  background-size: 196.4px;
+}
+.pane-topbar .logout-btn {
+  width: 65px;
+  height: 65px;
+  background: #8374f3;
+  float: right;
+  background-image: url(./assets/logout-btn.png);
+  background-size: 50.5px 44px;
+  background-repeat: no-repeat;
+  background-position: 10px 10px;
+  transition: background-image 0.4s ease;
+  cursor: pointer;
+}
+.pane-topbar .logout-btn:hover,
+.pane-topbar .logout-btn.all:hover {
+  background-image: url(./assets/logout-btn-active.png);
+}
+.pane-topbar .logout-btn.all {
+  background: #93b4f9;
+  background-image: url(./assets/logout-btn.png);
+  background-size: 50.5px 44px;
+  background-repeat: no-repeat;
+  background-position: 10px 10px;
+}
+
+.pane-topbar .user-thumbnail {
+  position: relative;
+  top: -12px;
+  margin-right: 1em;
+}
+.pane-topbar .user-info {
+  text-align: left;
+}
+.pane-topbar .user-thumbnail,
+.pane-topbar .user-info {
+  display: inline-block;
+  margin-right: 1em;
+  margin-top: 3px;
+}
+.pane-topbar .user-info h1 {
+  font-size: 0.9em;
+  color: white;
+  margin-bottom: -5px;
+}
+.pane-topbar .user-info h2 {
+  font-size: 0.8em;
+  color: #8374f3;
+}

@@ -8,6 +8,8 @@ import UContextAdapter from './UContextAdapter';
 import LSTokenService from '../services/LSTokenService';
 import AuthCryptoGuard from '../helpers/AuthCryptoGuard';
 import stEEmitterRVHub from '../EEmitters/RVHubs/stEEmitterRVHub';
+import LogoutRequest from '../models/LogoutRequest';
+import AlterGadgetAliasRequest from '../models/AlterGadgetAliasRequest';
 
 export const UserContext = createContext();
 
@@ -24,6 +26,7 @@ class UserContextProvider extends Component {
     gadgets: [],
     gadgetsGroups: [],
     selectedGadgetGroup: null,
+    selectedGadget: null,
     lifecycleHooks: new stEEmitterRVHub(),
   };
   /////////////////////////////////////
@@ -107,6 +110,23 @@ class UserContextProvider extends Component {
       .catch((err) => {});
   };
   /////////////////////////////////////
+  /////////////  log-out  /////////////
+  ////////////////////////////////////
+  logout = (state, action) => {
+    switch (action.type) {
+      case 'ALL':
+        this.singletonInstances.s_PLDStack.send(
+          new LogoutRequest('ALL', state)
+        );
+        break;
+      default:
+        this.singletonInstances.s_PLDStack.send(
+          new LogoutRequest('THIS', state)
+        );
+    }
+  };
+
+  /////////////////////////////////////
   //////// alter-GADGET-S ////////////
   ///////////////////////////////////
   update = (state) => {
@@ -115,6 +135,21 @@ class UserContextProvider extends Component {
     );
   };
 
+  /////////////////////////////////////
+  //////// alter-GADGET-A ////////////
+  ///////////////////////////////////
+  updateAlias = (state) => {
+    this.singletonInstances.s_PLDStack.send(
+      new AlterGadgetAliasRequest(state.gadgetId, state.newAlias)
+    );
+  };
+
+  /////////////////////////////////////
+  //////// selected-gadget ///////////
+  ///////////////////////////////////
+  selectGadget = (state) => {
+    this.setState({ selectedGadget: state });
+  };
   /////////////////////////////////////
   ////////  ucReceiverEEHub  /////////
   ///////////////////////////////////
@@ -198,6 +233,22 @@ class UserContextProvider extends Component {
       .getucEEmitterRVHub()
       .getEEInstance()
       .subscribe(
+        ucEEmitterRVHub.events.onSuccessfulLogoutRVEEService,
+        (...args) => {
+          console.log('successful logout (ucHook): ', ...args);
+          LSTokenService.clearStorage();
+          this.singletonInstances.s_CService.disconnect();
+          this.setState(UContextAdapter.clearContext(), () => {
+            /////////////////////////////// lifecycleHooks: emitLogout
+            this.state.lifecycleHooks.emitLogout(this.state, ...args);
+            /////////////////////////////// lifecycleHooks: emitLogout
+          });
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
         ucEEmitterRVHub.events.onGadgetFetchCompleteRVEEService,
         (...args) => {
           console.log('gadget fetch (ucHook): ', ...args);
@@ -245,6 +296,41 @@ class UserContextProvider extends Component {
       .getucEEmitterRVHub()
       .getEEInstance()
       .subscribe(
+        ucEEmitterRVHub.events.onGadgetAliasChangeRVEEService,
+        (...args) => {
+          console.log('gadget alias change (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(
+            UContextAdapter.updateUCGadgetAlias(this.state, ...args)
+          );
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(ucEEmitterRVHub.events.onGadgetAddedRVEEService, (...args) => {
+        console.log('new gadget added (ucHook): ', ...args);
+        console.log('!old state: ', this.state);
+        this.setState(UContextAdapter.addGadget(this.state, ...args));
+        console.log('!current state: ', this.state);
+      });
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onGadgetRemovedRVEEService,
+        (...args) => {
+          console.log('gadget removed (ucHook): ', ...args);
+          console.log('!old state: ', this.state);
+          this.setState(UContextAdapter.removeGadget(this.state, ...args));
+          console.log('!current state: ', this.state);
+        }
+      );
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
         ucEEmitterRVHub.events.onServerExceptionRVEEService,
         (...args) => {
           console.log('server exception (ucHook): ', ...args);
@@ -280,7 +366,6 @@ class UserContextProvider extends Component {
     }
     return false;
   };
-
   render() {
     return (
       <UserContext.Provider
@@ -288,7 +373,10 @@ class UserContextProvider extends Component {
           ...this.state,
           connect: this.csConnect,
           auth: this.auth,
+          logout: this.logout,
           update: this.update,
+          updateAlias: this.updateAlias,
+          selectGadget: this.selectGadget,
           singletonInstances: this.singletonInstances,
           updateGadgetGroupSelection: this.updateGadgetGroupSelection,
         }}

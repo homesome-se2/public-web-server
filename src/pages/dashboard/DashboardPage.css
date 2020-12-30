@@ -1,7 +1,10 @@
 .dashboard-page {
   margin: 0 !important;
   padding: 0 !important;
-  height: 100vh;
+  background: #0d2450;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
 }
 .dashboard-page .flex-grow {
   flex-grow: 1;
@@ -34,4 +37,27 @@ h2.medium-subtitle {
   text-align: left;
   font-weight: 300 !important;
   color: #c7cbdc;
+}
+.pane-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: flex-start;
+  height: 93%;
+  border-radius: 40px 0 0 0;
+  background: white;
+}
+.pane-wrapper .pane-detail-wrapper {
+  width: 150px;
+  transition: width 0.4s;
+}
+.pane-wrapper .active-area-wrapper {
+  width: 100%;
+}
+.pane-wrapper .pane-detail-wrapper.open {
+  width: 450px;
+}
+.pane-wrapper .group-sel-wrapper {
+  width: 190px;
+  min-width: 190px;
 }

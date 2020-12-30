@@ -7,12 +7,16 @@ class ucEEmitterRVHub {
     onSuccessfulManualLoginRVEEService:
       '$onHosoSuccessfulManaulLoginRVEEService',
     onSuccessfulAutoLoginRVEEService: '$onHosoSuccessfulAutoLoginRVEEService',
+    onSuccessfulLogoutRVEEService: '$onHoSoSuccessfulLogoutRVEEService',
     onUnSuccessfulLoginRVEEService: '$onHosoUnSuccessfulLoginRVEEService',
     onServerExceptionRVEEService: '$onHosoServerExceptionRVEEService',
     onGadgetFetchCompleteRVEEService: '$onHosoGadgetListReceiveRVEEService',
     onGadgetGroupFetchCompleteRVEEService:
       '$onHosoGadgetGroupReceiveRVEEService',
     onGadgetStateChangeRVEEService: '$onHosoGadgetStateChangeRVEEService',
+    onGadgetAliasChangeRVEEService: '$onHosoGadgetAliasChangeRVEEService',
+    onGadgetAddedRVEEService: '$onHosoGadgetAddedRVEEService',
+    onGadgetRemovedRVEEService: '$onHosoGadgetRemovedRVEEService',
   };
   constructor() {
     this.EEInstance = new EEmitter();

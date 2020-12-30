@@ -55,6 +55,7 @@ class FormLogin extends Component {
               className={` ${this.state.errorClass} ${
                 this.props.invalid ? 'late-error' : ''
               }`}
+              disabled={!this.state.editable}
             />
             <ControlsInput
               type="password"
@@ -72,6 +73,7 @@ class FormLogin extends Component {
               className={` ${this.state.errorClass} ${
                 this.props.invalid ? 'late-error' : ''
               }`}
+              disabled={!this.state.editable}
             />
             <ControlsHeroButton
               label="Login"

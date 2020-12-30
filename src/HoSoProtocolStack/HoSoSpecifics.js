@@ -9,12 +9,14 @@ class HoSoSpecifics {
       auth: {
         manualLogin: '101',
         autoLogin: '103',
-        logOut: '105',
+        logOutThis: '105',
+        logOutAll: '106',
       },
       gadgetState: {
         fetchGadgets: '301',
         fetchGadgetGroups: '370',
         alterGadgetState: '311',
+        alterGadgetAlias: '401',
       },
       global: {
         ping: 'ping',
@@ -25,13 +27,15 @@ class HoSoSpecifics {
         successfulManualLogin: '102',
         successfulAutoLogin: '104',
         unsuccessfulLogin: '903',
+        successfulLogout: '107',
       },
       gadgetState: {
         fetchGadgets: '304',
         fetchGadgetGroups: '373',
         gadgetStateChange: '316',
-        GadgetAddition: '352',
+        gadgetAddition: '352',
         gadgetRemoval: '354',
+        gadgetAliasChange: '404',
       },
       global: {
         exception: '901',

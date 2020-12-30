@@ -13,6 +13,7 @@ class stEEmitterRVHub {
     onUserAuthStarted: '$onUCUserAuthStarted-stEEmitterRVHub',
     onUserAuthComplete: '$onUCUserAuthComplet-stEEmitterRVHub',
     onStateReady: '$onUCStateReady-stEEmitterRVHub', //-> state is formed and complete
+    onLougoutState: '$onUCLougoutState-stEEmitterRVHub',
   };
   constructor() {
     this.EEInstance = new EEmitter();
@@ -40,6 +41,9 @@ class stEEmitterRVHub {
   };
   emitOnStateReady = (...args) => {
     this.EEInstance.emit(stEEmitterRVHub.events.onStateReady, ...args);
+  };
+  emitLogout = (...args) => {
+    this.EEInstance.emit(stEEmitterRVHub.events.onLougoutState, ...args);
   };
 }
 

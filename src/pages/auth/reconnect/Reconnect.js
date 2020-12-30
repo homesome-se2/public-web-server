@@ -79,7 +79,11 @@ class Reconnect extends Component {
       <div className="reconnect-page">
         <Grid container direction="column" justify="center" alignItems="center">
           <div className="wrapper">
-            <ControlsProgressInset type="indeterminate" scale="0.3" />
+            <ControlsProgressInset
+              type="indeterminate"
+              scale="0.3"
+              active={true}
+            />
             <div className="status"></div>
           </div>
         </Grid>

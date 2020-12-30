@@ -12,6 +12,11 @@
 .pane-active-area .content-wrapper {
   position: relative;
   top: -0.5em;
+
+  box-sizing: border-box;
+  height: 100%;
+  border-radius: 0 0 40px 40px;
+  position: relative;
 }
 
 .pane-active-area .header {
@@ -34,4 +39,58 @@
   background: #e4e7f2;
   margin-left: auto;
   margin-right: auto;
+  display: block;
+}
+.pane-active-area .left-wrapper {
+  display: inline-block;
+  width: 50%;
+}
+.pane-active-area .right-wrapper {
+  float: right;
+  width: 50%;
+}
+.pane-active-area .search-bar {
+  width: 200px;
+  box-sizing: border-box;
+  background: #dee6f3;
+  border-radius: 15px;
+  padding: 0.9em;
+  color: #373740;
+
+  transition: all 0.4s;
+  border: 3px solid transparent;
+
+  box-shadow: none;
+  outline: none;
+  transition: all 0.6s;
+  float: right;
+}
+.pane-active-area .gadget-grid-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+
+  height: 691px;
+  overflow-y: scroll;
+  padding-top: 2em;
+  margin-top: -2em;
+  padding-left: 2.5em;
+}
+.pane-active-area .right-wrapper .home-alias {
+  font-size: 0.9em;
+  text-align: right;
+}
+.pane-active-area .right-wrapper .home-alias h1 {
+  color: #5c5e65;
+}
+
+.pane-active-area .right-wrapper .home-alias span {
+  color: #c7cbdc;
+  font-weight: 400;
+}
+.pane-active-area .gadget-grid-wrapper::-webkit-scrollbar {
+  display: none;
 }

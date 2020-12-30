@@ -1,0 +1,59 @@
+.gadget-control-expanded-binarySensor {
+  height: 200px;
+  position: relative;
+}
+.gadget-control-expanded-binarySensor .wrapper {
+  margin-left: auto;
+  margin-right: auto;
+}
+.gadget-control-expanded-binarySensor .outer {
+  background: #f2f7fb;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.gadget-control-expanded-binarySensor .inner {
+  background: #e2e7ea;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  box-shadow: 0px 0px 10px 5px rgba(229, 231, 234, 1);
+  transition: all 0.4s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gadget-control-expanded-binarySensor .inner .status {
+  color: #f2f7fb;
+}
+.gadget-control-expanded-binarySensor .active .inner {
+  background: #0284ff;
+  box-shadow: 0 0 10px 5px rgba(2, 132, 255, 0.3);
+}
+
+.gadget-control-expanded-binarySensor .danger .inner {
+  background: #75ff3f !important;
+  box-shadow: 0 0 10px 5px rgba(117, 255, 63, 0.5);
+}
+.gadget-control-expanded-binarySensor .danger.active .inner {
+  background: #ff3f3f !important;
+  box-shadow: 0 0 10px 5px rgba(255, 63, 63, 0.5);
+}
+
+.gadget-control-expanded-binarySensor .safe .inner {
+  background: #ff3f3f !important;
+  box-shadow: 0 0 10px 5px rgba(255, 63, 63, 0.5);
+}
+.gadget-control-expanded-binarySensor .safe.active .inner {
+  background: #75ff3f !important;
+  box-shadow: 0 0 10px 5px rgba(117, 255, 63, 0.5);
+}
