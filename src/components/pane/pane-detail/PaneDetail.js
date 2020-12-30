@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
 import GadgetControlExpandedSwitch from '../../gadget/gadget-control-expanded-switch/GadgetControlExpandedSwitch';
 import GadgetControlExpandedSetValue from '../../gadget/gadget-control-expanded-setValue/GadgetControlExpandedSetValue';
+import GadgetControlExpandedSensor from '../../gadget/gadget-control-expanded-sensor/GadgetControlExpandedSensor';
 import './PaneDetail.css';
 
 class PaneDetail extends Component {
@@ -18,10 +19,10 @@ class PaneDetail extends Component {
     if (this.context.selectedGadget != null)
       switch (this.context.selectedGadget.type) {
         case 'SET_VALUE':
+        case 'SENSOR':
           return 'Range';
         case 'SWITCH':
         case 'BINARY_SENSOR':
-        case 'SENSOR':
         default:
           return 'Status';
       }
@@ -35,11 +36,15 @@ class PaneDetail extends Component {
             ? 'The gadget is on'
             : 'The gadget is off';
         case 'SET_VALUE':
-          return '0% - 100%';
+          return '0% to 100%';
         case 'BINARY_SENSOR':
           return this.context.selectedGadget.state;
         case 'SENSOR':
-          return this.context.selectedGadget.state;
+          return this.context.selectedGadget.valueTemplate === 'temp'
+            ? '-20°C to +60°C'
+            : this.context.selectedGadget.valueTemplate === 'percent'
+            ? '0% to 100%'
+            : '0 to 1023';
         default:
       }
   };
@@ -54,6 +59,7 @@ class PaneDetail extends Component {
         case 'BINARY_SENSOR':
           return null;
         case 'SENSOR':
+          return <GadgetControlExpandedSensor />;
         default:
       }
   };

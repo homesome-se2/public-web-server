@@ -1,0 +1,72 @@
+.gadget-control-expanded-sensor {
+  position: relative;
+}
+.gadget-control-expanded-sensor .wrapper {
+  margin-top: 3.5em;
+}
+
+.gadget-control-expanded-sensor .wrapper text {
+  background: red;
+}
+
+.gadget-control-expanded-sensor .wrapper .inner {
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  position: absolute;
+  border-radius: 50%;
+  top: 15px;
+  left: 40px;
+  box-shadow: 0px 0px 20px 10px rgba(229, 231, 234, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gadget-control-expanded-sensor .CircularProgressbar-path {
+  stroke: #389bfa;
+}
+.gadget-control-expanded-sensor .inner .state-value {
+  text-align: center;
+  color: #389bfa;
+  font-size: 1.8em;
+  font-weight: 400;
+  position: relative;
+}
+.gadget-control-expanded-sensor .state-value .unit {
+  display: inline;
+  vertical-align: super;
+  font-size: 0.5em;
+}
+.gadget-control-expanded-sensor .CircularProgressbar {
+  width: 150px;
+}
+.gadget-control-expanded-sensor .dial {
+  background-image: url(./assets/dial.png);
+  width: 535px;
+  height: 270px;
+  position: absolute;
+  top: -107px;
+  left: -167px;
+  transform: scale(0.37);
+}
+.gadget-control-expanded-sensor .steps {
+  position: absolute;
+  position: absolute;
+  font-size: 2em;
+  font-weight: 800;
+  color: #edeff4;
+  display: none;
+}
+.gadget-control-expanded-sensor .step1 {
+  top: 245px;
+  left: -73px;
+}
+.gadget-control-expanded-sensor .step2 {
+  top: -46px;
+  left: 236px;
+}
+.gadget-control-expanded-sensor .step3 {
+  top: 245px;
+  left: 550px;
+}
