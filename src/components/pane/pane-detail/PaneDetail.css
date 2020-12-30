@@ -149,3 +149,6 @@
   background: #0083ff;
   box-shadow: 0px 0px 10px 2.8px rgba(63, 185, 255, 0.3);
 }
+.pane-detail .state-wrapper h1 {
+  color: #939396 !important;
+}

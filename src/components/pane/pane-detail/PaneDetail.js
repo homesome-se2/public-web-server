@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
+import GadgetControlExpandedSetValue from '../../gadget/gadget-card/gadget-control-expanded-setValue/GadgetControlExpandedSetValue';
 import GadgetControlExpandedSwitch from '../../gadget/gadget-control-expanded-switch/GadgetControlExpandedSwitch';
 import './PaneDetail.css';
 
@@ -13,13 +14,28 @@ class PaneDetail extends Component {
     );
   };
 
+  getStatusHeading = () => {
+    if (this.context.selectedGadget != null)
+      switch (this.context.selectedGadget.type) {
+        case 'SET_VALUE':
+          return 'Range';
+        case 'SWITCH':
+        case 'BINARY_SENSOR':
+        case 'SENSOR':
+        default:
+          return 'Status';
+      }
+  };
+
   getStatus = () => {
     if (this.context.selectedGadget != null)
       switch (this.context.selectedGadget.type) {
         case 'SWITCH':
-          return this.context.selectedGadget.state === '1.0' ? 'on' : 'off';
+          return this.context.selectedGadget.state === '1.0'
+            ? 'The gadget is on'
+            : 'The gadget is off';
         case 'SET_VALUE':
-          return this.context.selectedGadget.state;
+          return '0% - 100%';
         case 'BINARY_SENSOR':
           return this.context.selectedGadget.state;
         case 'SENSOR':
@@ -34,7 +50,7 @@ class PaneDetail extends Component {
         case 'SWITCH':
           return <GadgetControlExpandedSwitch />;
         case 'SET_VALUE':
-          return null;
+          return <GadgetControlExpandedSetValue />;
         case 'BINARY_SENSOR':
           return null;
         case 'SENSOR':
@@ -85,9 +101,11 @@ class PaneDetail extends Component {
             {this.renderExpandedComponent()}
           </div>
           <div className="state-wrapper">
-            <h2 className="sub-header center light-grey">Status</h2>
+            <h2 className="sub-header center light-grey">
+              {this.getStatusHeading()}
+            </h2>
             <h1>
-              The gadget is <span className="active">{this.getStatus()}</span>
+              <span className="">{this.getStatus()}</span>
             </h1>
           </div>
           <div className="divider"></div>
@@ -119,7 +137,7 @@ class PaneDetail extends Component {
                   #
                   <span className="darker">
                     {this.context.selectedGadget != null
-                      ? this.context.selectedGadget.id
+                      ? this.context.selectedGadget.gadgetID
                       : 'UNSET'}
                   </span>
                 </h1>
