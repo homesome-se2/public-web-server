@@ -4,6 +4,8 @@ import FormLogin from '../../../components/form/form-login/FormLogin';
 import { UserContext } from '../../../contexts/UserContext';
 import ucEEmitterRVHub from '../../../EEmitters/RVHubs/ucEEmitterRVHub';
 import Timer from '../../../helpers/Timer';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import './LoginPage.css';
 
 class LoginPage extends Component {
@@ -15,6 +17,17 @@ class LoginPage extends Component {
     currentLogoAnimation: 'logo-reveal',
     loaderActive: false,
     invalid: false,
+    errorSnackbarVisibility: false,
+    errorMessage: '',
+  };
+  showErrorSB = () => {
+    this.setState({ errorSnackbarVisibility: true });
+  };
+  hideErrorSB = () => {
+    this.setState({ errorSnackbarVisibility: false });
+  };
+  setErrorMessage = (string) => {
+    this.setState({ errorMessage: string });
   };
   auth = (username, password) => {
     console.log('submit', username, password);
@@ -24,6 +37,7 @@ class LoginPage extends Component {
     this.wait(800).then(() => {
       this.setState({ loaderActive: true });
     });
+    this.hideErrorSB();
 
     this.context.auth(
       { username: username, password: password },
@@ -46,6 +60,28 @@ class LoginPage extends Component {
               this.setState({ currentLogoAnimation: 'logo-back' });
               this.setState({ loaderActive: false });
               this.setState({ invalid: true });
+
+              this.setErrorMessage(args[0].props.description);
+              this.showErrorSB();
+            });
+        }
+      );
+    this.context.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onHubDisconnectedRVEEService,
+        (...args) => {
+          const elapsed = this.eTimer.end();
+          if (elapsed < 4000)
+            this.wait(4000 - elapsed).then(() => {
+              this.setState({ currentCardAnimation: 'card-back' });
+              this.setState({ currentLogoAnimation: 'logo-back' });
+              this.setState({ loaderActive: false });
+              this.setState({ invalid: true });
+
+              this.setErrorMessage(args[0].props.description);
+              this.showErrorSB();
             });
         }
       );
@@ -94,6 +130,14 @@ class LoginPage extends Component {
             />
           </div>
         </div>
+        <Snackbar
+          open={this.state.errorSnackbarVisibility}
+          autoHideDuration={3000}
+        >
+          <MuiAlert elevation={6} variant="filled" severity="error">
+            {this.state.errorMessage}
+          </MuiAlert>
+        </Snackbar>
       </div>
     );
   }

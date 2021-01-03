@@ -2,6 +2,7 @@
   background: #f3f6ff;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 .login-page .controls-progress-inset,
 .login-page .form-login {
