@@ -39,6 +39,7 @@ class HoSoSpecifics {
       },
       global: {
         exception: '901',
+        hubDisconnectedException: '904',
       },
     },
   };

@@ -275,7 +275,7 @@ class UserContextProvider extends Component {
               /////////////////////////////// lifecycleHooks: onStateReady
             }
           );
-          console.log('!current state: ', this.state);
+          console.log('!curre!!!nt state: ', this.state);
         }
       );
     this.singletonInstances.s_PLDStack
@@ -315,6 +315,16 @@ class UserContextProvider extends Component {
         this.setState(UContextAdapter.addGadget(this.state, ...args));
         console.log('!current state: ', this.state);
       });
+    this.singletonInstances.s_PLDStack
+      .getucEEmitterRVHub()
+      .getEEInstance()
+      .subscribe(
+        ucEEmitterRVHub.events.onHubDisconnectedRVEEService,
+        (...args) => {
+          console.log('hub disconnected (ucHook): ', ...args);
+          this.logout({ state: {}, type: 'THIS' });
+        }
+      );
     this.singletonInstances.s_PLDStack
       .getucEEmitterRVHub()
       .getEEInstance()
