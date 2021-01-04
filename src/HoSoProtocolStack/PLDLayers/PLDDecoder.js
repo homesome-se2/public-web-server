@@ -172,12 +172,17 @@ class PLDDecoder {
           { type: 'GADGET_REMOVED', directives: {} }, //header
           obj.params // payload
         );
+      case HoSoSpecifics.commandCodes.receiving.global.hubDisconnectedException:
+        return new DLObject(
+          { type: 'HUB_DISCONNECTED', directives: {} }, //header
+          obj.params //payload
+        );
       case HoSoSpecifics.commandCodes.receiving.global.exception:
+      default:
         return new DLObject(
           { type: 'SERVER_EXCEPTION', directives: {} }, //header
           obj.params // payload
         );
-      default:
     }
   };
 }

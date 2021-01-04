@@ -142,6 +142,7 @@ class PLDEncapsulator {
             C_isAdmin: HoSoSpecifics.syntax.invalid,
             H_Alias: HoSoSpecifics.syntax.invalid,
             C_SessionKey: HoSoSpecifics.syntax.invalid,
+            description: obj.payload.data[0],
           })
         );
         break;
@@ -204,6 +205,14 @@ class PLDEncapsulator {
           ucEEmitterRVHub.events.onGadgetRemovedRVEEService,
           new ENLObject({
             gadgetID: obj.payload.data[0],
+          })
+        );
+        break;
+      case 'HUB_DISCONNECTED':
+        this._ucEEmitterRVHub.getEEInstance().emit(
+          ucEEmitterRVHub.events.onHubDisconnectedRVEEService,
+          new ENLObject({
+            description: obj.payload.data[0],
           })
         );
         break;
