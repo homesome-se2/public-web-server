@@ -40,6 +40,7 @@ class PaneActiveArea extends Component {
   };
   searchText = (e) => {
     this.setState({ searchText: e.target.value });
+    // this.forceUpdate();
   };
   render() {
     return (
@@ -69,15 +70,20 @@ class PaneActiveArea extends Component {
             <div className="gadget-grid-wrapper">
               {this.context.gadgets.map((gadget, key) => {
                 if (
-                  // 1 || //=REMOVE-ME, NOTIFY ANTON BUG
-                  this.context != null &&
-                  this.context.selectedGadgetGroup != null &&
-                  this.context.selectedGadgetGroup.gadgetIds.includes(
-                    gadget.id
-                  ) &&
+                  this.state.searchText.length > 0 &&
                   gadget.alias.includes(this.state.searchText)
-                )
+                ) {
                   return <GadgetCard gadget={gadget} key={key} />;
+                }
+                if (
+                  (gadget.alias.includes(this.state.searchText) === true &&
+                    this.context.selectedGadgetGroup.gadgetIds.includes(
+                      gadget.gadgetID
+                    )) ||
+                  this.context.selectedGadgetGroup.gadgetIds.includes(gadget.id)
+                ) {
+                  return <GadgetCard gadget={gadget} key={key} />;
+                }
 
                 return null;
               })}
