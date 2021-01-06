@@ -133,24 +133,27 @@ class PaneDetail extends Component {
           >
             <h1>Select a gadget to inspect</h1>
           </div>
-          <h2 className="sub-header light-grey">Device alias</h2>
-          <input
-            type="text"
-            placeholder={
-              this.context.selectedGadget != null
-                ? this.context.selectedGadget.alias
-                : 'Unset'
-            }
-            disabled={this.context.isAdmin === 'false' ? true : false}
-            className={`i-gadget-alias ${
-              this.context.isAdmin === 'false' ? 'disabled' : ''
-            }`}
-            onChange={this.updateAlias}
-            onBlur={this.alterAlias}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') this.alterAlias(e);
-            }}
-          />
+          <div className="info-box">
+            <h2 className="sub-header light-grey">Device alias</h2>
+            <input
+              type="text"
+              placeholder={
+                this.context.selectedGadget != null
+                  ? this.context.selectedGadget.alias
+                  : 'Unset'
+              }
+              disabled={this.context.isAdmin === 'false' ? true : false}
+              className={`i-gadget-alias ${
+                this.context.isAdmin === 'false' ? 'disabled' : ''
+              }`}
+              onChange={this.updateAlias}
+              onBlur={this.alterAlias}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') this.alterAlias(e);
+              }}
+            />
+          </div>
+
           <div className="control-wrapper">
             {this.renderExpandedComponent()}
           </div>
@@ -167,7 +170,7 @@ class PaneDetail extends Component {
             <div className="row">
               <div className="left">
                 <h2 className="sub-header light-grey">Device type</h2>
-                <h1>
+                <h1 className="cut-text">
                   {this.context.selectedGadget != null
                     ? this.capitalizeString(this.context.selectedGadget.type)
                     : 'UNSET'}
@@ -175,7 +178,7 @@ class PaneDetail extends Component {
               </div>
               <div className="right">
                 <h2 className="sub-header light-grey">V-Template</h2>
-                <h1>
+                <h1 className="cut-text">
                   {this.context.selectedGadget != null
                     ? this.capitalizeString(
                         this.context.selectedGadget.valueTemplate

@@ -42,6 +42,24 @@ class PaneActiveArea extends Component {
     this.setState({ searchText: e.target.value });
     // this.forceUpdate();
   };
+  isGadgetGroupEmpty = () => {
+    if (this.context != null && this.context.selectedGadgetGroup != null) {
+      //  this.context.selectedGadgetGroup.gadgetIds.includes(gadget.id);
+      let match = false;
+      for (let i = 0; i < this.context.gadgets.length || !match; i++)
+        for (
+          let k = 0;
+          k < this.context.selectedGadgetGroup.gadgetIds.length || !match;
+          k++
+        ) {
+          if (
+            this.context.gadgets[i].id ===
+            this.context.selectedGadgetGroup.gadgetIds[k]
+          )
+            match = true;
+        }
+    }
+  };
   render() {
     return (
       <div className="pane-active-area">
@@ -70,11 +88,11 @@ class PaneActiveArea extends Component {
             <div className="gadget-grid-wrapper">
               {this.context.gadgets.map((gadget, key) => {
                 if (
-                  1 ||
-                  (this.context != null &&
-                    this.context.selectedGadgetGroup != null &&
-                    this.state.searchText.length > 0 &&
-                    gadget.alias.includes(this.state.searchText))
+                  //1 ||//->for debug when public-server doesn't work
+                  this.context != null &&
+                  this.context.selectedGadgetGroup != null &&
+                  this.state.searchText.length > 0 &&
+                  gadget.alias.includes(this.state.searchText)
                 ) {
                   return <GadgetCard gadget={gadget} key={key} />;
                 }

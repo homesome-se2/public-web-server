@@ -15,7 +15,10 @@ class ControlsGroupSelector extends Component {
   updateGroupSelection = (groupName) => {
     this.context.updateGadgetGroupSelection(groupName);
   };
-
+  renderPlaceholder = () => {
+    if (this.context !== null && this.context.gadgetsGroups.length === 0)
+      return <div className="placeholder">No gadget groups present</div>;
+  };
   render() {
     return (
       <div className="controls-group-selector">
@@ -34,6 +37,7 @@ class ControlsGroupSelector extends Component {
               </li>
             );
           })}
+          {this.renderPlaceholder()}
         </ul>
       </div>
     );

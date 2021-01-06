@@ -1,5 +1,6 @@
 .gadget-control-expanded-binarySensor {
   height: 200px;
+  width: 200px;
   position: relative;
 }
 .gadget-control-expanded-binarySensor .wrapper {
