@@ -52,7 +52,7 @@ class GadgetControlExpandedSensor extends Component {
           </div>
           <CircularProgressbar
             value={this.context.selectedGadget.state}
-            text={`${this.context.selectedGadget.state}`}
+            //text={`${this.context.selectedGadget.state}`}
             circleRatio={0.75}
             minValue={this.getGadgetProps().minValue}
             maxValue={this.getGadgetProps().maxValue}
@@ -60,6 +60,7 @@ class GadgetControlExpandedSensor extends Component {
               rotation: 1 / 2 + 1 / 8,
               strokeLinecap: 'butt',
               trailColor: '#edeff4',
+              textColor: '#fff',
             })}
             strokeWidth={10}
           />
