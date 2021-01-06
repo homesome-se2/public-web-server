@@ -191,7 +191,7 @@ class PLDEncapsulator {
         this._ucEEmitterRVHub.getEEInstance().emit(
           ucEEmitterRVHub.events.onGadgetAddedRVEEService,
           new ENLObject({
-            gadgetID: obj.payload.data[0],
+            id: obj.payload.data[0],
             alias: obj.payload.data[1],
             type: obj.payload.data[2],
             valueTemplate: obj.payload.data[3],
