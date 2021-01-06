@@ -5,6 +5,7 @@ import GadgetControlExpandedSetValue from '../../gadget/gadget-control-expanded-
 import GadgetControlExpandedSensor from '../../gadget/gadget-control-expanded-sensor/GadgetControlExpandedSensor';
 import './PaneDetail.css';
 import GadgetControlExpandedBinarySensor from '../../gadget/gadget-control-expanded-binarySensor/GadgetControlExpandedBinarySensor';
+import stEEmitterRVHub from '../../../EEmitters/RVHubs/stEEmitterRVHub';
 
 class PaneDetail extends Component {
   static contextType = UserContext;
@@ -100,7 +101,10 @@ class PaneDetail extends Component {
   alterAlias = (e) => {
     console.log(this.context.selectGadget.id);
 
-    if (this.state.newGadgetAlias.length > 0) {
+    if (
+      this.state.newGadgetAlias !== null &&
+      this.state.newGadgetAlias.length > 0
+    ) {
       this.context.updateAlias({
         gadgetId: this.context.selectedGadget.id,
         newAlias: this.state.newGadgetAlias,
@@ -108,7 +112,6 @@ class PaneDetail extends Component {
     }
   };
 
-  state = {};
   render() {
     return (
       <div className="pane-detail">
@@ -138,9 +141,9 @@ class PaneDetail extends Component {
                 ? this.context.selectedGadget.alias
                 : 'Unset'
             }
-            disabled={!!this.context.isAdmin}
+            disabled={this.context.isAdmin === 'false' ? true : false}
             className={`i-gadget-alias ${
-              !!!this.context.isAdmin ? 'disabled' : ''
+              this.context.isAdmin === 'false' ? 'disabled' : ''
             }`}
             onChange={this.updateAlias}
             onBlur={this.alterAlias}

@@ -124,6 +124,7 @@ class UserContextProvider extends Component {
           new LogoutRequest('THIS', state)
         );
     }
+    this.setState(UContextAdapter.clearState());
   };
 
   /////////////////////////////////////
@@ -359,7 +360,7 @@ class UserContextProvider extends Component {
   /////////////  l-METHODS ///////////
   ///////////////////////////////////
   setupLSTS = (data) => {
-    LSTokenService.setAdminFlag(!!data.props.C_isAdmin);
+    LSTokenService.setAdminFlag(data.props.C_isAdmin === 'true' ? true : false);
     LSTokenService.setHomeAlias(data.props.H_Alias);
     LSTokenService.setUsername(data.props.C_nameID);
     LSTokenService.setToken(data.props.C_SessionKey);
