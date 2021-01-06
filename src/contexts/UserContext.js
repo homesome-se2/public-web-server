@@ -287,7 +287,15 @@ class UserContextProvider extends Component {
           console.log('gadget state change (ucHook): ', ...args);
           console.log('!old state: ', this.state);
           this.setState(
-            UContextAdapter.updateUCGadgetState(this.state, ...args)
+            UContextAdapter.updateUCGadgetState(this.state, ...args),
+            () => {
+              /////////////////////////////// lifecycleHooks: emitGadgetStateChange
+              this.state.lifecycleHooks.emitGadgetStateChange(
+                this.state,
+                ...args
+              );
+              /////////////////////////////// lifecycleHooks: emitGadgetStateChange
+            }
           );
           console.log('!current state: ', this.state);
         }
