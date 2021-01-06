@@ -70,16 +70,18 @@ class PaneActiveArea extends Component {
             <div className="gadget-grid-wrapper">
               {this.context.gadgets.map((gadget, key) => {
                 if (
+                  //1 ||
+                  this.context != null &&
+                  this.context.selectedGadgetGroup != null &&
                   this.state.searchText.length > 0 &&
                   gadget.alias.includes(this.state.searchText)
                 ) {
                   return <GadgetCard gadget={gadget} key={key} />;
                 }
                 if (
-                  (gadget.alias.includes(this.state.searchText) === true &&
-                    this.context.selectedGadgetGroup.gadgetIds.includes(
-                      gadget.gadgetID
-                    )) ||
+                  this.context != null &&
+                  this.context.selectedGadgetGroup != null &&
+                  gadget.alias.includes(this.state.searchText) === true &&
                   this.context.selectedGadgetGroup.gadgetIds.includes(gadget.id)
                 ) {
                   return <GadgetCard gadget={gadget} key={key} />;

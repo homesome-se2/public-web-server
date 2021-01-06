@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
+import { UserContext } from '../../../contexts/UserContext';
+import stEEmitterRVHub from '../../../EEmitters/RVHubs/stEEmitterRVHub';
 import './GadgetControlCompactSetValue.css';
 
 class GadgetControlCompactSetValue extends Component {
+  static contextType = UserContext;
+
   state = {
     percentage: this.props.state,
   };
-
+  componentDidMount() {
+    this.context.lifecycleHooks
+      .getEEInstance()
+      .subscribe(
+        stEEmitterRVHub.events.onGadgetStateUpdated,
+        this.didGadgetStateUpdate
+      );
+  }
+  didGadgetStateUpdate = (state, ...args) => {
+    if (args[0].props.gadgetID === this.props.gadgetID)
+      this.setState({ percentage: args[0].props.newState });
+  };
   generateLocation = () => {
     if (this.state.percentage < 50) return 'upper';
     return 'lower';

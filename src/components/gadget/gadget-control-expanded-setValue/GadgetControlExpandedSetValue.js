@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
+import stEEmitterRVHub from '../../../EEmitters/RVHubs/stEEmitterRVHub';
 import './GadgetControlExpandedSetValue.css';
 
 class GadgetControlExpandedSetValue extends Component {
@@ -9,6 +10,26 @@ class GadgetControlExpandedSetValue extends Component {
     percentage: this.context.selectedGadget.state,
   };
 
+  componentDidMount() {
+    this.context.lifecycleHooks
+      .getEEInstance()
+      .subscribe(
+        stEEmitterRVHub.events.onGadgetStateUpdated,
+        this.didGadgetStateUpdate
+      );
+    this._ismounted = true;
+  }
+  componentWillUnmount() {
+    //release subscribtion->#qos1.5
+    this._ismounted = false;
+  }
+  didGadgetStateUpdate = (state, ...args) => {
+    if (
+      args[0].props.gadgetID === this.context.selectedGadget.id &&
+      this._ismounted
+    )
+      this.setState({ percentage: args[0].props.newState });
+  };
   handleChange = (e) => {
     this.setState({ percentage: e.target.value });
   };

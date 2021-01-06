@@ -98,11 +98,14 @@ class PaneDetail extends Component {
     this.setState({ newGadgetAlias: e.target.value });
   };
   alterAlias = (e) => {
-    console.log(this.state.newGadgetAlias);
-    this.context.updateAlias({
-      gadgetId: this.context.selectedGadget.gadgetID,
-      newAlias: this.state.newGadgetAlias,
-    });
+    console.log(this.context.selectGadget.id);
+
+    if (this.state.newGadgetAlias.length > 0) {
+      this.context.updateAlias({
+        gadgetId: this.context.selectedGadget.id,
+        newAlias: this.state.newGadgetAlias,
+      });
+    }
   };
 
   state = {};
@@ -135,9 +138,15 @@ class PaneDetail extends Component {
                 ? this.context.selectedGadget.alias
                 : 'Unset'
             }
-            className="i-gadget-alias"
+            disabled={!!this.context.isAdmin}
+            className={`i-gadget-alias ${
+              !!!this.context.isAdmin ? 'disabled' : ''
+            }`}
             onChange={this.updateAlias}
             onBlur={this.alterAlias}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') this.alterAlias(e);
+            }}
           />
           <div className="control-wrapper">
             {this.renderExpandedComponent()}
@@ -179,7 +188,7 @@ class PaneDetail extends Component {
                   #
                   <span className="darker">
                     {this.context.selectedGadget != null
-                      ? this.context.selectedGadget.gadgetID
+                      ? this.context.selectedGadget.id
                       : 'UNSET'}
                   </span>
                 </h1>

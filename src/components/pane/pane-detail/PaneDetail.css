@@ -152,3 +152,6 @@
 .pane-detail .state-wrapper h1 {
   color: #939396 !important;
 }
+.pane-detail input.disabled {
+  cursor: not-allowed !important;
+}
