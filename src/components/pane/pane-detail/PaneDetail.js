@@ -5,6 +5,7 @@ import GadgetControlExpandedSetValue from '../../gadget/gadget-control-expanded-
 import GadgetControlExpandedSensor from '../../gadget/gadget-control-expanded-sensor/GadgetControlExpandedSensor';
 import './PaneDetail.css';
 import GadgetControlExpandedBinarySensor from '../../gadget/gadget-control-expanded-binarySensor/GadgetControlExpandedBinarySensor';
+import stEEmitterRVHub from '../../../EEmitters/RVHubs/stEEmitterRVHub';
 
 class PaneDetail extends Component {
   static contextType = UserContext;
@@ -98,14 +99,19 @@ class PaneDetail extends Component {
     this.setState({ newGadgetAlias: e.target.value });
   };
   alterAlias = (e) => {
-    console.log(this.state.newGadgetAlias);
-    this.context.updateAlias({
-      gadgetId: this.context.selectedGadget.gadgetID,
-      newAlias: this.state.newGadgetAlias,
-    });
+    console.log(this.context.selectGadget.id);
+
+    if (
+      this.state.newGadgetAlias !== null &&
+      this.state.newGadgetAlias.length > 0
+    ) {
+      this.context.updateAlias({
+        gadgetId: this.context.selectedGadget.id,
+        newAlias: this.state.newGadgetAlias,
+      });
+    }
   };
 
-  state = {};
   render() {
     return (
       <div className="pane-detail">
@@ -127,18 +133,27 @@ class PaneDetail extends Component {
           >
             <h1>Select a gadget to inspect</h1>
           </div>
-          <h2 className="sub-header light-grey">Device alias</h2>
-          <input
-            type="text"
-            placeholder={
-              this.context.selectedGadget != null
-                ? this.context.selectedGadget.alias
-                : 'Unset'
-            }
-            className="i-gadget-alias"
-            onChange={this.updateAlias}
-            onBlur={this.alterAlias}
-          />
+          <div className="info-box">
+            <h2 className="sub-header light-grey">Device alias</h2>
+            <input
+              type="text"
+              placeholder={
+                this.context.selectedGadget != null
+                  ? this.context.selectedGadget.alias
+                  : 'Unset'
+              }
+              disabled={this.context.isAdmin === 'false' ? true : false}
+              className={`i-gadget-alias ${
+                this.context.isAdmin === 'false' ? 'disabled' : ''
+              }`}
+              onChange={this.updateAlias}
+              onBlur={this.alterAlias}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') this.alterAlias(e);
+              }}
+            />
+          </div>
+
           <div className="control-wrapper">
             {this.renderExpandedComponent()}
           </div>
@@ -155,7 +170,7 @@ class PaneDetail extends Component {
             <div className="row">
               <div className="left">
                 <h2 className="sub-header light-grey">Device type</h2>
-                <h1>
+                <h1 className="cut-text">
                   {this.context.selectedGadget != null
                     ? this.capitalizeString(this.context.selectedGadget.type)
                     : 'UNSET'}
@@ -163,7 +178,7 @@ class PaneDetail extends Component {
               </div>
               <div className="right">
                 <h2 className="sub-header light-grey">V-Template</h2>
-                <h1>
+                <h1 className="cut-text">
                   {this.context.selectedGadget != null
                     ? this.capitalizeString(
                         this.context.selectedGadget.valueTemplate
@@ -179,7 +194,7 @@ class PaneDetail extends Component {
                   #
                   <span className="darker">
                     {this.context.selectedGadget != null
-                      ? this.context.selectedGadget.gadgetID
+                      ? this.context.selectedGadget.id
                       : 'UNSET'}
                   </span>
                 </h1>

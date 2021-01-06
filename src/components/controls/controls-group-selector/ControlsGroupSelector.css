@@ -6,3 +6,13 @@
 .controls-group-selector {
   padding-bottom: 5em;
 }
+.controls-group-selector .placeholder {
+  font-size: 1.5em;
+  color: #dce0eb;
+  font-weight: 300;
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  margin-top: -34px;
+}

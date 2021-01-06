@@ -71,6 +71,19 @@ class UContextAdapter {
     }
     return gadgetList;
   };
+  static clearState = () => {
+    return {
+      username: '',
+      isAdmin: '',
+      homeAlias: '',
+      token: '',
+      isAuth: '',
+      gadgets: [],
+      gadgetsGroups: [],
+      selectedGadgetGroup: null,
+      selectedGadget: null,
+    };
+  };
 }
 
 export default UContextAdapter;

@@ -9,12 +9,18 @@
   margin-top: -10px;
   font-size: 1.3em;
 }
-
+.pane-detail .info-box {
+  text-align: left;
+}
 .pane-detail .sub-header {
   text-align: left;
   font-size: 0.9em;
 }
-
+.pane-detail .cut-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 112px;
+}
 .pane-detail .frozen {
   color: #dce0eb;
   font-weight: 300;
@@ -42,6 +48,9 @@
 .pane-detail .control-wrapper {
   margin-top: 2em;
   margin-bottom: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
 }
 .pane-detail .state-wrapper .center,
 .pane-detail .h1 {
@@ -151,4 +160,7 @@
 }
 .pane-detail .state-wrapper h1 {
   color: #939396 !important;
+}
+.pane-detail input.disabled {
+  cursor: not-allowed !important;
 }

@@ -94,3 +94,8 @@
 .pane-active-area .gadget-grid-wrapper::-webkit-scrollbar {
   display: none;
 }
+.pane-active-area .placeholder {
+  font-size: 1.5em;
+  color: #dce0eb;
+  font-weight: 300;
+}

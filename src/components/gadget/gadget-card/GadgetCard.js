@@ -67,6 +67,7 @@ class GadgetCard extends Component {
         return (
           <GadgetControlCompactSetValue
             state={this.props.gadget.state}
+            gadgetID={this.props.gadget.id}
             onValueChange={(e) => {
               this.valueChanged(e);
             }}

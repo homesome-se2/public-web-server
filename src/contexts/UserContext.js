@@ -124,6 +124,7 @@ class UserContextProvider extends Component {
           new LogoutRequest('THIS', state)
         );
     }
+    this.setState(UContextAdapter.clearState());
   };
 
   /////////////////////////////////////
@@ -287,7 +288,15 @@ class UserContextProvider extends Component {
           console.log('gadget state change (ucHook): ', ...args);
           console.log('!old state: ', this.state);
           this.setState(
-            UContextAdapter.updateUCGadgetState(this.state, ...args)
+            UContextAdapter.updateUCGadgetState(this.state, ...args),
+            () => {
+              /////////////////////////////// lifecycleHooks: emitGadgetStateChange
+              this.state.lifecycleHooks.emitGadgetStateChange(
+                this.state,
+                ...args
+              );
+              /////////////////////////////// lifecycleHooks: emitGadgetStateChange
+            }
           );
           console.log('!current state: ', this.state);
         }
@@ -351,7 +360,7 @@ class UserContextProvider extends Component {
   /////////////  l-METHODS ///////////
   ///////////////////////////////////
   setupLSTS = (data) => {
-    LSTokenService.setAdminFlag(!!data.props.C_isAdmin);
+    LSTokenService.setAdminFlag(data.props.C_isAdmin === 'true' ? true : false);
     LSTokenService.setHomeAlias(data.props.H_Alias);
     LSTokenService.setUsername(data.props.C_nameID);
     LSTokenService.setToken(data.props.C_SessionKey);

@@ -3,6 +3,9 @@
 }
 .gadget-control-expanded-sensor .wrapper {
   margin-top: 3.5em;
+  position: relative;
+  width: 214px;
+  height: 150px;
 }
 
 .gadget-control-expanded-sensor .wrapper text {
@@ -16,7 +19,7 @@
   position: absolute;
   border-radius: 50%;
   top: 15px;
-  left: 40px;
+  left: 47px;
   box-shadow: 0px 0px 20px 10px rgba(229, 231, 234, 1);
   display: flex;
   align-items: center;
@@ -47,7 +50,7 @@
   height: 270px;
   position: absolute;
   top: -107px;
-  left: -167px;
+  left: -160px;
   transform: scale(0.37);
 }
 .gadget-control-expanded-sensor .steps {
