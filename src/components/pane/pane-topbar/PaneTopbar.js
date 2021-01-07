@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import UserThumbnail from '../../user/user-thumbnail/UserThumbnail';
 import { UserContext } from '../../../contexts/UserContext';
 import './PaneTopbar.css';
-import stEEmitterRVHub from '../../../EEmitters/RVHubs/stEEmitterRVHub';
 
 class PaneTopbar extends Component {
   static contextType = UserContext;

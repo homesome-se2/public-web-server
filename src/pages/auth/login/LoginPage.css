@@ -25,6 +25,7 @@
   left: 0;
   right: 0;
   height: auto;
+  margin-top: -20px;
 }
 .login-page .fw-wrapper {
   height: 100%;

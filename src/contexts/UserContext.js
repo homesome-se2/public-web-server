@@ -238,7 +238,7 @@ class UserContextProvider extends Component {
         (...args) => {
           console.log('successful logout (ucHook): ', ...args);
           LSTokenService.clearStorage();
-          this.singletonInstances.s_CService.disconnect();
+          //this.singletonInstances.s_CService.disconnect();
           this.setState(UContextAdapter.clearContext(), () => {
             /////////////////////////////// lifecycleHooks: emitLogout
             this.state.lifecycleHooks.emitLogout(this.state, ...args);
