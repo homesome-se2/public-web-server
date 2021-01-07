@@ -19,12 +19,13 @@
   top: -50px;
 }
 .login-page .header {
-  min-width: 900px;
+  min-width: 800px;
   width: 100%;
   position: absolute;
   left: 0;
   right: 0;
   height: auto;
+  margin-top: -20px;
 }
 .login-page .fw-wrapper {
   height: 100%;
