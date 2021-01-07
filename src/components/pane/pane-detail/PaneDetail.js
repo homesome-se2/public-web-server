@@ -5,7 +5,6 @@ import GadgetControlExpandedSetValue from '../../gadget/gadget-control-expanded-
 import GadgetControlExpandedSensor from '../../gadget/gadget-control-expanded-sensor/GadgetControlExpandedSensor';
 import './PaneDetail.css';
 import GadgetControlExpandedBinarySensor from '../../gadget/gadget-control-expanded-binarySensor/GadgetControlExpandedBinarySensor';
-import stEEmitterRVHub from '../../../EEmitters/RVHubs/stEEmitterRVHub';
 
 class PaneDetail extends Component {
   static contextType = UserContext;

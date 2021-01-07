@@ -20,6 +20,12 @@ class LoginPage extends Component {
     errorSnackbarVisibility: false,
     errorMessage: '',
   };
+  componentDidMount() {
+    this._ismounted = true;
+  }
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
   showErrorSB = () => {
     this.setState({ errorSnackbarVisibility: true });
   };
@@ -30,12 +36,11 @@ class LoginPage extends Component {
     this.setState({ errorMessage: string });
   };
   auth = (username, password) => {
-    console.log('submit', username, password);
     this.setState({ currentCardAnimation: 'card-lock' });
     this.setState({ currentLogoAnimation: 'logo-lock' });
     this.setState({ invalid: false });
     this.wait(800).then(() => {
-      this.setState({ loaderActive: true });
+      if (this._ismounted) this.setState({ loaderActive: true });
     });
     this.hideErrorSB();
 
@@ -92,10 +97,11 @@ class LoginPage extends Component {
         ucEEmitterRVHub.events.onSuccessfulManualLoginRVEEService,
         (...args) => {
           const elapsed = this.eTimer.end();
-          if (elapsed < 4000)
-            this.wait(4000 - elapsed).then(() => {
+          if (elapsed < 4000) {
+            this.wait(4000).then(() => {
               this.navigate('dashboard', {});
             });
+          }
         }
       );
   };
