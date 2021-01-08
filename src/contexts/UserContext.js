@@ -10,6 +10,7 @@ import AuthCryptoGuard from '../helpers/AuthCryptoGuard';
 import stEEmitterRVHub from '../EEmitters/RVHubs/stEEmitterRVHub';
 import LogoutRequest from '../models/LogoutRequest';
 import AlterGadgetAliasRequest from '../models/AlterGadgetAliasRequest';
+import KeepAliveRequest from '../models/KeepAliveRequest';
 
 export const UserContext = createContext();
 
@@ -28,6 +29,9 @@ class UserContextProvider extends Component {
     selectedGadgetGroup: null,
     selectedGadget: null,
     lifecycleHooks: new stEEmitterRVHub(),
+    connection: {
+      keepAliveInterval: 40000,
+    },
   };
   /////////////////////////////////////
   /////////////  i-SINGLETON /////////
@@ -152,6 +156,16 @@ class UserContextProvider extends Component {
     this.setState({ selectedGadget: state });
   };
   /////////////////////////////////////
+  ///// connection-keepAlive ////////
+  ///////////////////////////////////
+  keepAliveConnection = () => {
+    setInterval(() => {
+      this.singletonInstances.s_PLDStack.send(
+        new KeepAliveRequest({ type: 'KEEP_ALIVE' })
+      );
+    }, this.state.connection.keepAliveInterval);
+  };
+  /////////////////////////////////////
   ////////  ucReceiverEEHub  /////////
   ///////////////////////////////////
   ucHooks = () => {
@@ -172,6 +186,7 @@ class UserContextProvider extends Component {
                 ...args
               );
               /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+              this.keepAliveConnection();
             }
           );
           this.setupLSTS(...args);
@@ -203,6 +218,7 @@ class UserContextProvider extends Component {
                 ...args
               );
               /////////////////////////////// lifecycleHooks: emitOnUserAuthComplete
+              this.keepAliveConnection();
             }
           );
           console.log('!current state: ', this.state);
