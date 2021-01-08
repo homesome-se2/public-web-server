@@ -1,6 +1,7 @@
 {
   "name": "hs-webjs",
-  "version": "0.1.0",
+  "version": "0.0.1",
+  "homepage": "http://homesome.it/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
