@@ -18,8 +18,10 @@ class GadgetControlCompactSetValue extends Component {
       );
   }
   didGadgetStateUpdate = (state, ...args) => {
-    if (args[0].props.gadgetID === this.props.gadgetID)
+    if (args[0].props.gadgetID === this.props.gadgetID) {
       this.setState({ percentage: args[0].props.newState });
+      this.props.onValueChange(args[0].props.newState);
+    }
   };
   generateLocation = () => {
     if (this.state.percentage < 50) return 'upper';
