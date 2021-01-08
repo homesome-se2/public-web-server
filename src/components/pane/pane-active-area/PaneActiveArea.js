@@ -87,6 +87,15 @@ class PaneActiveArea extends Component {
             <div className="divider"></div>
             <div className="gadget-grid-wrapper">
               {this.context.gadgets.map((gadget, key) => {
+                console.log('log: ', this.context.selectedGadgetGroup.default);
+                if (
+                  this.context != null &&
+                  this.context.selectedGadgetGroup != null &&
+                  this.state.searchText.length <= 0 &&
+                  this.context.selectedGadgetGroup.default !== null &&
+                  this.context.selectedGadgetGroup.default
+                )
+                  return <GadgetCard gadget={gadget} key={key} />;
                 if (
                   //1 ||//->for debug when public-server doesn't work
                   this.context != null &&

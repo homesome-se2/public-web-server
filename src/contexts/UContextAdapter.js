@@ -29,7 +29,12 @@ class UContextAdapter {
     return state;
   };
   static updateUCGadgetGroupData = (state, ...update) => {
-    state.gadgetsGroups = update[0].props?.gadgetsGroups.reverse();
+    state.gadgetsGroups = update[0].props?.gadgetsGroups;
+    state.gadgetsGroups.unshift({
+      name: 'All gadgets',
+      default: true,
+      gadgetIds: [],
+    });
     state.selectedGadgetGroup = update[0].props?.gadgetsGroups[0];
     return state;
   };
