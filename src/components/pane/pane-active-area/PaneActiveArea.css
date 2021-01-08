@@ -99,3 +99,6 @@
   color: #dce0eb;
   font-weight: 300;
 }
+.pane-active-area .gadget-card:last-child {
+  padding-bottom: 110px;
+}
