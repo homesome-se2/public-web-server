@@ -50,7 +50,7 @@ class GadgetControlCompactSetValue extends Component {
               onChange={(e) => {
                 this.handleChange(e);
               }}
-              onBlur={(e) => {
+              onMouseUp={(e) => {
                 this.props.onStateAltered(e);
               }}
             ></input>
