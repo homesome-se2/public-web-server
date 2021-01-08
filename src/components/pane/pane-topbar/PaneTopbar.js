@@ -16,6 +16,7 @@ class PaneTopbar extends Component {
           </div>
           <div
             className="logout-btn all"
+            title="Logout from all devices"
             onClick={() => {
               this.context.logout({ payload: null }, { type: 'ALL' });
             }}
@@ -24,6 +25,7 @@ class PaneTopbar extends Component {
           </div>
           <div
             className="logout-btn this"
+            title="Logout from this device"
             onClick={() => {
               this.context.logout({ payload: null }, { type: 'THIS' });
             }}
