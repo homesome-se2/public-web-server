@@ -5,7 +5,7 @@
 .pane-active-area .inset-area {
   background: #f3f6ff;
   border-radius: 40px;
-  height: 98%;
+  height: 97%;
   margin-top: 0.5em;
 }
 
@@ -16,7 +16,7 @@
   box-sizing: border-box;
   height: 100%;
   border-radius: 0 0 40px 40px;
-  position: relative;
+  overflow: hidden;
 }
 
 .pane-active-area .header {
