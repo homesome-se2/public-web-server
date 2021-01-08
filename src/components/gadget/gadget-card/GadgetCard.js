@@ -14,6 +14,7 @@ class GadgetCard extends Component {
     super(props);
     this.state = {
       loading: false,
+      value: this.props.gadget.state,
     };
   }
 
