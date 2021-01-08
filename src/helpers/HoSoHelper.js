@@ -60,7 +60,7 @@ class HoSoHelper {
           HoSoSpecifics.syntax.doubleSeparator +
           state.newState
         );
-      case 'GLOBAL_PING':
+      case 'CONNECTION_KEEP_ALIVE_PING':
         return (
           HoSoSpecifics.commandCodes.sending.global.ping +
           HoSoSpecifics.syntax.doubleSeparator

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import './DashboardPage.css';
-import { Grid } from '@material-ui/core';
 import PaneActiveArea from '../../components/pane/pane-active-area/PaneActiveArea';
 import PaneDetail from '../../components/pane/pane-detail/PaneDetail';
 import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';

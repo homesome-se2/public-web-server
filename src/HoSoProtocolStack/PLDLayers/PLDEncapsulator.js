@@ -3,6 +3,7 @@ import ucEEmitterRVHub from '../../EEmitters/RVHubs/ucEEmitterRVHub';
 import AlterGadgetAliasRequest from '../../models/AlterGadgetAliasRequest';
 import AlterGadgetStateRequest from '../../models/AlterGadgetStateRequest';
 import AuthRequest from '../../models/AuthRequest';
+import KeepAliveRequest from '../../models/KeepAliveRequest';
 import LogoutRequest from '../../models/LogoutRequest';
 import HoSoSpecifics from '../HoSoSpecifics';
 import ENLObject from '../LDOModels/ENLObject';
@@ -93,6 +94,11 @@ class PLDEncapsulator {
           obj.type === 'ALL' ? 'AUTH_LOGOUT_ALL' : 'AUTH_LOGOUT_THIS';
         return new ENLObject({
           type: typeString,
+          data: obj,
+        });
+      case KeepAliveRequest:
+        return new ENLObject({
+          type: 'CONNECTION_KEEP_ALIVE_PING',
           data: obj,
         });
       default:

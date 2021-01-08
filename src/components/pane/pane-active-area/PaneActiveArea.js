@@ -87,7 +87,6 @@ class PaneActiveArea extends Component {
             <div className="divider"></div>
             <div className="gadget-grid-wrapper">
               {this.context.gadgets.map((gadget, key) => {
-                console.log('log: ', this.context.selectedGadgetGroup.default);
                 if (
                   this.context != null &&
                   this.context.selectedGadgetGroup != null &&
