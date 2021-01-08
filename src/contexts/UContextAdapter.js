@@ -55,9 +55,9 @@ class UContextAdapter {
     return state;
   };
   static removeGadget = (state, ...update) => {
-    console.log('removed: ', update[0].props.gadgetID);
+    console.log('removed: ', update[0].props);
     for (let i = 0; i < state.gadgets.length; i++) {
-      if (state.gadgets[i].gadgetID === update[0].props.gadgetID)
+      if (state.gadgets[i].id === update[0].props.gadgetID)
         state.gadgets.splice(i, 1);
     }
 
