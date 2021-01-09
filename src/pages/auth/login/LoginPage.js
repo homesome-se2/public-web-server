@@ -18,10 +18,16 @@ class LoginPage extends Component {
     loaderActive: false,
     invalid: false,
     errorSnackbarVisibility: false,
-    errorMessage: '',
+    errorMessage:
+      'Please consider consider using a modern browser, as the webapp utilizes features that are fully supported only on Google Chrome',
+    errorSeverity: 'info',
   };
   componentDidMount() {
     this._ismounted = true;
+    this.wait(800).then(() => {
+      this.showErrorSB();
+      this.wait(3500).then(() => this.hideErrorSB());
+    });
   }
   componentWillUnmount() {
     this._ismounted = false;
@@ -43,6 +49,7 @@ class LoginPage extends Component {
       if (this._ismounted) this.setState({ loaderActive: true });
     });
     this.hideErrorSB();
+    this.setState({ errorSeverity: 'error' });
 
     this.context.auth(
       { username: username, password: password },
@@ -140,7 +147,11 @@ class LoginPage extends Component {
           open={this.state.errorSnackbarVisibility}
           autoHideDuration={3000}
         >
-          <MuiAlert elevation={6} variant="filled" severity="error">
+          <MuiAlert
+            elevation={6}
+            variant="filled"
+            severity={this.state.errorSeverity}
+          >
             {this.state.errorMessage}
           </MuiAlert>
         </Snackbar>
